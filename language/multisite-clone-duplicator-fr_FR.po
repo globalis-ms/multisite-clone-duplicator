@@ -1,0 +1,221 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Duplicate Site 0.2.0\n"
+"POT-Creation-Date: 2014-07-18 14:29+0100\n"
+"PO-Revision-Date: 2014-07-18 14:30+0100\n"
+"Last-Translator: \n"
+"Language-Team: Pierre DARGHAM <pierre.dargham@globalis-ms.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-SearchPath-0: ../include\n"
+
+#: ../include/lang.php:6
+msgid "Sorry, you don't have permissions to use this page."
+msgstr "Désolé, vous n'avez pas le droit d'accéder à cette page"
+
+#: ../include/lang.php:7
+msgid "Sorry, there is no site available for duplication."
+msgstr "Aucun site n'est disponible pour la duplication"
+
+#: ../include/lang.php:8
+msgid "The log file cannot be written"
+msgstr "Le fichier journal n'a pas pu être enregistré"
+
+#: ../include/lang.php:9
+msgid "The log file cannot be written to location"
+msgstr "Le fichier journal n'a pas pu être enregistré dans le dossier"
+
+#: ../include/lang.php:10
+msgid "To enable logging, change permissions on log directory"
+msgstr ""
+"Pour activer l'enregistrement des journaux, changez les droits du répertoire"
+
+#: ../include/lang.php:15 ../include/lang.php:59
+msgid "Duplicate"
+msgstr "Dupliquer"
+
+#: ../include/lang.php:16
+msgid "Duplication"
+msgstr "Duplication"
+
+#: ../include/lang.php:17
+msgid "Duplicable"
+msgstr "Duplicable"
+
+#: ../include/lang.php:18
+msgid "Customize"
+msgstr "Personnaliser"
+
+#: ../include/lang.php:19
+msgid "Yes"
+msgstr "Oui"
+
+#: ../include/lang.php:20
+msgid "No"
+msgstr "Non"
+
+#: ../include/lang.php:25
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: ../include/lang.php:26
+msgid "Visit"
+msgstr "Aller sur le site"
+
+#: ../include/lang.php:27
+msgid "View log"
+msgstr "Voir le fichier journal"
+
+#: ../include/lang.php:28
+msgid "Missing fields"
+msgstr "Champs manquants"
+
+#: ../include/lang.php:29
+msgid "Missing or invalid title"
+msgstr "Titre manquant ou invalide"
+
+#: ../include/lang.php:30
+#, php-format
+msgid ""
+"The following words are reserved for use by WordPress functions and cannot "
+"be used as blog names : <code>%s</code>"
+msgstr ""
+"Les mots suivants sont réservés pour l&rsquo;usage de fonctions WordPress et "
+"ne peuvent pas être utilisés comme nom de site&nbsp;: <code>%s</code>"
+
+#: ../include/lang.php:31
+msgid "Missing or invalid site address"
+msgstr "Adresse manquante ou invalide"
+
+#: ../include/lang.php:32
+msgid "Missing admin email address"
+msgstr "Email de l'administrateur manquant"
+
+#: ../include/lang.php:33
+msgid "Invalid admin email address"
+msgstr "Email de l'administrateur invalide"
+
+#: ../include/lang.php:34
+msgid "Missing or invalid log directory path"
+msgstr "Dossier d'enregistrement des journaux manquant ou invalide"
+
+#: ../include/lang.php:35
+msgid "New site was created"
+msgstr "Nouveau sité créé"
+
+#: ../include/lang.php:36
+msgid "There was an error creating the user."
+msgstr "Erreur lors de la création de l'utilisateur"
+
+#: ../include/lang.php:37
+#, php-format
+msgid "Failed to copy files : check permissions on <strong>%s</strong>"
+msgstr ""
+"Erreur lors de la copie des fichiers : vérifiez les droits en écriture du "
+"dossier <strong>%s</strong>"
+
+#: ../include/lang.php:42
+msgid "Duplicate Site"
+msgstr "Dupliquer un site"
+
+#: ../include/lang.php:43
+msgid "Original site to copy"
+msgstr "Site original"
+
+#: ../include/lang.php:44
+msgid "New Site - Address"
+msgstr "Nouveau site - Adresse"
+
+#: ../include/lang.php:45
+msgid "Only lowercase letters (a-z) and numbers are allowed."
+msgstr "Seuls les lettres minuscules (de a à z) et chiffres sont autorisés."
+
+#: ../include/lang.php:46
+msgid "New Site - Title"
+msgstr "Nouveau site - Titre"
+
+#: ../include/lang.php:47
+msgid "New Site - Admin Email"
+msgstr "Nouveau site - Email de l'administrateur"
+
+#: ../include/lang.php:48
+msgid ""
+"A new user will be created if the above email address is not in the database."
+msgstr ""
+"Un nouvel utilisateur sera créé si l'adresse de contact n&rsquo;existe pas "
+"dans la base de données."
+
+#: ../include/lang.php:49
+msgid "The username and password will be mailed to this email address."
+msgstr ""
+"L'identifiant et le mot de passe seront envoyés sur l'adresse de contact "
+"indiquée."
+
+#: ../include/lang.php:50
+msgid "Show advanced options"
+msgstr "Afficher les options avancées"
+
+#: ../include/lang.php:51
+msgid "Hide advanced options"
+msgstr "Masquer les options avancées"
+
+#: ../include/lang.php:52
+msgid "Files"
+msgstr "Fichiers"
+
+#: ../include/lang.php:53
+msgid "Duplicate files from duplicated site upload directory"
+msgstr "Copier les fichiers du répertoire d'upload"
+
+#: ../include/lang.php:54
+msgid "Users and roles"
+msgstr "Utilisateur et rôles"
+
+#: ../include/lang.php:55
+msgid "Keep users and roles from duplicated site"
+msgstr "Conserver les utilisateurs et rôles du site dupliqué"
+
+#: ../include/lang.php:56
+msgid "Log"
+msgstr "Journal"
+
+#: ../include/lang.php:57
+msgid "Generate log file"
+msgstr "Générer un fichier journal"
+
+#: ../include/lang.php:58
+msgid "Log directory"
+msgstr "Répertoire des journaux"
+
+#: ../include/lang.php:60
+msgid "Edit duplicable sites list"
+msgstr "Modifier la liste des sites duplicables"
+
+#: ../include/lang.php:65
+msgid "Dublicable websites"
+msgstr "Sites duplicables"
+
+#: ../include/lang.php:66
+msgid "Allow duplication of all sites of the network"
+msgstr "Autoriser la duplication de tous les sites du réseau"
+
+#: ../include/lang.php:67
+msgid "Allow duplication of following sites only :"
+msgstr "Restreindre la duplication aux sites suivants :"
+
+#~ msgid "Site Admin"
+#~ msgstr "Administrateur"
+
+#~ msgid "[%s] New Site Created"
+#~ msgstr "[%s] Nouveau site créé"
+
+#~ msgid ""
+#~ "<br />New site created by %1$s<br />Address: %2$s<br />Name: %3$s<br />"
+#~ msgstr ""
+#~ "<br />Nouveau site créé par %1$s<br />Adresse: %2$s<br />Titre: %3$s<br />"
