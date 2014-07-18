@@ -26,7 +26,7 @@ MultiSite Clone Duplicator adds a "Duplicate Site" functionnality to your networ
 
 You can install MultiSite Clone Duplicator using the built in WordPress plugin installer. It’s easy, 2 seconds.
 
-If you prefer download Wp Duplicate Site manually :
+If you prefer download MultiSite Clone Duplicator manually :
 
 1. Upload multisite-clone-duplicator/ to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
