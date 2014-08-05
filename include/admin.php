@@ -147,17 +147,17 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          * Get select box with duplicable site list
          * @since 0.2.0
          * @param  array $site_list all the sites
-         * @param  array $_GET parameters
+         * @param  array $get parameters
          * @return string the output
          */
-        public static function select_site_list($site_list, $_GET) {
+        public static function select_site_list($site_list, $get) {
             $output = '';
 
             if(count($site_list) == 1) {
                 $blog_id = $site_list[0]['blog_id'];
             }
-            else if(isset($_GET['id']) && MUCD_Functions::value_in_array($_GET['id'], $site_list, 'blog_id') && MUCD_Functions::is_duplicable($_GET['id']) ) {
-                 $blog_id = $_GET['id'];
+            else if(isset($get['id']) && MUCD_Functions::value_in_array($get['id'], $site_list, 'blog_id') && MUCD_Functions::is_duplicable($get['id']) ) {
+                 $blog_id = $get['id'];
             }
 
             $output .= '<select name="site[source]">';
