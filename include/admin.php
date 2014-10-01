@@ -341,21 +341,18 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          */
         public static function save_admin_network_option_page() {
 
-            check_admin_referer( 'siteoptions' );
 
             if ( isset( $_POST['duplicables'] ) && $_POST['duplicables']=='all' ){
+                check_admin_referer( 'siteoptions' );
                 update_site_option( 'mucd_duplicables', 'all' );
             }
-            else {
-                update_site_option( 'mucd_duplicables', 'selected' );
 
-                if ( isset( $_POST['duplicables-list'] ) ){
-                    MUCD_Option::set_duplicable_option($_POST['duplicables-list']);
-                }
-                else {
-                    MUCD_Option::set_duplicable_option(array());
-                }
+            else if ( isset( $_POST['duplicables-list'] ) ){
+                check_admin_referer( 'siteoptions' );
+                update_site_option( 'mucd_duplicables', 'selected' );
+                MUCD_Option::set_duplicable_option($_POST['duplicables-list']);
             }
+
         }
 
         /**
