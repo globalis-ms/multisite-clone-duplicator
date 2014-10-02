@@ -1,4 +1,5 @@
 jQuery(document).ready(function() {
+
     jQuery('#log-box').change(function() {
         if(jQuery(this).is(":checked")) {
             jQuery('#log-path').prop('disabled', false);
@@ -18,5 +19,6 @@ jQuery(document).ready(function() {
 		 jQuery('#advanced-options').hide();
 		 jQuery('#show-advanced-options').show();
 		 jQuery(this).hide();
-    });  
+    });
+      
 });
