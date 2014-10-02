@@ -126,7 +126,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     $form_message['error'] = $data['error']->get_error_message();
                 }
                 else {
-                    //$form_message = MUCD_Duplicate::duplicate_site($data);
+                    $form_message = MUCD_Duplicate::duplicate_site($data);
                 }
             }
 
