@@ -114,6 +114,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 'keep_users'    => 'no',
                 'log'           => 'no',
                 'log-path'      => '',
+                'advanced'      => 'hide-advanced-options'
             );
 
             // Manage Form Post
