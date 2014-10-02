@@ -110,7 +110,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 'domain'        => '',
                 'title'         => '',
                 'email'         => '',
-                'copy_files'    => 'no',
+                'copy_files'    => 'yes',
                 'keep_users'    => 'no',
                 'log'           => 'no',
                 'log-path'      => '',
@@ -125,7 +125,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     $form_message['error'] = $data['error']->get_error_message();
                 }
                 else {
-                    $form_message = MUCD_Duplicate::duplicate_site($data);
+                    //$form_message = MUCD_Duplicate::duplicate_site($data);
                 }
             }
 
@@ -141,6 +141,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             }
 
             MUCD_Duplicate::close_log();
+
         }
 
         /**
@@ -256,7 +257,10 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          */
         public static function check_form($init_data) {
 
-            $data = array();
+            $data = $init_data;
+            $data['copy_files'] = 'no';                
+            $data['keep_users'] = 'no';                 
+            $data['log'] = 'no';                 
 
             // Check referer and nonce
             if(check_admin_referer( MUCD_DOMAIN )) {
@@ -266,7 +270,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 $error = array();
 
                 // Merge $data / $_POST['site'] to get Posted data and fill form
-                $data = array_merge($init_data, $_POST['site']);
+                $data = array_merge($data, $_POST['site']);
 
                 // format and check source
                 $data['from_site_id'] = $data['source'];
