@@ -57,13 +57,13 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 $table_name = $to_site_prefix . substr( $table, $from_site_prefix_length );
 
                 // Drop table if exists
-                MUCD_Data::do_sql_query('DROP TABLE IF EXISTS ' . $table_name);
+                MUCD_Data::do_sql_query('DROP TABLE IF EXISTS `' . $table_name . '`');
 
                 // Create new table from source table
-                MUCD_Data::do_sql_query('CREATE TABLE IF NOT EXISTS ' . $table_name . ' LIKE ' . $table);
+                MUCD_Data::do_sql_query('CREATE TABLE IF NOT EXISTS `' . $table_name . '` LIKE `' . $table . '`');
 
                 // Populate database with data from source table
-                MUCD_Data::do_sql_query('INSERT ' . $table_name . ' SELECT * FROM ' . $table);
+                MUCD_Data::do_sql_query('INSERT `' . $table_name . '` SELECT * FROM `' . $table . '`');
             }
 
             // apply key options from new blog.
@@ -113,7 +113,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
             $to_blog_prefix = $wpdb->get_blog_prefix( $to_site_id );
 
-            // Recherche des repertoires uploads associé a chaque blog
+            // Looking for uploads dirs
             switch_to_blog($from_site_id);
             $dir = wp_upload_dir();
             $from_upload_url = str_replace(network_site_url(), get_bloginfo('url').'/',$dir['baseurl']);
@@ -128,14 +128,14 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
             $tables = array();
 
-            $results = MUCD_Data::do_sql_query('SHOW TABLES LIKE \'' .$to_blog_prefix. '%\'', 'col', FALSE);
+            $results = MUCD_Data::do_sql_query('SHOW TABLES LIKE `' .$to_blog_prefix. '%`', 'col', FALSE);
 
             foreach( $results as $k => $v ) {
                 $tables[str_replace($to_blog_prefix, '', $v)] = array();
             }
 
             foreach( $tables as $table => $col) {
-                $results = MUCD_Data::do_sql_query('SHOW COLUMNS FROM ' . $to_blog_prefix . $table, 'col', FALSE);
+                $results = MUCD_Data::do_sql_query('SHOW COLUMNS FROM `' . $to_blog_prefix . $table . '`', 'col', FALSE);
 
                 $columns = array();
 
@@ -182,18 +182,18 @@ if( !class_exists( 'MUCD_Data' ) ) {
             if(is_array($fields) || !empty($fields)) {
                 global $wpdb;
 
-                $sql_query = 'SHOW KEYS FROM ' .$table. ' WHERE Key_name = \'PRIMARY\'';
+                $sql_query = 'SHOW KEYS FROM `' .$table. '` WHERE Key_name = `PRIMARY`';
                 $results =  (array)MUCD_Data::do_sql_query($sql_query, 'row', FALSE);
                 $id = $results['Column_name'];
 
                 foreach($fields as $value) {
 
 
-                    $sql_query = $wpdb->prepare('SELECT '.$id. ', ' .$value. ' FROM '.$table.' WHERE ' .$value. ' LIKE "%%%s%%" ' , $from_string);   
+                    $sql_query = $wpdb->prepare('SELECT `'.$id. '`, `' .$value. '` FROM `'.$table.'` WHERE `' .$value. '` LIKE "%%%s%%" ' , $from_string);   
                     $results = MUCD_Data::do_sql_query($sql_query, 'results', FALSE);
 
                     if($results) {
-                        $update = 'UPDATE '.$table.' SET '.$value.' = "%s" WHERE '.$id.' = "%d"';
+                        $update = 'UPDATE `'.$table.'` SET `'.$value.'` = "%s" WHERE `'.$id.'` = "%d"';
 
                          foreach($results as $result => $row) {
                             $row[$value] = MUCD_Data::try_replace( $row, $value, $from_string, $to_string );
