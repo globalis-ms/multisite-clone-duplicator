@@ -169,7 +169,7 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
                         $prefix = substr($metakey, 0, $from_site_prefix_length);
                         if($prefix==$from_site_prefix) {
                             $raw_meta_name = substr($metakey,$from_site_prefix_length);
-                            update_user_meta( $user->ID, $to_site_prefix . $raw_meta_name, $metavalue );
+                            update_user_meta( $user->ID, $to_site_prefix . $raw_meta_name, maybe_unserialize($metavalue) );
                         }
                     }
                 }
