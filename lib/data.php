@@ -45,7 +45,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
             }
 
             // Get sources Tables
-            $sql_query = $wpdb->prepare('SHOW TABLES LIKE %s',$from_site_prefix.'%');
+            $sql_query = $wpdb->prepare('SHOW TABLES LIKE \'%s\'',$from_site_prefix.'%');
             $from_site_table =  MUCD_Data::do_sql_query($sql_query, 'col', FALSE); 
 
             if($from_site_id==MUCD_PRIMARY_SITE_ID) {
@@ -128,7 +128,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
             $tables = array();
 
-            $results = MUCD_Data::do_sql_query('SHOW TABLES LIKE `' .$to_blog_prefix. '%`', 'col', FALSE);
+            $results = MUCD_Data::do_sql_query('SHOW TABLES LIKE \'' .$to_blog_prefix. '%\'', 'col', FALSE);
 
             foreach( $results as $k => $v ) {
                 $tables[str_replace($to_blog_prefix, '', $v)] = array();
@@ -182,7 +182,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
             if(is_array($fields) || !empty($fields)) {
                 global $wpdb;
 
-                $sql_query = 'SHOW KEYS FROM `' .$table. '` WHERE Key_name = `PRIMARY`';
+                $sql_query = 'SHOW KEYS FROM `' .$table. '` WHERE Key_name = \'PRIMARY\'';
                 $results =  (array)MUCD_Data::do_sql_query($sql_query, 'row', FALSE);
                 $id = $results['Column_name'];
 
