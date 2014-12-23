@@ -29,7 +29,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
          */
         public static function db_copy_tables( $from_site_id, $to_site_id ) {
             global $wpdb ;
-
+            
             // Source Site information
             $from_site_prefix = $wpdb->get_blog_prefix( $from_site_id );                    // prefix 
             $from_site_prefix_length = strlen($from_site_prefix);                           // prefix length
@@ -189,7 +189,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 foreach($fields as $value) {
 
 
-                    $sql_query = 'SELECT '.$id. ', ' .$value. ' FROM '.$table.' WHERE ' .$value. ' LIKE "%'.mysql_real_escape_string($from_string).'%" ';   
+                    $sql_query = $wpdb->prepare('SELECT '.$id. ', ' .$value. ' FROM '.$table.' WHERE ' .$value. ' LIKE "%%%s%%" ' , $from_string);   
                     $results = MUCD_Data::do_sql_query($sql_query, 'results', FALSE);
 
                     if($results) {
@@ -197,7 +197,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
                          foreach($results as $result => $row) {
                             $row[$value] = MUCD_Data::try_replace( $row, $value, $from_string, $to_string );
-                            $sql_query = sprintf($update, mysql_real_escape_string($row[$value]), $row[$id]);
+                            $sql_query = $wpdb->prepare($update, $row[$value], $row[$id]);
                             MUCD_Data::do_sql_query($sql_query);
                         }
                     }

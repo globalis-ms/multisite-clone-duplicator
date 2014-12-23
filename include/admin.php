@@ -106,14 +106,15 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
             // Form Data
             $data = array(
-                'source'        => 0,
+                'source'        => (isset($_GET['id']))?$_GET['id']:0,
                 'domain'        => '',
                 'title'         => '',
                 'email'         => '',
-                'copy_files'    => 'no',
+                'copy_files'    => 'yes',
                 'keep_users'    => 'no',
                 'log'           => 'no',
                 'log-path'      => '',
+                'advanced'      => 'hide-advanced-options'
             );
 
             // Manage Form Post
@@ -131,7 +132,8 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
             // Load template if at least one Site is available
             if( $site_list ) {
-                $select_site_list = MUCD_Admin::select_site_list($site_list, $_GET);
+
+                $select_site_list = MUCD_Admin::select_site_list($site_list, $data['source']);
 
                 MUCD_Admin::enqueue_script_network_duplicate();
                 require_once MUCD_COMPLETE_PATH . '/template/network_admin_duplicate_site.php';
@@ -141,23 +143,24 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             }
 
             MUCD_Duplicate::close_log();
+
         }
 
         /**
          * Get select box with duplicable site list
          * @since 0.2.0
          * @param  array $site_list all the sites
-         * @param  array $get parameters
+         * @param  id $current_blog_id parameters
          * @return string the output
          */
-        public static function select_site_list($site_list, $get) {
+        public static function select_site_list($site_list, $current_blog_id=null) {
             $output = '';
 
             if(count($site_list) == 1) {
                 $blog_id = $site_list[0]['blog_id'];
             }
-            else if(isset($get['id']) && MUCD_Functions::value_in_array($get['id'], $site_list, 'blog_id') && MUCD_Functions::is_duplicable($get['id']) ) {
-                 $blog_id = $get['id'];
+            else if(isset($current_blog_id) && MUCD_Functions::value_in_array($current_blog_id, $site_list, 'blog_id') && MUCD_Functions::is_duplicable($current_blog_id) ) {
+                 $blog_id = $current_blog_id;
             }
 
             $output .= '<select name="site[source]">';
@@ -256,7 +259,10 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          */
         public static function check_form($init_data) {
 
-            $data = array();
+            $data = $init_data;
+            $data['copy_files'] = 'no';                
+            $data['keep_users'] = 'no';                 
+            $data['log'] = 'no';                 
 
             // Check referer and nonce
             if(check_admin_referer( MUCD_DOMAIN )) {
@@ -266,7 +272,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 $error = array();
 
                 // Merge $data / $_POST['site'] to get Posted data and fill form
-                $data = array_merge($init_data, $_POST['site']);
+                $data = array_merge($data, $_POST['site']);
 
                 // format and check source
                 $data['from_site_id'] = $data['source'];
@@ -341,21 +347,18 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          */
         public static function save_admin_network_option_page() {
 
-            check_admin_referer( 'siteoptions' );
 
             if ( isset( $_POST['duplicables'] ) && $_POST['duplicables']=='all' ){
+                check_admin_referer( 'siteoptions' );
                 update_site_option( 'mucd_duplicables', 'all' );
             }
-            else {
-                update_site_option( 'mucd_duplicables', 'selected' );
 
-                if ( isset( $_POST['duplicables-list'] ) ){
-                    MUCD_Option::set_duplicable_option($_POST['duplicables-list']);
-                }
-                else {
-                    MUCD_Option::set_duplicable_option(array());
-                }
+            else if ( isset( $_POST['duplicables-list'] ) ){
+                check_admin_referer( 'siteoptions' );
+                update_site_option( 'mucd_duplicables', 'selected' );
+                MUCD_Option::set_duplicable_option($_POST['duplicables-list']);
             }
+
         }
 
         /**

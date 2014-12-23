@@ -1,41 +1,39 @@
 jQuery(document).ready(function() {
 
-
-
     function enable_multiselect() {
 
-            jQuery('.duplicables-list').prop('disabled', false);
-            jQuery('#site-select-box').css('overflow', 'auto');
+        jQuery('.duplicables-list').prop('disabled', false);
+        jQuery('#site-select-box').css('overflow', 'auto');
 
-            var checkboxes = jQuery('#site-select-box').find("input:checkbox");
-            checkboxes.each(function() {
-                var checkbox = jQuery(this);
+        var checkboxes = jQuery('#site-select-box').find("input:checkbox");
+        checkboxes.each(function() {
+            var checkbox = jQuery(this);
 
-                // Highlight pre-selected checkboxes
+            // Highlight pre-selected checkboxes
+            if (checkbox.prop("checked")) {
+                checkbox.parent().addClass("multiselect-on");
+            }
+ 
+            // Highlight checkboxes that the user selects
+            checkbox.click(function() {
                 if (checkbox.prop("checked")) {
                     checkbox.parent().addClass("multiselect-on");
                 }
-     
-                // Highlight checkboxes that the user selects
-                checkbox.click(function() {
-                    if (checkbox.prop("checked")) {
-                        checkbox.parent().addClass("multiselect-on");
-                    }
-                    else {
-                        checkbox.parent().removeClass("multiselect-on");
-                    }
-                });
-            });        
+                else {
+                    checkbox.parent().removeClass("multiselect-on");
+                }
+            });
+        });        
     }
 
     function disable_multiselect() {
-            jQuery('.duplicables-list').prop('disabled', true);
-            jQuery('#site-select-box').css('overflow', 'hidden');
-            var checkboxes = jQuery('#site-select-box').find("input:checkbox");
-            checkboxes.each(function() {
-                var checkbox = jQuery(this);
-                checkbox.parent().removeClass("multiselect-on");
-            });        
+        jQuery('.duplicables-list').prop('disabled', true);
+        jQuery('#site-select-box').css('overflow', 'hidden');
+        var checkboxes = jQuery('#site-select-box').find("input:checkbox");
+        checkboxes.each(function() {
+            var checkbox = jQuery(this);
+            checkbox.parent().removeClass("multiselect-on");
+        });        
     }
 
     if(jQuery('#radio-duplicables-all').prop("checked")) {
@@ -56,6 +54,5 @@ jQuery(document).ready(function() {
             enable_multiselect();
         }
     });
-
 
 });

@@ -57,27 +57,28 @@
         <p>
             <a id="show-advanced-options" href="#"><?php echo MUCD_NETWORK_PAGE_DUPLICATE_ADVANCED_SHOW; ?> &rsaquo;</a>
             <a id="hide-advanced-options" style="display: none;" href="#"><?php echo MUCD_NETWORK_PAGE_DUPLICATE_ADVANCED_HIDE; ?> &lsaquo;</a>
+            <input id="status-advanced-options" type="hidden" name="site[advanced]" value="<?php echo $data['advanced']; ?>" />
         </p>
 
         <table class="form-table" id="advanced-options" style="display: none;">
             <tr>
                 <th scope="row"><?php echo MUCD_NETWORK_PAGE_DUPLICATE_FILES; ?></th>
                 <td>
-                    <label><input name="site[copy_files]" type="checkbox" checked value="yes" /><?php echo MUCD_NETWORK_PAGE_DUPLICATE_FILES_TEXT_1; ?></label>
+                    <label><input name="site[copy_files]" type="checkbox" value="yes" <?php echo ($data['copy_files']=='yes')?'checked':''; ?> /><?php echo MUCD_NETWORK_PAGE_DUPLICATE_FILES_TEXT_1; ?></label>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row"><?php echo MUCD_NETWORK_PAGE_DUPLICATE_USERS; ?></th>
                 <td>
-                    <label><input name="site[keep_users]" type="checkbox" value="yes" /><?php echo MUCD_NETWORK_PAGE_DUPLICATE_USERS_TEXT_1; ?></label>
+                    <label><input name="site[keep_users]" type="checkbox" value="yes" <?php echo ($data['keep_users']=='yes')?'checked':''; ?> /><?php echo MUCD_NETWORK_PAGE_DUPLICATE_USERS_TEXT_1; ?></label>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row"><?php echo MUCD_NETWORK_PAGE_DUPLICATE_LOG; ?></th>
                 <td>
-                    <label><input id="log-box" name="site[log]" type="checkbox" checked value="yes" /><?php echo MUCD_NETWORK_PAGE_DUPLICATE_LOG_TEXT_1; ?></label>
+                    <label><input id="log-box" name="site[log]" type="checkbox" value="yes" <?php echo ($data['log']=='yes')?'checked':''; ?> /><?php echo MUCD_NETWORK_PAGE_DUPLICATE_LOG_TEXT_1; ?></label>
                     <br /><br /><label><?php echo MUCD_NETWORK_PAGE_DUPLICATE_LOG_TEXT_2; ?> : <input id="log-path" name="site[log-path]" type="text"  class="large-text" value="<?php echo MUCD_Option::get_option_log_directory(); ?>"/></label>
                 </td>
             </tr>
