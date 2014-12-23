@@ -45,7 +45,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
             }
 
             // Get sources Tables
-            $sql_query = $wpdb->prepare('SHOW TABLES LIKE \'%s\'',$from_site_prefix.'%');
+            $sql_query = $wpdb->prepare('SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE \'%s\'', $from_site_prefix . '%');
             $from_site_table =  MUCD_Data::do_sql_query($sql_query, 'col', FALSE); 
 
             if($from_site_id==MUCD_PRIMARY_SITE_ID) {
@@ -56,14 +56,19 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
                 $table_name = $to_site_prefix . substr( $table, $from_site_prefix_length );
 
+                // Get Schema name (for multibase DB as with HyberDB plugin)
+                $sql_query = $wpdb->prepare('SELECT TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = \'%s\'', $table);
+                $schema = MUCD_Data::do_sql_query($sql_query, 'var');
+
                 // Drop table if exists
                 MUCD_Data::do_sql_query('DROP TABLE IF EXISTS `' . $table_name . '`');
 
                 // Create new table from source table
-                MUCD_Data::do_sql_query('CREATE TABLE IF NOT EXISTS `' . $table_name . '` LIKE `' . $table . '`');
+                MUCD_Data::do_sql_query('CREATE TABLE IF NOT EXISTS `' . $table_name . '` LIKE ' . $schema . '.' . '`' . $table . '`');
 
                 // Populate database with data from source table
-                MUCD_Data::do_sql_query('INSERT `' . $table_name . '` SELECT * FROM `' . $table . '`');
+                MUCD_Data::do_sql_query('INSERT `' . $table_name . '` SELECT * FROM ' . $schema . '.' . '`' . $table . '`');
+
             }
 
             // apply key options from new blog.
