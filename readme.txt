@@ -82,6 +82,11 @@ As of now, MultiSite Clone Duplicator is available in English and in French. If 
 
 == Changelog ==
 
+= 1.1.0 =
+* Bugfix : "Keep users and roles" was broken
+* Bugfix : Compatibility with plugins that use reserved mysql words in table names
+* Bugfix : Partial compatibility with HyperDB
+
 = 1.0.0 =
 * Tested on WP 4.0.0
 * Bugfix : Compatibility with PHP 5.2
