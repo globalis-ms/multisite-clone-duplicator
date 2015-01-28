@@ -44,6 +44,9 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 $saved_options[$option_name] = get_blog_option( $to_site_id, $option_name );
             }
 
+            // Bugfix : escape '_' character for mysql 
+            $from_site_prefix = str_replace('_', '\\_', $from_site_prefix);
+
             // Get sources Tables
             $sql_query = $wpdb->prepare('SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE \'%s\'', $from_site_prefix . '%');
             $from_site_table =  MUCD_Data::do_sql_query($sql_query, 'col', FALSE); 
