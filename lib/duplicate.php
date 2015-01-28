@@ -151,6 +151,10 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
 
             switch_to_blog($to_site_id);
 
+            // Bugfix Pierre Dargham : relocating this declaration outside of the loop
+            // PHP < 5.3
+            function user_array_map( $a ){ return $a[0]; }
+
             foreach ($users as $user) {
                 if($user->user_email != $admin_email) {
 
@@ -160,13 +164,12 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
                     //$all_meta = array_map( function( $a ){ return $a[0]; }, get_user_meta( $user->ID ) );
                     // PHP < 5.3
                     $all_meta = array_map( 'user_array_map', get_user_meta( $user->ID ) );
-                    function user_array_map( $a ){ return $a[0]; }
 
                     foreach ($all_meta as $metakey => $metavalue) {
                         $prefix = substr($metakey, 0, $from_site_prefix_length);
                         if($prefix==$from_site_prefix) {
                             $raw_meta_name = substr($metakey,$from_site_prefix_length);
-                            update_user_meta( $user->ID, $to_site_prefix . $raw_meta_name, $metavalue );
+                            update_user_meta( $user->ID, $to_site_prefix . $raw_meta_name, maybe_unserialize($metavalue) );
                         }
                     }
                 }
