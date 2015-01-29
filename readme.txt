@@ -3,7 +3,7 @@ Contributors: GLOBALIS media systems
 Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
 Requires at least: 3.5.0
 Tested up to: 4.1.0
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,9 @@ As of now, MultiSite Clone Duplicator is available in English and in French. If 
 
 == Changelog ==
 
+= 1.2.0 =
+* Bugfix : escape underscore characters ( '_' ) in sql queries
+
 = 1.1.0 =
 * Bugfix : "Keep users and roles" was broken
 * Bugfix : Compatibility with plugins that use reserved mysql words in table names
@@ -107,11 +110,6 @@ As of now, MultiSite Clone Duplicator is available in English and in French. If 
 * Initial version released by Julien Oger
 * Copies all the posts, settings and files from a site to a new one
 * Cannot clone primary site
-
-== Upgrade Notice ==
-
-= 0.2.0 =
-Get advanded features and log functionnality !
 
 == Hooks ==
   
