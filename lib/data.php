@@ -196,11 +196,12 @@ if( !class_exists( 'MUCD_Data' ) ) {
                     $results = MUCD_Data::do_sql_query($sql_query, 'results', FALSE);
 
                     if($results) {
-                        $update = 'UPDATE `'.$table.'` SET `'.$field.'` = "%s" WHERE `' .$field. '` LIKE "%%%s%%" ';
+                        $update = 'UPDATE `'.$table.'` SET `'.$field.'` = "%s" WHERE `'.$field.'` = "%s"';
 
                          foreach($results as $result => $row) {
-                            $row[$field] = MUCD_Data::try_replace( $row, $field, $from_string, $to_string );
-                            $sql_query = $wpdb->prepare($update, $row[$field], $from_string);
+                            $old_value = $row[$field];
+                            $new_value = MUCD_Data::try_replace( $row, $field, $from_string, $to_string );
+                            $sql_query = $wpdb->prepare($update, $new_value, $old_value);
                             $results = MUCD_Data::do_sql_query($sql_query);
                         }
                     }
