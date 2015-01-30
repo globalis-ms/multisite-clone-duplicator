@@ -44,11 +44,11 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 $saved_options[$option_name] = get_blog_option( $to_site_id, $option_name );
             }
 
-            // Bugfix : escape '_' character for mysql 
-            $from_site_prefix = str_replace('_', '\\_', $from_site_prefix);
+            // Bugfix : escape '_' , '%' and '/' character for mysql 'like' queries
+            $like = $wpdb->esc_like($from_site_prefix);
 
             // Get sources Tables
-            $sql_query = $wpdb->prepare('SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE \'%s\'', $from_site_prefix . '%');
+            $sql_query = $wpdb->prepare('SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE \'%s\'', $like . '%');
             $from_site_table =  MUCD_Data::do_sql_query($sql_query, 'col', FALSE); 
 
             if($from_site_id==MUCD_PRIMARY_SITE_ID) {
@@ -136,7 +136,10 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
             $tables = array();
 
-            $results = MUCD_Data::do_sql_query('SHOW TABLES LIKE \'' .$to_blog_prefix. '%\'', 'col', FALSE);
+            // Bugfix : escape '_' , '%' and '/' character for mysql 'like' queries
+            $like = $wpdb->esc_like($to_blog_prefix);
+
+            $results = MUCD_Data::do_sql_query('SHOW TABLES LIKE \'' . $like . '%\'', 'col', FALSE);
 
             foreach( $results as $k => $v ) {
                 $tables[str_replace($to_blog_prefix, '', $v)] = array();
@@ -192,7 +195,10 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
                 foreach($fields as $field) {
 
-                    $sql_query = $wpdb->prepare('SELECT `' .$field. '` FROM `'.$table.'` WHERE `' .$field. '` LIKE "%%%s%%" ' , $from_string);  
+                    // Bugfix : escape '_' , '%' and '/' character for mysql 'like' queries
+                    $like = $wpdb->esc_like($from_string);
+
+                    $sql_query = $wpdb->prepare('SELECT `' .$field. '` FROM `'.$table.'` WHERE `' .$field. '` LIKE "%s" ', '%' . $like . '%');  
                     $results = MUCD_Data::do_sql_query($sql_query, 'results', FALSE);
 
                     if($results) {
@@ -310,7 +316,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
          */
         public static function do_sql_query($sql_query, $type = '', $log = TRUE) {
             global $wpdb;
-            $wpdb->hide_errors();
+            //$wpdb->hide_errors();
 
             switch ($type) {
                 case 'col':
