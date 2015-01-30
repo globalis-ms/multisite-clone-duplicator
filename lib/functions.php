@@ -84,7 +84,7 @@ if( !class_exists( 'MUCD_Functions' ) ) {
         public static function get_site_list() {
             $site_list = array();
 
-            $network_blogs = wp_get_sites();
+            $network_blogs = wp_get_sites(array('limit' => 1000));
             foreach( $network_blogs as $blog ){
                 if (MUCD_Functions::is_duplicable($blog['blog_id']) && MUCD_SITE_DUPLICATION_EXCLUDE != $blog['blog_id']) {
                     $site_list[] = $blog;
