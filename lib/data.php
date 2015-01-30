@@ -190,23 +190,18 @@ if( !class_exists( 'MUCD_Data' ) ) {
             if(is_array($fields) || !empty($fields)) {
                 global $wpdb;
 
-                $sql_query = 'SHOW KEYS FROM `' .$table. '` WHERE Key_name = \'PRIMARY\'';
-                $results =  (array)MUCD_Data::do_sql_query($sql_query, 'row', FALSE);
-                $id = $results['Column_name'];
+                foreach($fields as $field) {
 
-                foreach($fields as $value) {
-
-
-                    $sql_query = $wpdb->prepare('SELECT `'.$id. '`, `' .$value. '` FROM `'.$table.'` WHERE `' .$value. '` LIKE "%%%s%%" ' , $from_string);   
+                    $sql_query = $wpdb->prepare('SELECT `' .$field. '` FROM `'.$table.'` WHERE `' .$field. '` LIKE "%%%s%%" ' , $from_string);  
                     $results = MUCD_Data::do_sql_query($sql_query, 'results', FALSE);
 
                     if($results) {
-                        $update = 'UPDATE `'.$table.'` SET `'.$value.'` = "%s" WHERE `'.$id.'` = "%d"';
+                        $update = 'UPDATE `'.$table.'` SET `'.$field.'` = "%s" WHERE `' .$field. '` LIKE "%%%s%%" ';
 
                          foreach($results as $result => $row) {
-                            $row[$value] = MUCD_Data::try_replace( $row, $value, $from_string, $to_string );
-                            $sql_query = $wpdb->prepare($update, $row[$value], $row[$id]);
-                            MUCD_Data::do_sql_query($sql_query);
+                            $row[$field] = MUCD_Data::try_replace( $row, $field, $from_string, $to_string );
+                            $sql_query = $wpdb->prepare($update, $row[$field], $from_string);
+                            $results = MUCD_Data::do_sql_query($sql_query);
                         }
                     }
                 }
@@ -261,47 +256,47 @@ if( !class_exists( 'MUCD_Data' ) ) {
          * Try to replace $from_string with $to_string in a row
          * @since 0.2.0
          * @param  array $row the row
-         * @param  array $value the field
+         * @param  array $field the field
          * @param  string $from_string
          * @param  string $to_string
          * @return the new data
          */
-        public static function try_replace( $row, $value, $from_string, $to_string) {
-            if(is_serialized($row[$value])) {
+        public static function try_replace( $row, $field, $from_string, $to_string) {
+            if(is_serialized($row[$field])) {
                 $double_serialize = FALSE;
-                $row[$value] = @unserialize($row[$value]);
+                $row[$field] = @unserialize($row[$field]);
 
                 // FOR SERIALISED OPTIONS, like in wp_carousel plugin
-                if(is_serialized($row[$value])) {
-                    $row[$value] = @unserialize($row[$value]);
+                if(is_serialized($row[$field])) {
+                    $row[$field] = @unserialize($row[$field]);
                     $double_serialize = TRUE;
                 }
 
-                if(is_array($row[$value])) {
-                    $row[$value] = MUCD_Data::replace_recursive($row[$value], $from_string, $to_string);
+                if(is_array($row[$field])) {
+                    $row[$field] = MUCD_Data::replace_recursive($row[$field], $from_string, $to_string);
                 }
-                else if(is_object($row[$value]) || $row[$value] instanceof __PHP_Incomplete_Class) { // Étrange fonctionnement avec Google Sitemap...
-                    $array_object = (array) $row[$value];
+                else if(is_object($row[$field]) || $row[$field] instanceof __PHP_Incomplete_Class) { // Étrange fonctionnement avec Google Sitemap...
+                    $array_object = (array) $row[$field];
                     $array_object = MUCD_Data::replace_recursive($array_object, $from_string, $to_string);
-                    foreach($array_object as $key => $value) {
-                        $row[$value]->$key = $value;
+                    foreach($array_object as $key => $field) {
+                        $row[$field]->$key = $field;
                     }
                 }
                 else {
-                        $row[$value] = MUCD_Data::replace($row[$value], $from_string, $to_string);
+                        $row[$field] = MUCD_Data::replace($row[$field], $from_string, $to_string);
                 }
 
-                $row[$value] = serialize($row[$value]);
+                $row[$field] = serialize($row[$field]);
 
                 // Pour des options comme wp_carousel...
                 if($double_serialize) {
-                    $row[$value] = serialize($row[$value]);
+                    $row[$field] = serialize($row[$field]);
                 }
             }
             else {
-                $row[$value] = MUCD_Data::replace($row[$value], $from_string, $to_string);
+                $row[$field] = MUCD_Data::replace($row[$field], $from_string, $to_string);
             }
-            return $row[$value];
+            return $row[$field];
         }
 
         /**

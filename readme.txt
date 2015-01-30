@@ -83,6 +83,7 @@ As of now, MultiSite Clone Duplicator is available in English and in French. If 
 == Changelog ==
 
 = 1.2.0 =
+* Bugfix : duplication of tables without primary key / with several primary keys was causing SQL error
 * Bugfix : escape underscore characters ( '_' ) in sql queries
 
 = 1.1.0 =
