@@ -316,7 +316,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
          */
         public static function do_sql_query($sql_query, $type = '', $log = TRUE) {
             global $wpdb;
-            //$wpdb->hide_errors();
+            $wpdb->hide_errors();
 
             switch ($type) {
                 case 'col':
