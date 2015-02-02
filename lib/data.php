@@ -67,10 +67,10 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 MUCD_Data::do_sql_query('DROP TABLE IF EXISTS `' . $table_name . '`');
 
                 // Create new table from source table
-                MUCD_Data::do_sql_query('CREATE TABLE IF NOT EXISTS `' . $table_name . '` LIKE ' . $schema . '.' . '`' . $table . '`');
+                MUCD_Data::do_sql_query('CREATE TABLE IF NOT EXISTS `' . $table_name . '` LIKE `' . $schema . '`.`' . $table . '`');
 
                 // Populate database with data from source table
-                MUCD_Data::do_sql_query('INSERT `' . $table_name . '` SELECT * FROM ' . $schema . '.' . '`' . $table . '`');
+                MUCD_Data::do_sql_query('INSERT `' . $table_name . '` SELECT * FROM `' . $schema . '`.`' . $table . '`');
 
             }
 
