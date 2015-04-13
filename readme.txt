@@ -84,6 +84,7 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 
 = 1.3.0 =
 * Languages : added translation for spanish, lithuanian and greek
+* Bugfix : Using backtricks on CREATE TABLE LIKE
 
 = 1.2.0 =
 * Bugfix : duplication of tables without primary key / with several primary keys was causing SQL error
