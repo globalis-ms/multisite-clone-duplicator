@@ -6,7 +6,7 @@
  * Author:              Julien OGER, Pierre DARGHAM, GLOBALIS media systems
  * Author URI:          http://www.globalis-ms.com
  *
- * Version:             1.1.0
+ * Version:             1.3.0
  * Requires at least:   3.5.0
  * Tested up to:        4.1.0
  */

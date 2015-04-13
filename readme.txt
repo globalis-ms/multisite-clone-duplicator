@@ -3,7 +3,7 @@ Contributors: GLOBALIS media systems
 Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
 Requires at least: 3.5.0
 Tested up to: 4.1.0
-Stable tag: 1.1.0
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,7 +67,7 @@ It's not a problem ! Serialized data are understood by the plugin, recursively u
 Check your host / server configuration : you probably cloned your site into a domain that is not available !
 
 = Which languages are currently supported? = 
-As of now, MultiSite Clone Duplicator is available in English and in French. If you wish to, you can translate the interface in your own language in the [standard WordPress way](http://codex.wordpress.org/Translating_WordPress)
+As of now, following languages are supported : English (en_US), French (fr_FR), Spanish (es_ES), Lithuanian (lt_LT) and Greek (el). If you wish to, you can translate the interface in your own language in the [standard WordPress way](http://codex.wordpress.org/Translating_WordPress) or with [Transifex](https://www.transifex.com/projects/p/multisite-clone-duplicator/)
 
 = GLOBALIS what ? =
 [Globalis media systems](http://www.globalis-ms.com/) is a web IT consulting company based in Paris, and a pioneer of the PHP and LAMP platform. Since 1997, we have been designing, making and maintaining Internet, intranet or mobile software. We have been working with open source CMS since 2000 and have regularly been using WordPress since 2007.
@@ -81,6 +81,13 @@ As of now, MultiSite Clone Duplicator is available in English and in French. If 
 5. **Log warning**
 
 == Changelog ==
+
+= 1.3.0 =
+* Languages : added translation for spanish, lithuanian and greek
+
+= 1.2.0 =
+* Bugfix : duplication of tables without primary key / with several primary keys was causing SQL error
+* Bugfix : escape underscore characters ( '_' ) in sql queries
 
 = 1.1.0 =
 * Bugfix : "Keep users and roles" was broken
