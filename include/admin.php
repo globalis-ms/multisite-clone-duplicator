@@ -387,14 +387,11 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
                 
                 <?php
-                $network_blogs = wp_get_sites();
+                $network_blogs = wp_get_sites(array('limit' => 1000));
                 echo '<div class="multiselect" id="site-select-box">';
-                //echo '<select id="site-select-box" name="site[source]">';
                 foreach( $network_blogs as $blog ) {
-                    //echo '    <option value="'.$blog['blog_id'].'">' . substr($blog['domain'] . $blog['path'], 0, -1) . '</option>';
                     echo '    <label><input ' . checked(get_blog_option( $blog['blog_id'], 'mucd_duplicable', "no"), 'yes', false) . ' class="duplicables-list" type="checkbox" name="duplicables-list[]" value="'.$blog['blog_id'].'" />' . substr($blog['domain'] . $blog['path'], 0, -1) . '</label>';
                 }
-                //echo '</select>';
                 echo '</div>';
                 ?>
                 

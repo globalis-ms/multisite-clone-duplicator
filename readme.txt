@@ -115,11 +115,6 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 * Copies all the posts, settings and files from a site to a new one
 * Cannot clone primary site
 
-== Upgrade Notice ==
-
-= 0.2.0 =
-Get advanded features and log functionnality !
-
 == Hooks ==
   
 ---------------------------------------
