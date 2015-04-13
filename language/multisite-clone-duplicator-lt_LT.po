@@ -1,0 +1,206 @@
+# 
+# Translators:
+# Moo, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Multisite Clone Duplicator\n"
+"POT-Creation-Date: 2014-07-18 14:29+0100\n"
+"PO-Revision-Date: 2015-03-10 15:47+0000\n"
+"Last-Translator: Moo\n"
+"Language-Team: Lithuanian (Lithuania) (http://www.transifex.com/projects/p/multisite-clone-duplicator/language/lt_LT/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt_LT\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: ../include\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+
+#: ../include/lang.php:6
+msgid "Sorry, you don't have permissions to use this page."
+msgstr "Atleiskite, jūs neturite leidimų naudoti ši puslapį."
+
+#: ../include/lang.php:7
+msgid "Sorry, there is no site available for duplication."
+msgstr "Atleiskite, nėra dubliavimui prieinamos svetainės."
+
+#: ../include/lang.php:8
+msgid "The log file cannot be written"
+msgstr "Žurnalo failas negali būti įrašytas"
+
+#: ../include/lang.php:9
+msgid "The log file cannot be written to location"
+msgstr "Žurnalas negali būti įrašytas į paskirtą vietą"
+
+#: ../include/lang.php:10
+msgid "To enable logging, change permissions on log directory"
+msgstr "Kad įjungtumėte registravimą, pakeiskite žurnalo katalogo leidimus"
+
+#: ../include/lang.php:15 ../include/lang.php:59
+msgid "Duplicate"
+msgstr "Dubliuoti"
+
+#: ../include/lang.php:16
+msgid "Duplication"
+msgstr "Dubliavimas"
+
+#: ../include/lang.php:17
+msgid "Duplicable"
+msgstr "Dubliuotina"
+
+#: ../include/lang.php:18
+msgid "Customize"
+msgstr "Konfigūruoti"
+
+#: ../include/lang.php:19
+msgid "Yes"
+msgstr "Taip"
+
+#: ../include/lang.php:20
+msgid "No"
+msgstr "Ne"
+
+#: ../include/lang.php:25
+msgid "Dashboard"
+msgstr "Skydelis"
+
+#: ../include/lang.php:26
+msgid "Visit"
+msgstr "Aplankyti"
+
+#: ../include/lang.php:27
+msgid "View log"
+msgstr "Žiūrėti žurnalą"
+
+#: ../include/lang.php:28
+msgid "Missing fields"
+msgstr "Trūkstami laukai"
+
+#: ../include/lang.php:29
+msgid "Missing or invalid title"
+msgstr "Trūksta pavadinimo arba jis yra neteisingas"
+
+#: ../include/lang.php:30
+#, php-format
+msgid ""
+"The following words are reserved for use by WordPress functions and cannot "
+"be used as blog names : <code>%s</code>"
+msgstr "Šie žodžiai yra rezervuoti WordPress funkcijoms ir negali būti naudojami kaip tinklaraščio pavadinimai : <code>%s</code>"
+
+#: ../include/lang.php:31
+msgid "Missing or invalid site address"
+msgstr "Trūksta svetainės adreso arba jis yra neteisingas "
+
+#: ../include/lang.php:32
+msgid "Missing admin email address"
+msgstr "Trūksta administratoriaus el. pašto adreso"
+
+#: ../include/lang.php:33
+msgid "Invalid admin email address"
+msgstr "Neteisingas administratoriaus el. pašto adresas"
+
+#: ../include/lang.php:34
+msgid "Missing or invalid log directory path"
+msgstr "Trūksta žurnalo katalogo kelio arba jis yra neteisingas"
+
+#: ../include/lang.php:35
+msgid "New site was created"
+msgstr "Nauja svetainė buvo sukurta"
+
+#: ../include/lang.php:36
+msgid "There was an error creating the user."
+msgstr "Kuriant vartotojo paskyrą, įvyko klaida."
+
+#: ../include/lang.php:37
+#, php-format
+msgid "Failed to copy files : check permissions on <strong>%s</strong>"
+msgstr "Nepavyko kopijuoti failų : patikrinkite šių vietų leidimus <strong>%s</strong>"
+
+#: ../include/lang.php:42
+msgid "Duplicate Site"
+msgstr "Dubliuoti Svetainę"
+
+#: ../include/lang.php:43
+msgid "Original site to copy"
+msgstr "Norima kopijuoti originali svetainė"
+
+#: ../include/lang.php:44
+msgid "New Site - Address"
+msgstr "Nauja Svetainė - Adresas"
+
+#: ../include/lang.php:45
+msgid "Only lowercase letters (a-z) and numbers are allowed."
+msgstr "Galimi tik skaičiai ir mažosios raidės (a-z)"
+
+#: ../include/lang.php:46
+msgid "New Site - Title"
+msgstr "Nauja Svetainė - Pavadinimas"
+
+#: ../include/lang.php:47
+msgid "New Site - Admin Email"
+msgstr "Nauja Svetainė - Administratoriaus El. Paštas"
+
+#: ../include/lang.php:48
+msgid ""
+"A new user will be created if the above email address is not in the "
+"database."
+msgstr "Jei el. pašto adreso dar nėra duomenų bazėje, bus sukurtas naujas vartotojas."
+
+#: ../include/lang.php:49
+msgid "The username and password will be mailed to this email address."
+msgstr "Vartotojo vardas ir slaptažodis bus nusiųsti į nurodytą el. pašto adresą."
+
+#: ../include/lang.php:50
+msgid "Show advanced options"
+msgstr "Rodyti išplėstines parinktis"
+
+#: ../include/lang.php:51
+msgid "Hide advanced options"
+msgstr "Slėpti išplėstines parinktis"
+
+#: ../include/lang.php:52
+msgid "Files"
+msgstr "Failai"
+
+#: ../include/lang.php:53
+msgid "Duplicate files from duplicated site upload directory"
+msgstr "Dubliuoti failus iš dubliuotos svetainės išsiuntimo katalogo"
+
+#: ../include/lang.php:54
+msgid "Users and roles"
+msgstr "Vartotojai ir vaidmenys"
+
+#: ../include/lang.php:55
+msgid "Keep users and roles from duplicated site"
+msgstr "Išlaikyti dubliuotos svetaines vartotojus ir vaidmenis"
+
+#: ../include/lang.php:56
+msgid "Log"
+msgstr "Žurnalas"
+
+#: ../include/lang.php:57
+msgid "Generate log file"
+msgstr "Kurti žurnalo failą"
+
+#: ../include/lang.php:58
+msgid "Log directory"
+msgstr "Žurnalo katalogas"
+
+#: ../include/lang.php:60
+msgid "Edit duplicable sites list"
+msgstr "Keisti dubliuotinų svetainių sąrašą"
+
+#: ../include/lang.php:65
+msgid "Dublicable websites"
+msgstr "Dubliuotinos žiniatinklio svetainės"
+
+#: ../include/lang.php:66
+msgid "Allow duplication of all sites of the network"
+msgstr "Leisti dubliuoti visas tinklo svetaines"
+
+#: ../include/lang.php:67
+msgid "Allow duplication of following sites only :"
+msgstr "Leisti tik sekančių svetainių dubliavimą :"
