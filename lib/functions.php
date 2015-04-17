@@ -128,19 +128,21 @@ if( !class_exists( 'MUCD_Functions' ) ) {
 
         /**
          * Check if site exists
-         * @since 0.2.0
+         * @since 1.3.0
          * @param  int $blog_id the blog id
          * @return boolean true | false
          */
         public static function site_exists($blog_id) {
-            $exists = true;
-            switch_to_blog($blog_id);
-            $current_blog = get_current_blog_id();
-            if($current_blog != $blog_id) {
-                $exists = false;
-            }
-            restore_current_blog();
-            return $exists;
+            return (get_blog_details($blog_id) !== false);
+        }
+
+        /**
+         * Set a new locale
+         * @since 1.3.0
+         * @param  string $locale the new locale
+         */
+        function set_locale_to($locale) {
+            add_filter( 'locale', function( $old_locale ) { return $locale; } );
         }
 
     }
