@@ -106,7 +106,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
             // Form Data
             $data = array(
-                'source'        => (isset($_GET['id']))?$_GET['id']:0,
+                'source'        => (isset($_GET['id']))?intval($_GET['id']):0,
                 'domain'        => '',
                 'title'         => '',
                 'email'         => '',
@@ -275,8 +275,8 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 $data = array_merge($data, $_POST['site']);
 
                 // format and check source
-                $data['from_site_id'] = $data['source'];
-                if ( empty( $data['from_site_id'] ) ) {
+                $data['from_site_id'] = intval($data['source']);
+                if ( $data['from_site_id'] < 1 || !get_blog_details( $data['from_site_id'], false ) ) {
                     $error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_MISSING_FIELDS );
                 }
 
@@ -303,6 +303,10 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     $newdomain = $current_site->domain;
                     $path      = $current_site->path . $domain . '/';
                 }
+								
+								if( domain_exists( $newdomain, $path ) ) {
+									$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_DOMAIN_ERROR_REQUIRE );
+								}
 
                 // format and check title
                 if ( empty( $data['title'] ) ) {
@@ -325,7 +329,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 $data['newdomain'] = $newdomain;
                 $data['path'] = $path;
 
-                if(isset($data['log']) && $data['log']=='yes' && (!isset($data['log-path']) || $data['log-path'] == "" || !MUCD_Functions::valid_path($data['log-path']) ) ) {
+                if(isset($data['log']) && $data['log']=='yes' && (!isset($data['log-path']) || $data['log-path'] == "" || !MUCD_Functions::valid_path($data['log-path']) || !is_dir($data['log-path']) || !is_writable($data['log-path']) ) ) {
                     $error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_VIEW_LOG_PATH_EMPTY );
                 }
 
