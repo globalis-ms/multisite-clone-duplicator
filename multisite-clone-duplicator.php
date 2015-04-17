@@ -36,6 +36,10 @@ if( !class_exists( 'MUCD' ) ) {
         MUCD_Admin::hooks();
     }
 
+    if ( defined('WP_CLI') && WP_CLI ) {
+        include MUCD_COMPLETE_PATH . '/include/wp_cli_command.php';
+    }    
+
     /**
      * Main class of the plugin
      */
