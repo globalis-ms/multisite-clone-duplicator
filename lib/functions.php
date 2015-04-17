@@ -137,12 +137,35 @@ if( !class_exists( 'MUCD_Functions' ) ) {
         }
 
         /**
-         * Set a new locale
+         * Set locale to en_US
          * @since 1.3.0
-         * @param  string $locale the new locale
          */
-        function set_locale_to($locale) {
-            add_filter( 'locale', function( $old_locale ) { return $locale; } );
+        function set_locale_to_en_US() {
+            add_filter( 'locale', function( $locale ) { return 'en_US'; } );
+        }
+
+        /**
+         * Get network data for a given id.
+         *
+         * @author wp-cli
+         * @see https://github.com/wp-cli/wp-cli/blob/master/php/commands/site.php
+         *
+         * @param int     $network_id
+         * @return bool|array False if no network found with given id, array otherwise
+         */
+        function get_network( $network_id ) {
+            global $wpdb;
+
+            // Load network data
+            $networks = $wpdb->get_results( $wpdb->prepare(
+                "SELECT * FROM $wpdb->site WHERE id = %d", $network_id ) );
+
+            if ( !empty( $networks ) ) {
+                // Only care about domain and path which are set here
+                return $networks[0];
+            }
+
+            return false;
         }
 
     }

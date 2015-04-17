@@ -37,6 +37,7 @@ if( !class_exists( 'MUCD' ) ) {
     }
 
     if ( defined('WP_CLI') && WP_CLI ) {
+        MUCD_Functions::set_locale_to_en_US();
         include MUCD_COMPLETE_PATH . '/include/wp_cli_command.php';
     }    
 
