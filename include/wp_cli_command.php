@@ -1,7 +1,5 @@
 <?php
 
-require_once MUCD_COMPLETE_PATH . '/include/admin.php';
-
 /**
  * Implements duplication command.
  */
