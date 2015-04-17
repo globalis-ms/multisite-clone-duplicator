@@ -304,9 +304,9 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     $path      = $current_site->path . $domain . '/';
                 }
 								
-								if( domain_exists( $newdomain, $path ) ) {
-									$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_DOMAIN_ERROR_REQUIRE );
-								}
+                if( domain_exists( $newdomain, $path ) ) {
+                    $error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_DOMAIN_ERROR_REQUIRE );
+                }
 
                 // format and check title
                 if ( empty( $data['title'] ) ) {
