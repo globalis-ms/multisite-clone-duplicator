@@ -1,13 +1,17 @@
 <?php
 
+require_once WP_CLI_ROOT . '/php/commands/site.php';
+
 /**
  * Implements duplication command.
  */
 
-class Duplicate_Command extends WP_CLI_Command  {
+class Site_Duplicate_Subcommand extends Site_Command  {
 
     /**
      * Duplicate a site in a multisite install.
+     *
+     * @alias clone
      *
      * ## OPTIONS
      *
@@ -46,7 +50,7 @@ class Duplicate_Command extends WP_CLI_Command  {
      *
      * @synopsis --slug=<slug> --source=<site_id> [--title=<title>] [--email=<email>] [--network_id=<network-id>] [--private] [--porcelain] [--v] [--do_not_copy_files] [--keep_users] [--log=<dir_path>]
      */
-    public function __invoke( $_, $assoc_args ) {
+    public function duplicate( $_, $assoc_args ) {
         if ( !is_multisite() ) {
             WP_CLI::error( 'This is not a multisite install.' );
         }
@@ -186,4 +190,4 @@ class Duplicate_Command extends WP_CLI_Command  {
 
 }
 
-WP_CLI::add_command( 'site_duplicate', 'Duplicate_Command' );
+WP_CLI::add_command( 'site', 'Site_Duplicate_Subcommand' );

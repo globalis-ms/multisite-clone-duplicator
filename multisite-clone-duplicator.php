@@ -37,9 +37,10 @@ if( !class_exists( 'MUCD' ) ) {
     }
 
     if ( defined('WP_CLI') && WP_CLI ) {
-        require_once MUCD_COMPLETE_PATH . '/include/admin.php';
+        require_once MUCD_COMPLETE_PATH . '/lib/duplicate.php';
         MUCD_Functions::set_locale_to_en_US();
-        include MUCD_COMPLETE_PATH . '/include/wp_cli_command.php';
+        require_once MUCD_COMPLETE_PATH . '/include/wp_cli_site_duplicate_command.php';
+        require_once MUCD_COMPLETE_PATH . '/include/wp_cli_site_duplicate_subcommand.php';
     }    
 
     /**
