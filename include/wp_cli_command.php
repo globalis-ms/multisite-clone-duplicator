@@ -3,7 +3,7 @@
 require_once MUCD_COMPLETE_PATH . '/include/admin.php';
 
 /**
- * Implements example command.
+ * Implements duplication command.
  */
 
 class Duplicate_Command extends WP_CLI_Command  {
