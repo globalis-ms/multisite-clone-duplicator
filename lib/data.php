@@ -335,7 +335,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
             if($log) {
                 MUCD_Duplicate::write_log('SQL :' .$sql_query);
-                MUCD_Duplicate::write_log('Result :' .$results);
+                MUCD_Duplicate::write_log('Result :' . var_export($results));
             }
 
             if ($wpdb->last_error != "") {
