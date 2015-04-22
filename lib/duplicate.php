@@ -26,7 +26,7 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
          */
         public static function duplicate_site($data) {
 
-            global $wpdb, $current_site;
+            global $wpdb;
             $form_message = array();
             $wpdb->hide_errors();
 
@@ -40,6 +40,8 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
             $from_site_id = $data['from_site_id'];
             $keep_users = $data['keep_users'];
             $copy_file = $data['copy_files'];
+            $public = $data['public'];
+            $network_id = $data['network_id'];
 
             MUCD_Duplicate::write_log('Start site duplication : from site ' . $from_site_id);
             MUCD_Duplicate::write_log('Admin email : ' . $email);
@@ -56,7 +58,7 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
             }
 
             // Create new site
-            $to_site_id = wpmu_create_blog( $newdomain, $path, $title, $user_id , array( 'public' => 1 ), $current_site->id );
+            $to_site_id = wpmu_create_blog( $newdomain, $path, $title, $user_id , array( 'public' => $public ), $network_id );
             $wpdb->show_errors();
 
             if ( is_wp_error( $to_site_id ) ) {

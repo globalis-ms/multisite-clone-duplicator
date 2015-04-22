@@ -126,5 +126,47 @@ if( !class_exists( 'MUCD_Functions' ) ) {
             return $wp_upload_info['basedir'];
         }
 
+        /**
+         * Check if site exists
+         * @since 1.3.0
+         * @param  int $blog_id the blog id
+         * @return boolean true | false
+         */
+        public static function site_exists($blog_id) {
+            return (get_blog_details($blog_id) !== false);
+        }
+
+        /**
+         * Set locale to en_US
+         * @since 1.3.0
+         */
+        function set_locale_to_en_US() {
+            add_filter( 'locale', function( $locale ) { return 'en_US'; } );
+        }
+
+        /**
+         * Get network data for a given id.
+         *
+         * @author wp-cli
+         * @see https://github.com/wp-cli/wp-cli/blob/master/php/commands/site.php
+         *
+         * @param int     $network_id
+         * @return bool|array False if no network found with given id, array otherwise
+         */
+        function get_network( $network_id ) {
+            global $wpdb;
+
+            // Load network data
+            $networks = $wpdb->get_results( $wpdb->prepare(
+                "SELECT * FROM $wpdb->site WHERE id = %d", $network_id ) );
+
+            if ( !empty( $networks ) ) {
+                // Only care about domain and path which are set here
+                return $networks[0];
+            }
+
+            return false;
+        }
+
     }
 }
