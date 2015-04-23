@@ -195,7 +195,6 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
                         $data['log-path'] = $data['log-path'] . '/';
                     }
                     MUCD_Duplicate::$log = new MUCD_Log(true, $data['log-path'], $log_name);
-                    update_site_option('mucd_log_dir', $data['log-path']);
                 }           
              }
             else {

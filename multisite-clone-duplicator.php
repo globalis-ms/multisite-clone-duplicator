@@ -76,23 +76,21 @@ if( !class_exists( 'MUCD' ) ) {
          */
         public static function activate() {
             MUCD::check_if_multisite();
-            MUCD_Option::init_duplicable_option();
-            MUCD_Option::init_log_dir_option();               
+            MUCD_Option::init_options();              
         }
 
         /**
          * What to do on plugin deactivation
          */
         public static function deactivate() {
-            MUCD_Option::delete_duplicable_option();
-            MUCD_Option::delete_log_dir_option();
+            // Nothing for now.
         }
 
         /**
          * What to do on plugin uninstallation
          */
         public static function uninstall() {
-            // Nothing for now.
+            MUCD_Option::delete_options();
         }
 
         /**

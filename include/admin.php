@@ -355,24 +355,53 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          * @since 0.2.0
          */
         public static function save_admin_network_option_page() {
-            if (isset( $_POST['duplicables'])) {
 
-                check_admin_referer( 'siteoptions' );
+            if ( ! empty( $_POST ) && check_admin_referer( 'siteoptions' ) ) {
 
-                if($_POST['duplicables']=='all') {
-                    update_site_option( 'mucd_duplicables', 'all' );                   
+                if (isset( $_POST['duplicables'])) {
+
+                    if($_POST['duplicables']=='all') {
+                        update_site_option( 'mucd_duplicables', 'all' );                   
+                    }
+
+                    else {
+                        update_site_option( 'mucd_duplicables', 'selected' );
+
+                        if(isset( $_POST['duplicables-list'] )) {
+                            MUCD_Option::set_duplicable_option($_POST['duplicables-list'] );
+                        }
+                        
+                        else {
+                            MUCD_Option::set_duplicable_option(array());
+                        }                    
+                    }
                 }
 
+                if (isset( $_POST['mucd_copy_files']) && $_POST['mucd_copy_files']=='yes') {
+                    update_site_option( 'mucd_copy_files', 'yes' );
+                }
                 else {
-                    update_site_option( 'mucd_duplicables', 'selected' );
+                    update_site_option( 'mucd_copy_files', 'no' );
+                }
 
-                    if(isset( $_POST['duplicables-list'] )) {
-                        MUCD_Option::set_duplicable_option($_POST['duplicables-list'] );
+                if (isset( $_POST['mucd_keep_users']) && $_POST['mucd_keep_users']=='yes') {
+                    update_site_option( 'mucd_keep_users', 'yes' );
+                }
+                else {
+                    update_site_option( 'mucd_keep_users', 'no' );
+                }
+
+                if (isset( $_POST['mucd_log']) && $_POST['mucd_log']=='yes') {
+
+                    update_site_option( 'mucd_log', 'yes' );
+
+                    if (isset( $_POST['mucd_log_dir'])) {
+                        update_site_option( 'mucd_log_dir', $_POST['mucd_log_dir'] );
                     }
-                    
-                    else {
-                        MUCD_Option::set_duplicable_option(array());
-                    }                    
+
+                }
+                else {
+                    update_site_option( 'mucd_log', 'no' );
                 }
             }
         }
@@ -382,33 +411,8 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          * @since 0.2.0
          */
         public static function admin_network_option_page() {
-
-        MUCD_Admin::enqueue_script_network_settings();
-
-        ?>
-        <h3><?php echo MUCD_NETWORK_MENU_DUPLICATION; ?></h3>
-                <table id="mucd_duplication" class="form-table">
-                    <tr>
-                        <th scope="row"><?php echo MUCD_NETWORK_SETTINGS_DUPLICABLE_WEBSITES; ?></th>
-                        <td>
-                        <label><input <?php checked( get_site_option( 'mucd_duplicables', 'all' ), 'all' ); ?> type="radio" id="radio-duplicables-all" name="duplicables" value="all"><?php echo MUCD_NETWORK_SETTINGS_DUPLICABLE_ALL; ?></label><br><br>
-                        <label><input <?php checked( get_site_option( 'mucd_duplicables', 'all' ), 'selected' ); ?> type="radio" id="radio-duplicables-selected" name="duplicables" value="selected"><?php echo MUCD_NETWORK_SETTINGS_DUPLICABLE_SELECTED; ?></label><br><br>
-
-                
-                <?php
-                $network_blogs = wp_get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
-                echo '<div class="multiselect" id="site-select-box">';
-                foreach( $network_blogs as $blog ) {
-                    echo '    <label><input ' . checked(get_blog_option( $blog['blog_id'], 'mucd_duplicable', "no"), 'yes', false) . ' class="duplicables-list" type="checkbox" name="duplicables-list[]" value="'.$blog['blog_id'].'" />' . substr($blog['domain'] . $blog['path'], 0, -1) . '</label>';
-                }
-                echo '</div>';
-                ?>
-                
-
-                        </td>
-                    </tr>
-                </table>
-            <?php
+            MUCD_Admin::enqueue_script_network_settings();
+            require_once MUCD_COMPLETE_PATH . '/template/network_admin_network_settings.php';
         }
 
     }
