@@ -13,7 +13,7 @@ if( !class_exists( 'MUCD_Option' ) ) {
          * @since 0.2.0
          */
         public static function init_duplicable_option($blogs_value = "no", $network_value = "all") {
-            $network_blogs = wp_get_sites(array('limit' => 1000));
+            $network_blogs = wp_get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
             foreach( $network_blogs as $blog ){
                 $blog_id = $blog['blog_id'];
                 update_blog_option( $blog_id, 'mucd_duplicable', $blogs_value);
@@ -26,7 +26,7 @@ if( !class_exists( 'MUCD_Option' ) ) {
          * @since 0.2.0
          */
         public static function delete_duplicable_option() {
-            $network_blogs = wp_get_sites(array('limit' => 1000));
+            $network_blogs = wp_get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
             foreach( $network_blogs as $blog ){
                 $blog_id = $blog['blog_id'];
                 delete_blog_option( $blog_id, 'mucd_duplicable');
@@ -40,7 +40,7 @@ if( !class_exists( 'MUCD_Option' ) ) {
          * @param array $blogs list of blogs we want the option set to "yes"
          */
         public static function set_duplicable_option($blogs) {
-            $network_blogs = wp_get_sites(array('limit' => 1000));
+            $network_blogs = wp_get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
             foreach( $network_blogs as $blog ){
                 if(in_array($blog['blog_id'], $blogs)) {
                     update_blog_option( $blog['blog_id'], 'mucd_duplicable', "yes");
