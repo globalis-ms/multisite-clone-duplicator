@@ -334,7 +334,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 // Network
                 $data['network_id'] = $current_site->id;
 
-                if(isset($data['log']) && $data['log']=='yes' && (!isset($data['log-path']) || $data['log-path'] == "" || !MUCD_Functions::valid_path($data['log-path']) || !is_dir($data['log-path']) || !is_writable($data['log-path']) ) ) {
+                if(isset($data['log']) && $data['log']=='yes' && (!isset($data['log-path']) || $data['log-path'] == "" || !MUCD_Functions::valid_path($data['log-path']) ) ) {
                     $error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_VIEW_LOG_PATH_EMPTY );
                 }
 
