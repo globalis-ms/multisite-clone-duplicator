@@ -29,7 +29,9 @@ if( !class_exists( 'MUCD_Log' ) ) {
 
             $this->log_file_url = str_replace(ABSPATH, get_site_url(1, '/'), $log_dir_path) . $log_file_name;
 
-            $this->init_file();
+            if( $mod !== false) {
+                $this->init_file();
+						}
         }
 
         /**
