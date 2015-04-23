@@ -27,6 +27,7 @@ Simple and user-friendly, this plugin extends WordPress core network's functiona
 * Keep users and roles from duplicated site (if option is checked)
 * Configure which site is clonable (so you can define an unique "pattern" site)
 * Fully hookable
+* Command line ready (provides a WP-CLI subcommand)
 
 == Installation ==
 
@@ -38,6 +39,7 @@ If you prefer download MultiSite Clone Duplicator manually :
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. (Optional) Chmod 777 the logs/ directory of the plugin, if you want to activate logs
 4. Go to My Sites > Network Admin > Duplication and enjoy !
+5. (Optional) Change default options into Network dashboard > Network settings > Duplication
 
 In the future, you'll probably want to create a dedicated "template" blog to clone from.
 
@@ -66,6 +68,13 @@ It's not a problem ! Serialized data are understood by the plugin, recursively u
 = After cloning, new site was created, but it goes on 404 page, why ? =
 Check your host / server configuration : you probably cloned your site into a domain that is not available !
 
+= How to duplicate with command line commands ? =
+Install [WP-CLI](http://wp-cli.org/), go to your wordpress multisite directory, and type `wp-cli site duplicate --source=<id_of_the_site_to_clone> --slug="<slug_of_the_new_site>"`
+
+Arguments are : `wp site duplicate --slug=<slug> --source=<site_id> [--title=<title>]
+  [--email=<email>] [--network_id=<network-id>] [--private] [--porcelain] [--v]
+  [--do_not_copy_files] [--keep_users] [--log=<dir_path>]`
+
 = Which languages are currently supported? = 
 As of now, following languages are supported : English (en_US), French (fr_FR), Spanish (es_ES), Lithuanian (lt_LT) and Greek (el). If you wish to, you can translate the interface in your own language in the [standard WordPress way](http://codex.wordpress.org/Translating_WordPress) or with [Transifex](https://www.transifex.com/projects/p/multisite-clone-duplicator/)
 
@@ -83,8 +92,11 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 == Changelog ==
 
 = 1.3.0 =
+* Added wp-cli site duplicate subcommand
+* Added default options in network settings pannel
 * Languages : added translation for spanish, lithuanian and greek
 * Bugfix : Using backtricks on CREATE TABLE LIKE
+* Bugfix : Remove HyperDB compat. : it made some bug on schema / table selection
 
 = 1.2.0 =
 * Bugfix : duplication of tables without primary key / with several primary keys was causing SQL error
@@ -183,6 +195,14 @@ Filter which strings we want to replace during update
   
 ---------------------------------------
   
+== WP-CLI arguments ==
+
+Arguments are :
+
+`wp site duplicate --slug=<slug> --source=<site_id> [--title=<title>]
+  [--email=<email>] [--network_id=<network-id>] [--private] [--porcelain] [--v]
+  [--do_not_copy_files] [--keep_users] [--log=<dir_path>]`
+
 == Thank’s ==
 
 The original version of this plugin has been developed by [Julien OGER](https://github.com/julienOG) who keeps following the project carefully.  
