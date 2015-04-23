@@ -63,11 +63,6 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
                 $table_name = $to_site_prefix . substr( $table, $from_site_prefix_length );
 
-                // Get Schema name (for multibase DB as with HyberDB plugin)
-                // TO FIX : this does not work because table name can be found in several wordpress installations
-                //$sql_query = $wpdb->prepare('SELECT TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = \'%s\'', $table);
-                //$schema = MUCD_Data::do_sql_query($sql_query, 'var');
-
                 // Drop table if exists
                 MUCD_Data::do_sql_query('DROP TABLE IF EXISTS `' . $table_name . '`');
 
@@ -95,7 +90,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
          * @param  string $from_site_prefix db prefix of duplicated site
          * @return array of strings : the tables
          */
-       public static function get_primary_tables($from_site_tables, $from_site_prefix) {
+       public static function get_primary_tables($from_site_prefix) {
 
             $default_tables =  MUCD_Option::get_primary_tables_to_copy();
 
