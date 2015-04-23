@@ -56,10 +56,10 @@ if( !class_exists( 'MUCD_Option' ) ) {
          * @since 1.3.0
          */
         public static function init_options() {
-            MUCD_Option::add_site_option('mucd_copy_files', 'yes');
-            MUCD_Option::add_site_option('mucd_keep_users', 'yes');
-            MUCD_Option::add_site_option('mucd_log', 'no');
-            MUCD_Option::add_site_option('mucd_log_dir', MUCD_COMPLETE_PATH . '/logs/');
+            add_site_option('mucd_copy_files', 'yes');
+            add_site_option('mucd_keep_users', 'yes');
+            add_site_option('mucd_log', 'no');
+            add_site_option('mucd_log_dir', MUCD_COMPLETE_PATH . '/logs/');
             MUCD_Option::init_duplicable_option();
         }
 
@@ -68,10 +68,10 @@ if( !class_exists( 'MUCD_Option' ) ) {
          * @since 1.3.0
          */
         public static function delete_options() {
-            MUCD_Option::delete_site_option('mucd_copy_files');
-            MUCD_Option::delete_site_option('mucd_keep_users');
-            MUCD_Option::delete_site_option('mucd_log');
-            MUCD_Option::delete_site_option('mucd_log_dir');
+            delete_site_option('mucd_copy_files');
+            delete_site_option('mucd_keep_users');
+            delete_site_option('mucd_log');
+            delete_site_option('mucd_log_dir');
             MUCD_Option::delete_duplicable_option();
         }
       
