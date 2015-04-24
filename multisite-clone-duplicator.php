@@ -28,13 +28,15 @@ if( !class_exists( 'MUCD' ) ) {
     // Load language
     require_once MUCD_COMPLETE_PATH . '/include/lang.php';
 
+    // Load Functions
+    require_once MUCD_COMPLETE_PATH . '/lib/functions.php';
+
     if( is_admin() ) {
         require_once MUCD_COMPLETE_PATH . '/include/admin.php';
         MUCD_Admin::hooks();
     }
 
     if ( defined('WP_CLI') && WP_CLI ) {
-        require_once MUCD_COMPLETE_PATH . '/lib/functions.php';
         require_once MUCD_COMPLETE_PATH . '/lib/duplicate.php';
         MUCD_Functions::set_locale_to_en_US();
         require_once MUCD_COMPLETE_PATH . '/wp-cli/wp-cli-site-duplicate-subcommand.php';

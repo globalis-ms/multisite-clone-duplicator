@@ -2,7 +2,6 @@
 
 if( !class_exists( 'MUCD_Admin' ) ) {
 
-    require_once MUCD_COMPLETE_PATH . '/lib/functions.php';
     require_once MUCD_COMPLETE_PATH . '/lib/duplicate.php';
 
     class MUCD_Admin {
