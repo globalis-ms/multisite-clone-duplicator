@@ -143,7 +143,7 @@ if( !class_exists( 'MUCD_Functions' ) ) {
         public static function set_locale_to_en_US() {
 
             // Bugfix Pierre Dargham : relocating this declaration outside of the call to add_filter
-            // PHP < 5.3
+            // PHP < 5.3 does not accept anonymous functions
             function mucd_locale_en_us( $locale ) { return 'en_US'; }
 
             add_filter( 'locale', 'mucd_locale_en_us' );
