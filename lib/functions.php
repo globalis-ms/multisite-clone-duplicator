@@ -138,10 +138,15 @@ if( !class_exists( 'MUCD_Functions' ) ) {
 
         /**
          * Set locale to en_US
-         * @since 1.3.0
+         * @since 1.3.1
          */
-        function set_locale_to_en_US() {
-            add_filter( 'locale', function( $locale ) { return 'en_US'; } );
+        public static function set_locale_to_en_US() {
+
+            // Bugfix Pierre Dargham : relocating this declaration outside of the call to add_filter
+            // PHP < 5.3
+            function mucd_locale_en_us( $locale ) { return 'en_US'; }
+
+            add_filter( 'locale', 'mucd_locale_en_us' );
         }
 
         /**
@@ -153,7 +158,7 @@ if( !class_exists( 'MUCD_Functions' ) ) {
          * @param int     $network_id
          * @return bool|array False if no network found with given id, array otherwise
          */
-        function get_network( $network_id ) {
+        public static function get_network( $network_id ) {
             global $wpdb;
 
             // Load network data
