@@ -91,6 +91,9 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 
 == Changelog ==
 
+= 1.3.1 =
+* Bugfix : Compatibility with PHP 5.2
+
 = 1.3.0 =
 * Added wp-cli site duplicate subcommand
 * Added default options in network settings pannel
