@@ -352,54 +352,58 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          */
         public static function save_admin_network_option_page() {
 
-            if ( ! empty( $_POST ) && check_admin_referer( 'siteoptions' ) ) {
+            if( ! empty( $_POST ) && isset( $_POST[MUCD_SLUG_ACTION_SETTINGS] ) ) {
 
-                if (isset( $_POST['duplicables'])) {
+                if ( check_admin_referer( 'siteoptions' ) ) {
 
-                    if($_POST['duplicables']=='all') {
-                        update_site_option( 'mucd_duplicables', 'all' );                   
-                    }
+                    if (isset( $_POST['duplicables'])) {
 
-                    else {
-                        update_site_option( 'mucd_duplicables', 'selected' );
-
-                        if(isset( $_POST['duplicables-list'] )) {
-                            MUCD_Option::set_duplicable_option($_POST['duplicables-list'] );
+                        if($_POST['duplicables']=='all') {
+                            update_site_option( 'mucd_duplicables', 'all' );                   
                         }
-                        
+
                         else {
-                            MUCD_Option::set_duplicable_option(array());
-                        }                    
-                    }
-                }
+                            update_site_option( 'mucd_duplicables', 'selected' );
 
-                if (isset( $_POST['mucd_copy_files']) && $_POST['mucd_copy_files']=='yes') {
-                    update_site_option( 'mucd_copy_files', 'yes' );
-                }
-                else {
-                    update_site_option( 'mucd_copy_files', 'no' );
-                }
-
-                if (isset( $_POST['mucd_keep_users']) && $_POST['mucd_keep_users']=='yes') {
-                    update_site_option( 'mucd_keep_users', 'yes' );
-                }
-                else {
-                    update_site_option( 'mucd_keep_users', 'no' );
-                }
-
-                if (isset( $_POST['mucd_log']) && $_POST['mucd_log']=='yes') {
-
-                    update_site_option( 'mucd_log', 'yes' );
-
-                    if (isset( $_POST['mucd_log_dir'])) {
-                        update_site_option( 'mucd_log_dir', $_POST['mucd_log_dir'] );
+                            if(isset( $_POST['duplicables-list'] )) {
+                                MUCD_Option::set_duplicable_option($_POST['duplicables-list'] );
+                            }
+                            
+                            else {
+                                MUCD_Option::set_duplicable_option(array());
+                            }                    
+                        }
                     }
 
-                }
-                else {
-                    update_site_option( 'mucd_log', 'no' );
+                    if (isset( $_POST['mucd_copy_files']) && $_POST['mucd_copy_files']=='yes') {
+                        update_site_option( 'mucd_copy_files', 'yes' );
+                    }
+                    else {
+                        update_site_option( 'mucd_copy_files', 'no' );
+                    }
+
+                    if (isset( $_POST['mucd_keep_users']) && $_POST['mucd_keep_users']=='yes') {
+                        update_site_option( 'mucd_keep_users', 'yes' );
+                    }
+                    else {
+                        update_site_option( 'mucd_keep_users', 'no' );
+                    }
+
+                    if (isset( $_POST['mucd_log']) && $_POST['mucd_log']=='yes') {
+
+                        update_site_option( 'mucd_log', 'yes' );
+
+                        if (isset( $_POST['mucd_log_dir'])) {
+                            update_site_option( 'mucd_log_dir', $_POST['mucd_log_dir'] );
+                        }
+
+                    }
+                    else {
+                        update_site_option( 'mucd_log', 'no' );
+                    }
                 }
             }
+
         }
 
         /**

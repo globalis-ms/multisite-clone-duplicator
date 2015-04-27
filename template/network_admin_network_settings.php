@@ -1,3 +1,5 @@
+<?php echo '<input type="hidden" id="'.MUCD_SLUG_ACTION_SETTINGS.'" name="'.MUCD_SLUG_ACTION_SETTINGS.'" value="_'.MUCD_SLUG_ACTION_SETTINGS.'" />'; ?>
+
 <h3 id="mucd_duplication"><?php echo MUCD_NETWORK_MENU_DUPLICATION; ?></h3>
 <table class="form-table">
 

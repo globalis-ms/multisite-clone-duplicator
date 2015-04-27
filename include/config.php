@@ -16,6 +16,7 @@ define( 'MUCD_DOMAIN', 'multisite-clone-duplicator' );
  */
 define( 'MUCD_SLUG_NETWORK_ACTION', 'multisite-clone-duplicator' );
 define( 'MUCD_SLUG_ACTION_DUPLICATE', 'duplicate-site' );
+define( 'MUCD_SLUG_ACTION_SETTINGS', '_mucdsettings' );
 
 /**
  * Site to excude
