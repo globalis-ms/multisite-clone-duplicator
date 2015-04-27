@@ -6,7 +6,7 @@
  * Author:              Julien OGER, Pierre DARGHAM, GLOBALIS media systems
  * Author URI:          https://github.com/pierre-dargham/multisite-clone-duplicator
  *
- * Version:             1.3.1
+ * Version:             1.3.2
  * Requires at least:   3.5.0
  * Tested up to:        4.1.2
  */
