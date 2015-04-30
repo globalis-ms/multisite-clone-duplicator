@@ -1,5 +1,5 @@
 === MultiSite Clone Duplicator ===
-Contributors: GLOBALIS media systems
+Contributors: pdargham, julienog, globalis
 Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
 Requires at least: 3.5.0
 Tested up to: 4.1.2

@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * ERRORS
  */
 define( 'MUCD_GAL_ERROR_CAPABILITIES', __( 'Sorry, you don\'t have permissions to use this page.', MUCD_DOMAIN ) );
@@ -9,7 +9,7 @@ define( 'MUCD_LOG_ERROR', __( 'The log file cannot be written', MUCD_DOMAIN ) );
 define( 'MUCD_CANT_WRITE_LOG', __( 'The log file cannot be written to location', MUCD_DOMAIN ) );
 define( 'MUCD_CHANGE_RIGHTS_LOG', __( 'To enable logging, change permissions on log directory', MUCD_DOMAIN ) );
 
-/** 
+/**
  * LABELS
  */
 define( 'MUCD_NETWORK_MENU_DUPLICATE', __( 'Duplicate', MUCD_DOMAIN ) );
@@ -19,7 +19,7 @@ define( 'MUCD_NETWORK_CUSTOMIZE', __( 'Customize', MUCD_DOMAIN ) );
 define( 'MUCD_YES', __( 'Yes', MUCD_DOMAIN ) );
 define( 'MUCD_NO', __( 'No', MUCD_DOMAIN ) );
 
-/** 
+/**
  * Admin Page Duplicate MESSAGES
  */
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_DASHBOARD', __( 'Dashboard', MUCD_DOMAIN ) );
@@ -36,7 +36,7 @@ define( 'MUCD_NETWORK_PAGE_DUPLICATE_NOTICE_CREATED', __( 'New site was created'
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_ADMIN_ERROR_CREATE_USER', __( 'There was an error creating the user.', MUCD_DOMAIN ) );
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_COPY_FILE_ERROR', __( 'Failed to copy files : check permissions on <strong>%s</strong>', MUCD_DOMAIN ) );
 
-/** 
+/**
  * Admin Page Duplicate FORM
  */
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_TITLE', __( 'Duplicate Site', MUCD_DOMAIN ) );
@@ -59,7 +59,7 @@ define( 'MUCD_NETWORK_PAGE_DUPLICATE_LOG_TEXT_2', __( 'Log directory', MUCD_DOMA
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_BUTTON_COPY', __( 'Duplicate', MUCD_DOMAIN ) );
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_TOOLTIP', __( 'Edit duplicable sites list', MUCD_DOMAIN ) );
 
-/** 
+/**
  * Settings
  */
 define( 'MUCD_NETWORK_SETTINGS_DUPLICABLE_WEBSITES', __( 'Dublicable websites', MUCD_DOMAIN ) );
