@@ -129,7 +129,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     $form_message = MUCD_Duplicate::duplicate_site($data);
                 }
             }
-            
+
             $select_site_list = MUCD_Admin::select2_site_list( $data['source'] );
             require_once MUCD_COMPLETE_PATH . '/template/network_admin_duplicate_site.php';
 
@@ -290,7 +290,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          * Enqueue scripts for Duplication page
          * @since 0.2.0
          */
-        public static function enqueue_script_network_duplicate( $data = array() ) {
+        public static function enqueue_script_network_duplicate( $data ) {
             // Enqueue script for user suggest on mail input
             wp_enqueue_script( 'user-suggest' );
 
@@ -300,10 +300,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
             // Enqueue script for advanced options and enable / disable log path text input
             wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js', MUCD::VERSION, true );
-            
-            if ( ! empty( $data ) ) {
-                wp_localize_script( 'mucd-duplicate', 'mucd_config', $data );        
-            }
+            wp_localize_script( 'mucd-duplicate', 'mucd_config', $data );        
         }
 
         /**
