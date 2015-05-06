@@ -15,6 +15,9 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 add_action( 'network_admin_menu', array( __CLASS__, 'network_menu_add_duplicate' ) );
             }
             add_action( 'admin_init', array( __CLASS__, 'admin_init' ) );
+
+            // ajax
+            add_action( 'wp_ajax_mucd_fetch_sites', array( __CLASS__, 'mucd_fetch_sites' ) );
         }
 
         /**
@@ -101,9 +104,6 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 wp_die(MUCD_GAL_ERROR_CAPABILITIES);
             }
 
-            // Getting Sites
-            $site_list = MUCD_Functions::get_site_list();
-
             // Form Data
             $data = array(
                 'source'        => (isset($_GET['id']))?intval($_GET['id']):0,
@@ -129,54 +129,113 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     $form_message = MUCD_Duplicate::duplicate_site($data);
                 }
             }
-
-            // Load template if at least one Site is available
-            if( $site_list ) {
-
-                $select_site_list = MUCD_Admin::select_site_list($site_list, $data['source']);
-
-                MUCD_Admin::enqueue_script_network_duplicate();
-                require_once MUCD_COMPLETE_PATH . '/template/network_admin_duplicate_site.php';
-            }
-            else {
-                return new WP_Error( 'mucd_error', MUCD_GAL_ERROR_NO_SITE );
-            }
+            
+            $select_site_list = MUCD_Admin::select2_site_list( $data['source'] );
+            require_once MUCD_COMPLETE_PATH . '/template/network_admin_duplicate_site.php';
 
             MUCD_Duplicate::close_log();
 
         }
 
+        public static function select2_site_list( $source_id = 0 ) {
+            $data = array(
+                'nonce'                  => wp_create_nonce( 'mucd-fetch-sites' ),
+                'placeholder_text'       => __( 'Select a site', 'mucd' ),
+                'placeholder_value_text' => __( 'This feature will not work without javascript', 'mucd' ),
+                'source_id'              => $source_id,
+            );
+
+            self::enqueue_script_network_duplicate( $data );
+            return '<input type="text" name="site[source]" id="mucd-site-source" value="'.$source_id.'"/>';
+        }
+
         /**
-         * Get select box with duplicable site list
-         * @since 0.2.0
-         * @param  array $site_list all the sites
-         * @param  id $current_blog_id parameters
-         * @return string the output
+         * Search for sites using path
+         * @return    null    outputs a JSON string to be consumed by an AJAX call
          */
-        public static function select_site_list($site_list, $current_blog_id=null) {
-            $output = '';
+        public static function mucd_fetch_sites() {
+            $security_check_passes = (
+                ! empty( $_SERVER['HTTP_X_REQUESTED_WITH'] )
+                && 'xmlhttprequest' === strtolower( $_SERVER['HTTP_X_REQUESTED_WITH'] )
+                && isset( $_GET['nonce'], $_GET['q'] )
+                && wp_verify_nonce( $_GET['nonce'],  'mucd-fetch-sites' )
+            );
 
-            if(count($site_list) == 1) {
-                $blog_id = $site_list[0]['blog_id'];
-            }
-            else if(isset($current_blog_id) && MUCD_Functions::value_in_array($current_blog_id, $site_list, 'blog_id') && MUCD_Functions::is_duplicable($current_blog_id) ) {
-                 $blog_id = $current_blog_id;
+            if ( ! $security_check_passes ) {
+                wp_send_json_error( $_GET );
             }
 
-            $output .= '<select name="site[source]">';
-            foreach( $site_list as $site ) {
-                if(isset($blog_id) && $site['blog_id']==$blog_id) {
-                    $output .= '    <option selected value="'.$site['blog_id'].'">' . substr($site['domain'] . $site['path'], 0, -1) . '</option>';
+            // if we have an id value, we know we're trying to get the inital select2 value
+            if ( isset( $_GET['id'] ) ) {
+                self::send_initial_value( $_GET['id'] );
+            }
+
+            // @info $site_id is actually the 'network' id
+            global $wpdb, $site_id;
+
+            $query = "
+                SELECT
+                    `blog_id`
+                FROM
+                    `$wpdb->blogs`
+                WHERE
+                    `path` LIKE '%%%s%%'
+                    AND `site_id` = %d
+                LIMIT 10
+            ";
+
+            // Get our sites based on the search string
+            $results = $wpdb->get_results( $wpdb->prepare( $query, esc_attr( $_GET['q'] ), $site_id ) );
+
+            // bail if we found no results
+            if ( empty( $results ) ) {
+                wp_send_json_error( $_GET );
+            }
+
+            self::send_sites_array_value( $results );
+        }
+
+        /**
+         * Returns select2 value based on the field's saved blog id value
+         *
+         * @since  0.1.0
+         *
+         * @param  int  $id Stored blog id
+         */
+        protected static function send_initial_value( $id ) {
+            $id           = esc_attr( $id );
+            $blog_details = get_blog_details( $id, true );
+            $response     = array(
+                array(
+                    'id'   => $id,
+                    'text' => isset( $blog_details->domain )
+                        ? $blog_details->domain . $blog_details->path
+                        : __( 'ERROR', 'wds_cloud_settings' ),
+                ),
+            );
+
+            wp_send_json_success( $response );
+        }
+
+        /**
+         * Returns select2 options based on the current search query
+         *
+         * @param  array  $results Array of DB results for the queried string
+         */
+        protected static function send_sites_array_value( $results ) {
+            $response  = array();
+            foreach ( $results as $result ) {
+                $blog = get_blog_details( $result->blog_id, true );
+
+                if ( $blog && isset( $blog->domain ) ) {
+                    $response[] = array(
+                        'id'   => $result->blog_id,
+                        'text' => $blog->domain . $blog->path,
+                    );
                 }
-                else {
-                $output .= '    <option value="'.$site['blog_id'].'">' . substr($site['domain'] . $site['path'], 0, -1) . '</option>';
-                }
             }
-            $output .= '</select>';
 
-            $output .= '&emsp;<a href="'. network_admin_url("settings.php#mucd_duplication") .'" title="'.MUCD_NETWORK_PAGE_DUPLICATE_TOOLTIP.'">?</a>';
-
-            return $output;
+            wp_send_json_success( $response );
         }
 
         /**
@@ -227,17 +286,24 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             }
         }
 
-
-
         /**
          * Enqueue scripts for Duplication page
          * @since 0.2.0
          */
-        public static function enqueue_script_network_duplicate() {
+        public static function enqueue_script_network_duplicate( $data = array() ) {
             // Enqueue script for user suggest on mail input
             wp_enqueue_script( 'user-suggest' );
+
+            // enqueue select2
+            wp_enqueue_script('select2', MUCD_URL . '/js/select2-3.5.0/select2.min.js', array( 'jquery' ), MUCD::VERSION, true );
+            wp_enqueue_style('select2', MUCD_URL . '/js/select2-3.5.0/select2.css', array(), MUCD::VERSION );
+
             // Enqueue script for advanced options and enable / disable log path text input
-            wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js' );       
+            wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js', MUCD::VERSION, true );
+            
+            if ( ! empty( $data ) ) {
+                wp_localize_script( 'mucd-duplicate', 'mucd_config', $data );        
+            }
         }
 
         /**

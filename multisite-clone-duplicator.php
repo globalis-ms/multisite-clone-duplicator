@@ -47,6 +47,11 @@ if( !class_exists( 'MUCD' ) ) {
      */
     class MUCD {
         /**
+         * Plugin's version number
+         */
+        const VERSION = '1.4.0';
+
+        /**
          * Register hooks used by the plugin
          */
         public static function hooks() {
