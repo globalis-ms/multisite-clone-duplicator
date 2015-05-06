@@ -132,8 +132,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
             // Load template if at least one Site is available
             if( $site_list ) {
-
-                $select_site_list = apply_filters( 'mucd_select_site_list', MUCD_Admin::select_site_list( $site_list, $data['source'] ) );
+                $select_site_list = MUCD_Admin::select_site_list( $site_list, $data['source'] );
 
                 MUCD_Admin::enqueue_script_network_duplicate();
                 require_once MUCD_COMPLETE_PATH . '/template/network_admin_duplicate_site.php';
@@ -154,6 +153,14 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          * @return string the output
          */
         public static function select_site_list($site_list, $current_blog_id=null) {
+            // Override site select
+            $override = apply_filters( 'mucd_override_site_select', null, $site_list, $current_blog_id );
+
+            // return override early
+            if ( null !== $override ) {
+                return $override;
+            }
+
             $output = '';
 
             if(count($site_list) == 1) {
