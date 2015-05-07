@@ -139,7 +139,16 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
         public static function select2_site_input() {
             $source_id = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
-            return '<input type="text" name="site[source]" id="mucd-site-source" value="' . $source_id . '"/>';
+
+            $select2_html = '<select name="site[source]" id="mucd-site-source">';
+            
+            if ( 0 !== $source_id ) {
+                $initial_values = self::fetch_initial_value( $source_id );
+                $select2_html .= '<option value="'.$initial_values[0]['id'].'" selected="selected">'.$initial_values[0]['text'].'</option>';
+            }
+            $select2_html .= '</select>';
+            return $select2_html;
+           // return '<input type="text" name="site[source]" id="mucd-site-source" value="' . $source_id . '"/>';
         }
 
         /**
@@ -195,7 +204,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          *
          * @param  int  $id Stored blog id
          */
-        protected static function send_initial_value( $id ) {
+        protected static function fetch_initial_value( $id ) {
             $id = esc_attr( $id );
             $blog_details = get_blog_details( $id, true );
             $response     = array(
@@ -204,10 +213,12 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     'text' => isset( $blog_details->domain )
                         ? $blog_details->domain . $blog_details->path
                         : MUCD_GENERAL_ERROR,
+                    'details' => $blog_details,
                 ),
             );
 
-            wp_send_json_success( $response );
+            //wp_send_json_success( $response );
+            return $response;
         }
 
         /**
@@ -224,6 +235,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     $response[] = array(
                         'id'   => $result->blog_id,
                         'text' => $blog->domain . $blog->path,
+                        'details' => $blog,
                     );
                 }
             }
@@ -288,8 +300,8 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             wp_enqueue_script( 'user-suggest' );
 
             // enqueue select2
-            wp_enqueue_script( 'select2', MUCD_URL . '/js/select2-3.5.0/select2.min.js', array( 'jquery' ), MUCD::VERSION, true );
-            wp_enqueue_style( 'select2', MUCD_URL . '/js/select2-3.5.0/select2.css', array(), MUCD::VERSION );
+            wp_enqueue_script( 'select2', MUCD_URL . '/js/select2/js/select2.min.js', array( 'jquery' ), MUCD::VERSION, true );
+            wp_enqueue_style( 'select2', MUCD_URL . '/js/select2/css/select2.css', array(), MUCD::VERSION );
 
             // Enqueue script for advanced options and enable / disable log path text input
             wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js', array( 'jquery', 'select2' ), MUCD::VERSION, true );

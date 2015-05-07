@@ -35,59 +35,54 @@ window.MUCD_Admin = window.MUCD_Admin || {};
             app.toggle_advanced_options ( app.$.statusAdvOptions.val());
         }
 
-        // bind select2
         app.$input.select2({
-            placeholder        : l10n.placeholder_text,
-            minimumInputLength : 1,
-            allowClear         : true,
-            width              : '100%',
-            initSelection      : app.initial_selection,
-            ajax               : {
-                cache    : false,
-                url      : ajaxurl,
+            width : '100%',
+            minimumInputLength: 1,
+            templateResult: app.formatSites,
+            templateSelection: app.formatSiteSelection,
+            escapeMarkup: function( markup ) { 
+                return markup; 
+            },
+            ajax: {
+                url : ajaxurl,
+                cache : false,
                 dataType : 'json',
-                results  : app.handle_results,
-                data     : function( term, page ) {
-                    return app.select2_ajax_data( term );
-                }
+                delay : 250,
+                data : function( params ) {
+                    return app.select2_ajax_data( params.term );
+                },
+                processResults: app.handle_results,
             }
         });
+    };
 
+    app.formatSites = function( site ) {
+        // return early if we're still loading
+        if ( site.loading ) {
+            return site.text;
+        }
+
+        console.log(site);
+        var markup = '<div class="site-wrapper clearfix">'
+            + '<span>' + site.text + '</span>'
+            + '<br><strong>Post Count</strong>: ' + site.details.post_count
+            + ', <strong>Public</strong>: ' + ( 1 == site.details['public'] ? 'Yes' : 'No' )
+            + ', <strong>Archived</strong>: ' + ( 1 == site.details.archived  ? 'Yes' : 'No' )
+            + '</div>';
+
+        return markup;
+    };
+
+    app.formatSiteSelection = function( result ) {
+        return result.text;
     };
 
     // Function to controle toggle on Advanced Options fields
-    app.toggle_advanced_options = function(value){
+    app.toggle_advanced_options = function( value ){
          app.$.advOptions.toggle();
          app.$.showHideAdvanced.toggle();
          $(this).hide();
          app.$.statusAdvOptions.val(value);
-    };
-
-    // Display the inital selection
-    app.initial_selection = function( element, callback ) {
-        var site_id_value = app.$input.val();
-
-        if ( '0' === site_id_value ) {
-            callback( {
-                id   : 0,
-                text : l10n.placeholder_text
-            } );
-            return;
-        }
-
-        var done_cb = function( data ) {
-            callback( {
-                id   : data.success ? data.data[0].id : 0,
-                text : data.success ? data.data[0].text : l10n.placeholder_text
-            } );
-        };
-
-        return $.ajax( {
-            url      : ajaxurl,
-            dataType : 'json',
-            data     : app.select2_ajax_data( l10n.placeholder_value_text, site_id_value ),
-        } ).done( done_cb );
-
     };
 
     // Handle setting up our ajax data
@@ -114,17 +109,14 @@ window.MUCD_Admin = window.MUCD_Admin || {};
             || ( 'undefined' === typeof ajax_data.data )
             || ( ajax_data.data.length < 1 )
         ) {
-            items.push({
-                'id' : 0,
-                'text' : l10n.placeholder_no_results_text
-            });
-            return { results: items };
+            return false;
         }
 
         $.each( ajax_data.data, function( i, item ) {
             var new_item = {
                 'id'   : item.id,
-                'text' : item.text
+                'text' : item.text,
+                'details' : item.details,
             };
 
             items.push( new_item );
