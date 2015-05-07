@@ -62,6 +62,8 @@ define( 'MUCD_NETWORK_PAGE_DUPLICATE_LOG_TEXT_1', __( 'Generate log file', MUCD_
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_LOG_TEXT_2', __( 'Log directory', MUCD_DOMAIN ) );
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_BUTTON_COPY', __( 'Duplicate', MUCD_DOMAIN ) );
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_TOOLTIP', __( 'Edit duplicable sites list', MUCD_DOMAIN ) );
+define( 'MUCD_NETWORK_PAGE_USE_ENHANCED_FOR_SITE_SELECT', __( 'Use Enhanced Site Select', MUCD_DOMAIN ) );
+define( 'MUCD_NETWORK_PAGE_USE_ENHANCED_FOR_SITE_SELECT_TEXT_1', __( 'Use Select2 for Site Select ', MUCD_DOMAIN ) );
 
 /**
  * Settings

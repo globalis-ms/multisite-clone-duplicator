@@ -43,4 +43,12 @@
         </td>
     </tr>
 
+
+    <tr>
+        <th scope="row"><?php echo MUCD_NETWORK_PAGE_USE_ENHANCED_FOR_SITE_SELECT; ?></th>
+        <td>
+            <label><input <?php checked( get_site_option( 'mucd_enhanced_site_select', 'no' ), 'yes' ); ?> id="use-enhanced-select" name="mucd_enhanced_site_select" type="checkbox" value="yes" /><?php echo MUCD_NETWORK_PAGE_USE_ENHANCED_FOR_SITE_SELECT_TEXT_1; ?></label>
+        </td>
+    </tr>
+
 </table>

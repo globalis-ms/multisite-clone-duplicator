@@ -35,25 +35,27 @@ window.MUCD_Admin = window.MUCD_Admin || {};
             app.toggle_advanced_options ( app.$.statusAdvOptions.val());
         }
 
-        app.$input.select2({
-            width : '100%',
-            minimumInputLength: 1,
-            templateResult: app.formatSites,
-            templateSelection: app.formatSiteSelection,
-            escapeMarkup: function( markup ) { 
-                return markup; 
-            },
-            ajax: {
-                url : ajaxurl,
-                cache : false,
-                dataType : 'json',
-                delay : 250,
-                data : function( params ) {
-                    return app.select2_ajax_data( params.term );
+        if ( $().select2 ) {
+            app.$input.select2({
+                width : '100%',
+                minimumInputLength: 1,
+                templateResult: app.formatSites,
+                templateSelection: app.formatSiteSelection,
+                escapeMarkup: function( markup ) { 
+                    return markup; 
                 },
-                processResults: app.handle_results,
-            }
-        });
+                ajax: {
+                    url : ajaxurl,
+                    cache : false,
+                    dataType : 'json',
+                    delay : 250,
+                    data : function( params ) {
+                        return app.select2_ajax_data( params.term );
+                    },
+                    processResults: app.handle_results,
+                }
+            });
+        }
     };
 
     app.formatSites = function( site ) {
@@ -65,6 +67,7 @@ window.MUCD_Admin = window.MUCD_Admin || {};
         console.log(site);
         var markup = '<div class="site-wrapper clearfix">'
             + '<span>' + site.text + '</span>'
+            + '<br><strong>Site Title</strong>: ' + site.details.blogname
             + '<br><strong>Post Count</strong>: ' + site.details.post_count
             + ', <strong>Public</strong>: ' + ( 1 == site.details['public'] ? 'Yes' : 'No' )
             + ', <strong>Archived</strong>: ' + ( 1 == site.details.archived  ? 'Yes' : 'No' )

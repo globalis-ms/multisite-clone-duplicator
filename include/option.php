@@ -60,6 +60,7 @@ if( !class_exists( 'MUCD_Option' ) ) {
             add_site_option('mucd_keep_users', 'yes');
             add_site_option('mucd_log', 'no');
             add_site_option('mucd_log_dir', MUCD_COMPLETE_PATH . '/logs/');
+            add_site_option('mucd_enhanced_site_select', 'yes');
             MUCD_Option::init_duplicable_option();
         }
 
@@ -72,6 +73,7 @@ if( !class_exists( 'MUCD_Option' ) ) {
             delete_site_option('mucd_keep_users');
             delete_site_option('mucd_log');
             delete_site_option('mucd_log_dir');
+            delete_site_option('mucd_enhanced_site_select');
             MUCD_Option::delete_duplicable_option();
         }
       

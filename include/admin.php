@@ -94,6 +94,14 @@ if( !class_exists( 'MUCD_Admin' ) ) {
         }
 
         /**
+         * Are we using the enhanced site select?
+         * @since 1.4.0
+         */
+        protected static function use_enhanced_select() {
+           return ( 'yes' === get_site_option( 'mucd_enhanced_site_select' ) );
+        }
+
+        /**
          * Check result from Duplication page / print the page
          * @since 0.2.0
          */
@@ -107,6 +115,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
             // Form Data
             $data = array(
+                'source'     => ( isset( $_GET['id'] ))?intval( $_GET['id'] ):0,
                 'domain'     => '',
                 'title'      => '',
                 'email'      => '',
@@ -130,7 +139,21 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 }
             }
 
-            $select2_input = MUCD_Admin::select2_site_input();
+            if ( self::use_enhanced_select() ) {
+                MUCD_Admin::enqueue_script_network_duplicate( true );
+                $select_site_list = MUCD_Admin::select2_site_input();
+            } else {
+                $site_list = MUCD_Functions::get_site_list();
+
+                // bail early if we don't have any sites
+                if ( ! $site_list ) {
+                    return new WP_Error( 'mucd_error', MUCD_GAL_ERROR_NO_SITE );
+                }
+
+                $select_site_list = MUCD_Admin::select_site_list( $site_list, $data['source'] );
+                MUCD_Admin::enqueue_script_network_duplicate( false );
+            }
+            
             require_once MUCD_COMPLETE_PATH . '/template/network_admin_duplicate_site.php';
 
             MUCD_Duplicate::close_log();
@@ -148,7 +171,42 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             }
             $select2_html .= '</select>';
             return $select2_html;
-           // return '<input type="text" name="site[source]" id="mucd-site-source" value="' . $source_id . '"/>';
+        }
+
+        /**
+         * Get select box with duplicable site list
+         * @since 0.2.0
+         * @param  array $site_list all the sites
+         * @param  id $current_blog_id parameters
+         * @return string the output
+         */
+        public static function select_site_list( $site_list, $current_blog_id = null ) {
+            // return early if we're overriding 
+            $override = apply_filters( 'mucd_override_site_select', null, $site_list, $current_blog_id );
+
+            if ( null !== $override ) {
+                return $override;
+            }
+
+            $output = '';
+            if ( 1 == count( $site_list ) ) { // Yoda style ;)
+                $blog_id = $site_list[0]['blog_id'];
+            }
+            else if ( isset( $current_blog_id ) && MUCD_Functions::value_in_array( $current_blog_id, $site_list, 'blog_id' ) && MUCD_Functions::is_duplicable( $current_blog_id ) ) {
+                 $blog_id = $current_blog_id;
+            }
+            $output .= '<select name="site[source]">';
+            foreach ( $site_list as $site ) {
+                if ( isset( $blog_id ) && $site['blog_id'] == $blog_id ) {
+                    $output .= '    <option selected value="'.$site['blog_id'].'">' . substr( $site['domain'] . $site['path'], 0, -1 ) . '</option>';
+                }
+                else {
+                    $output .= '    <option value="'.$site['blog_id'].'">' . substr( $site['domain'] . $site['path'], 0, -1 ) . '</option>';
+                }
+            }
+            $output .= '</select>';
+            $output .= '&emsp;<a href="'. network_admin_url( 'settings.php#mucd_duplication' ) .'" title="'.MUCD_NETWORK_PAGE_DUPLICATE_TOOLTIP.'">?</a>';
+            return $output;
         }
 
         /**
@@ -295,16 +353,23 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          * Enqueue scripts for Duplication page
          * @since 0.2.0
          */
-        public static function enqueue_script_network_duplicate() {
+        public static function enqueue_script_network_duplicate( $select2 = true ) {
             // Enqueue script for user suggest on mail input
             wp_enqueue_script( 'user-suggest' );
 
             // enqueue select2
-            wp_enqueue_script( 'select2', MUCD_URL . '/js/select2/js/select2.min.js', array( 'jquery' ), MUCD::VERSION, true );
-            wp_enqueue_style( 'select2', MUCD_URL . '/js/select2/css/select2.css', array(), MUCD::VERSION );
+            if ( $select2 ) {
+                wp_enqueue_script( 'select2', MUCD_URL . '/js/select2/js/select2.min.js', array( 'jquery' ), MUCD::VERSION, true );
+                wp_enqueue_style( 'select2', MUCD_URL . '/js/select2/css/select2.css', array(), MUCD::VERSION );
+            }
 
             // Enqueue script for advanced options and enable / disable log path text input
-            wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js', array( 'jquery', 'select2' ), MUCD::VERSION, true );
+            $dependencies = array( 'jquery' );
+
+            if ( $select2 ) {
+                $dependencies[] = 'select2';
+            } 
+            wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js', $dependencies, MUCD::VERSION, true );
 
             // Localize variables for Javascript usage
             wp_localize_script( 'mucd-duplicate', 'mucd_config', array(
@@ -476,6 +541,14 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     else {
                         update_site_option( 'mucd_log', 'no' );
                     }
+
+                    if (isset( $_POST['mucd_enhanced_site_select']) && $_POST['mucd_enhanced_site_select']=='yes') {
+                        update_site_option( 'mucd_enhanced_site_select', 'yes' );
+                    }
+                    else {
+                        update_site_option( 'mucd_enhanced_site_select', 'no' );
+                    }
+
                 }
             }
 

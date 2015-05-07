@@ -20,7 +20,7 @@
            <tr class="form-required">
                 <th scope='row'><?php echo MUCD_NETWORK_PAGE_DUPLICATE_FIELD_SOURCE ; ?></th>
                 <td>
-                    <?php echo $select2_input; ?>
+                    <?php echo $select_site_list; ?>
                 </td>
             </tr>
 
