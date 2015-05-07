@@ -67,8 +67,8 @@ window.MUCD_Admin = window.MUCD_Admin || {};
         console.log(site);
         var markup = '<div class="site-wrapper clearfix">'
             + '<span>' + site.text + '</span>'
-            + '<br><strong>Site Title</strong>: ' + site.details.blogname
-            + '<br><strong>Post Count</strong>: ' + site.details.post_count
+            + '<br><strong>Blogname</strong>: ' + site.details.blogname
+            + ', <strong>Post Count</strong>: ' + site.details.post_count
             + ', <strong>Public</strong>: ' + ( 1 == site.details['public'] ? 'Yes' : 'No' )
             + ', <strong>Archived</strong>: ' + ( 1 == site.details.archived  ? 'Yes' : 'No' )
             + '</div>';
