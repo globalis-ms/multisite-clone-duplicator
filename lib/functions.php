@@ -138,7 +138,7 @@ if ( ! class_exists( 'MUCD_Functions' ) ) {
 		 * Set locale to en_US
 		 * @since 1.3.1
 		 */
-		public static function set_locale_to_en_US() {
+		public static function set_locale_to_en_us() {
 
 			// Bugfix Pierre Dargham : relocating this declaration outside of the call to add_filter
 			// PHP < 5.3 does not accept anonymous functions

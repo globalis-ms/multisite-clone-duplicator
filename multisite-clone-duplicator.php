@@ -39,7 +39,7 @@ if ( ! class_exists( 'MUCD' ) ) {
 
 	if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		require_once MUCD_COMPLETE_PATH . '/lib/duplicate.php';
-		MUCD_Functions::set_locale_to_en_US();
+		MUCD_Functions::set_locale_to_en_us();
 		require_once MUCD_COMPLETE_PATH . '/wp-cli/wp-cli-site-duplicate-subcommand.php';
 	}
 

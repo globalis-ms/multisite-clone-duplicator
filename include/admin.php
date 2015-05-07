@@ -351,7 +351,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		 */
 		public static function save_admin_network_option_page() {
 
-			if ( ! empty( $_POST ) && isset( $_POST[MUCD_SLUG_ACTION_SETTINGS] ) ) {
+			if ( ! empty( $_POST ) && isset( $_POST[ MUCD_SLUG_ACTION_SETTINGS ] ) ) {
 
 				if ( check_admin_referer( 'siteoptions' ) ) {
 
