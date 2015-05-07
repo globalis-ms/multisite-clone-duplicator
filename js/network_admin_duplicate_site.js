@@ -7,8 +7,6 @@ var MUCD_Admin = (function( window, document, $, undefined ) {
     app.init = function() {
         $.extend( app, l10n );
 
-        console.log(app);
-
         // bind select2
         app.select2Init();
 

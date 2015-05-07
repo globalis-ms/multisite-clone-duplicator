@@ -210,7 +210,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     'id'   => $id,
                     'text' => isset( $blog_details->domain )
                         ? $blog_details->domain . $blog_details->path
-                        : __( 'ERROR', 'wds_cloud_settings' ),
+                        : __( 'ERROR', 'mucd' ),
                 ),
             );
 
