@@ -108,6 +108,19 @@ window.MUCD_Admin = window.MUCD_Admin || {};
     app.handle_results = function( ajax_data, page, query ) {
         var items=[];
 
+        // return early on ajax failure, undefined data, and empty data
+        if ( 
+            ( false == ajax_data.success )
+            || ( 'undefined' === typeof ajax_data.data )
+            || ( ajax_data.data.length < 1 )
+        ) {
+            items.push({
+                'id' : 0,
+                'text' : l10n.placeholder_no_results_text
+            });
+            return { results: items };
+        }
+
         $.each( ajax_data.data, function( i, item ) {
             var new_item = {
                 'id'   : item.id,

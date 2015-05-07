@@ -9,6 +9,7 @@ define( 'MUCD_LOG_ERROR', __( 'The log file cannot be written', MUCD_DOMAIN ) );
 define( 'MUCD_CANT_WRITE_LOG', __( 'The log file cannot be written to location', MUCD_DOMAIN ) );
 define( 'MUCD_CHANGE_RIGHTS_LOG', __( 'To enable logging, change permissions on log directory', MUCD_DOMAIN ) );
 define( 'MUCD_JAVASCRIPT_REQUIRED', __( 'This feature will not work without javascript', MUCD_DOMAIN ) );
+define( 'MUCD_NO_RESULTS', __( 'No results found', MUCD_DOMAIN ) );
 define( 'MUCD_GENERAL_ERROR', __( 'ERROR', MUCD_DOMAIN ) );
 
 /**

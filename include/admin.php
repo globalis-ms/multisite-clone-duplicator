@@ -296,9 +296,10 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
             // Localize variables for Javascript usage
             wp_localize_script( 'mucd-duplicate', 'mucd_config', array(
-                'nonce'                  => wp_create_nonce( 'mucd-fetch-sites' ),
-                'placeholder_text'       => MUCD_NETWORK_SELECT_SITE,
-                'placeholder_value_text' => MUCD_JAVASCRIPT_REQUIRED,
+                'nonce'                       => wp_create_nonce( 'mucd-fetch-sites' ),
+                'placeholder_text'            => MUCD_NETWORK_SELECT_SITE,
+                'placeholder_value_text'      => MUCD_JAVASCRIPT_REQUIRED,
+                'placeholder_no_results_text' => MUCD_NO_RESULTS,
             ) );
         }
 
