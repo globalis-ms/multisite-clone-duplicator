@@ -90,7 +90,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
         */
         public static function network_menu_add_duplicate() {
             $hook = add_submenu_page( 'sites.php', MUCD_NETWORK_PAGE_DUPLICATE_TITLE, MUCD_NETWORK_MENU_DUPLICATE, 'manage_sites', MUCD_SLUG_NETWORK_ACTION, array( __CLASS__, 'network_page_admin_duplicate_site' ) );
-            add_action( "admin_footer-$hook", array( __CLASS__, 'enqueue_script_network_duplicate' ) );
+            add_action( "admin_head-$hook", array( __CLASS__, 'enqueue_script_network_duplicate' ) );
         }
 
         /**
@@ -292,7 +292,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             wp_enqueue_style( 'select2', MUCD_URL . '/js/select2-3.5.0/select2.css', array(), MUCD::VERSION );
 
             // Enqueue script for advanced options and enable / disable log path text input
-            wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js', MUCD::VERSION, true );
+            wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js', array( 'jquery', 'select2' ), MUCD::VERSION, true );
 
             // Localize variables for Javascript usage
             wp_localize_script( 'mucd-duplicate', 'mucd_config', array(
