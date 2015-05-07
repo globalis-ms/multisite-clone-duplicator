@@ -134,7 +134,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				$select_site_list = MUCD_Admin::select_site_list( $site_list, $data['source'] );
 
 				MUCD_Admin::enqueue_script_network_duplicate();
-				require_once MUCD_COMPLETE_PATH . '/template/network_admin_duplicate_site.php';
+				require_once MUCD_COMPLETE_PATH . '/template/network-admin-duplicate-site.php';
 			}
 			else {
 				return new WP_Error( 'mucd_error', MUCD_GAL_ERROR_NO_SITE );
@@ -235,7 +235,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 			// Enqueue script for user suggest on mail input
 			wp_enqueue_script( 'user-suggest' );
 			// Enqueue script for advanced options and enable / disable log path text input
-			wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js' );
+			wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network-admin_duplicate-site.js' );
 		}
 
 		/**
@@ -244,9 +244,9 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		 */
 		public static function enqueue_script_network_settings() {
 			// Enqueue script for network settings page
-			wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_settings.js' );
+			wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network-admin-settings.js' );
 			// Enqueue style for network settings page
-			wp_enqueue_style( 'mucd-duplicate-css', MUCD_URL . '/css/network_admin_settings.css' );
+			wp_enqueue_style( 'mucd-duplicate-css', MUCD_URL . '/css/network-admin-settings.css' );
 		}
 
 		/**
@@ -409,7 +409,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		 */
 		public static function admin_network_option_page() {
 			MUCD_Admin::enqueue_script_network_settings();
-			require_once MUCD_COMPLETE_PATH . '/template/network_admin_network_settings.php';
+			require_once MUCD_COMPLETE_PATH . '/template/network-admin-network-settings.php';
 		}
 
 	}
