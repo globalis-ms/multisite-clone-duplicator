@@ -3,7 +3,7 @@
 
     <?php
 
-    if(MUCD_Duplicate::log_error()) { 
+    if(MUCD_Duplicate::log_error()) {
         MUCD_Admin::log_error_message();
     }
 
@@ -20,7 +20,7 @@
            <tr class="form-required">
                 <th scope='row'><?php echo MUCD_NETWORK_PAGE_DUPLICATE_FIELD_SOURCE ; ?></th>
                 <td>
-                    <?php echo $select_site_list; ?>                      
+                    <?php echo $select2_input; ?>
                 </td>
             </tr>
 
