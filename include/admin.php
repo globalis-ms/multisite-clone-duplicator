@@ -359,8 +359,8 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             // enqueue select2?
             if ( $select2 ) {
                 $min = $debug ? '' : '.min';
-                wp_enqueue_script( 'select2', MUCD_URL . "/js/select2/js/select2$min.js", array( 'jquery' ), MUCD::VERSION, true );
-                wp_enqueue_style( 'select2', MUCD_URL . '/js/select2/css/select2.css', array(), MUCD::VERSION );
+                wp_enqueue_script( 'select2', MUCD_URL . "/js/select2/js/select2$min.js", array( 'jquery' ), '4.0.0', true );
+                wp_enqueue_style( 'select2', MUCD_URL . '/js/select2/css/select2.css', array(), '4.0.0' );
                 $dependencies[] = 'select2';
             }
 
@@ -389,9 +389,9 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          */
         public static function enqueue_script_network_settings() {
             // Enqueue script for network settings page
-            wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_settings.js' );
+            wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_settings.js', array( 'jquery' ), MUCD::VERSION, true );
             // Enqueue style for network settings page
-            wp_enqueue_style( 'mucd-duplicate-css', MUCD_URL . '/css/network_admin_settings.css' );
+            wp_enqueue_style( 'mucd-duplicate-css', MUCD_URL . '/css/network_admin_settings.css', array(), MUCD::VERSION );
         }
 
         /**
