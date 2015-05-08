@@ -89,8 +89,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
         * @return [type] [description]
         */
         public static function network_menu_add_duplicate() {
-            $hook = add_submenu_page( 'sites.php', MUCD_NETWORK_PAGE_DUPLICATE_TITLE, MUCD_NETWORK_MENU_DUPLICATE, 'manage_sites', MUCD_SLUG_NETWORK_ACTION, array( __CLASS__, 'network_page_admin_duplicate_site' ) );
-            add_action( "admin_head-$hook", array( __CLASS__, 'enqueue_script_network_duplicate' ) );
+            add_submenu_page( 'sites.php', MUCD_NETWORK_PAGE_DUPLICATE_TITLE, MUCD_NETWORK_MENU_DUPLICATE, 'manage_sites', MUCD_SLUG_NETWORK_ACTION, array( __CLASS__, 'network_page_admin_duplicate_site' ) );
         }
 
         /**
@@ -129,7 +128,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             // Manage Form Post
             if ( isset($_REQUEST['action']) && MUCD_SLUG_ACTION_DUPLICATE == $_REQUEST['action'] && !empty($_POST) ) {
 
-                $data = MUCD_Admin::check_form($data);
+                $data = self::check_form($data);
 
                 if (isset($data['error']) ) {
                     $form_message['error'] = $data['error']->get_error_message();
@@ -139,10 +138,16 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 }
             }
 
-            if ( self::use_enhanced_select() ) {
-                MUCD_Admin::enqueue_script_network_duplicate( true );
-                $select_site_list = MUCD_Admin::select2_site_input();
+            $select2 = self::use_enhanced_select();
+
+            self::enqueue_script_network_duplicate( $select2 );
+
+            if ( $select2 ) {
+
+                $select_site_list = self::select2_site_input();
+
             } else {
+
                 $site_list = MUCD_Functions::get_site_list();
 
                 // bail early if we don't have any sites
@@ -150,10 +155,9 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     return new WP_Error( 'mucd_error', MUCD_GAL_ERROR_NO_SITE );
                 }
 
-                $select_site_list = MUCD_Admin::select_site_list( $site_list, $data['source'] );
-                MUCD_Admin::enqueue_script_network_duplicate( false );
+                $select_site_list = self::select_site_list( $site_list, $data['source'] );
             }
-            
+
             require_once MUCD_COMPLETE_PATH . '/template/network_admin_duplicate_site.php';
 
             MUCD_Duplicate::close_log();
@@ -164,12 +168,15 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             $source_id = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
 
             $select2_html = '<select name="site[source]" id="mucd-site-source">';
-            
-            if ( 0 !== $source_id ) {
-                $initial_values = self::fetch_initial_value( $source_id );
-                $select2_html .= '<option value="'.$initial_values[0]['id'].'" selected="selected">'.$initial_values[0]['text'].'</option>';
+
+            if ( $source_id ) {
+                $value = self::fetch_initial_value( $source_id );
+                $select2_html .= sprintf( '<option value="%s" selected="selected">%s</option>', esc_attr( $value['id'] ), esc_html( $value['text']  ) );
             }
+
             $select2_html .= '</select>';
+            $select2_html .= '&emsp;<a href="'. network_admin_url( 'settings.php#mucd_duplication' ) .'" title="'.MUCD_NETWORK_PAGE_DUPLICATE_TOOLTIP.'">?</a>';
+
             return $select2_html;
         }
 
@@ -181,7 +188,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          * @return string the output
          */
         public static function select_site_list( $site_list, $current_blog_id = null ) {
-            // return early if we're overriding 
+            // return early if we're overriding
             $override = apply_filters( 'mucd_override_site_select', null, $site_list, $current_blog_id );
 
             if ( null !== $override ) {
@@ -265,18 +272,16 @@ if( !class_exists( 'MUCD_Admin' ) ) {
         protected static function fetch_initial_value( $id ) {
             $id = esc_attr( $id );
             $blog_details = get_blog_details( $id, true );
-            $response     = array(
-                array(
-                    'id'   => $id,
-                    'text' => isset( $blog_details->domain )
-                        ? $blog_details->domain . $blog_details->path
-                        : MUCD_GENERAL_ERROR,
-                    'details' => $blog_details,
-                ),
+
+            $value = array(
+                'id'   => $id,
+                'text' => isset( $blog_details->domain )
+                    ? $blog_details->domain . $blog_details->path
+                    : MUCD_GENERAL_ERROR,
+                'details' => $blog_details,
             );
 
-            //wp_send_json_success( $response );
-            return $response;
+            return $value;
         }
 
         /**
@@ -357,26 +362,35 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             // Enqueue script for user suggest on mail input
             wp_enqueue_script( 'user-suggest' );
 
-            // enqueue select2
-            if ( $select2 ) {
-                wp_enqueue_script( 'select2', MUCD_URL . '/js/select2/js/select2.min.js', array( 'jquery' ), MUCD::VERSION, true );
-                wp_enqueue_style( 'select2', MUCD_URL . '/js/select2/css/select2.css', array(), MUCD::VERSION );
-            }
+            $debug = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
 
             // Enqueue script for advanced options and enable / disable log path text input
             $dependencies = array( 'jquery' );
 
+            // enqueue select2?
             if ( $select2 ) {
+                $min = $debug ? '' : '.min';
+                wp_enqueue_script( 'select2', MUCD_URL . "/js/select2/js/select2$min.js", array( 'jquery' ), MUCD::VERSION, true );
+                wp_enqueue_style( 'select2', MUCD_URL . '/js/select2/css/select2.css', array(), MUCD::VERSION );
                 $dependencies[] = 'select2';
-            } 
+            }
+
             wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js', $dependencies, MUCD::VERSION, true );
 
             // Localize variables for Javascript usage
             wp_localize_script( 'mucd-duplicate', 'mucd_config', array(
+                'use_select2'                 => $select2,
+                'debug'                       => $debug,
                 'nonce'                       => wp_create_nonce( 'mucd-fetch-sites' ),
                 'placeholder_text'            => MUCD_NETWORK_SELECT_SITE,
                 'placeholder_value_text'      => MUCD_JAVASCRIPT_REQUIRED,
                 'placeholder_no_results_text' => MUCD_NO_RESULTS,
+                'blogname'                    => MUCD_BLOGNAME,
+                'post_count'                  => MUCD_POST_COUNT,
+                'is_public'                   => MUCD_IS_PUBLIC,
+                'is_archived'                 => MUCD_IS_ARCHIVED,
+                'yes'                         => MUCD_YES,
+                'no'                          => MUCD_NO,
             ) );
         }
 
@@ -559,7 +573,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          * @since 0.2.0
          */
         public static function admin_network_option_page() {
-            MUCD_Admin::enqueue_script_network_settings();
+            self::enqueue_script_network_settings();
             require_once MUCD_COMPLETE_PATH . '/template/network_admin_network_settings.php';
         }
 

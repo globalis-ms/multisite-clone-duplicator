@@ -35,49 +35,79 @@ window.MUCD_Admin = window.MUCD_Admin || {};
             app.toggle_advanced_options ( app.$.statusAdvOptions.val());
         }
 
-        if ( $().select2 ) {
-            app.$input.select2({
-                width : '100%',
-                minimumInputLength: 1,
-                templateResult: app.formatSites,
-                templateSelection: app.formatSiteSelection,
-                escapeMarkup: function( markup ) { 
-                    return markup; 
-                },
-                ajax: {
-                    url : ajaxurl,
-                    cache : false,
-                    dataType : 'json',
-                    delay : 250,
-                    data : function( params ) {
-                        return app.select2_ajax_data( params.term );
-                    },
-                    processResults: app.handle_results,
-                }
-            });
+        if ( l10n.use_select2 ) {
+            app.select2_init();
         }
     };
 
-    app.formatSites = function( site ) {
+    app.select2_init = function() {
+        app.$input.select2({
+            width : '75%',
+            placeholder : l10n.placeholder_text,
+            minimumInputLength: 1,
+            templateResult: app.format_sites,
+            templateSelection: function( result ) { return result.text; },
+            escapeMarkup: function( markup ) { return markup; },
+            ajax: {
+                url : ajaxurl,
+                cache : false,
+                dataType : 'json',
+                delay : 250,
+                data : app.select2_ajax_data,
+                processResults: app.handle_results,
+            }
+        });
+    };
+
+    app.format_sites = function( site ) {
         // return early if we're still loading
         if ( site.loading ) {
             return site.text;
         }
 
-        console.log(site);
         var markup = '<div class="site-wrapper clearfix">'
             + '<span>' + site.text + '</span>'
-            + '<br><strong>Blogname</strong>: ' + site.details.blogname
-            + ', <strong>Post Count</strong>: ' + site.details.post_count
-            + ', <strong>Public</strong>: ' + ( 1 == site.details['public'] ? 'Yes' : 'No' )
-            + ', <strong>Archived</strong>: ' + ( 1 == site.details.archived  ? 'Yes' : 'No' )
+            + '<br><strong>'+ l10n.blogname +'</strong>: ' + site.details.blogname
+            + ', <strong>'+ l10n.post_count +'</strong>: ' + site.details.post_count
+            + ', <strong>'+ l10n.is_public +'</strong>: ' + ( 1 == site.details['public'] ? l10n.yes : l10n.no )
+            + ', <strong>'+ l10n.is_archived +'</strong>: ' + ( 1 == site.details.archived  ? l10n.yes : l10n.no )
             + '</div>';
 
         return markup;
     };
 
-    app.formatSiteSelection = function( result ) {
-        return result.text;
+    // Handle setting up our ajax data
+    app.select2_ajax_data = function( params ) {
+        return {
+            q      : params.term,
+            action : 'mucd_fetch_sites',
+            nonce  : l10n.nonce,
+        };
+    };
+
+    // Handle our ajax results
+    app.handle_results = function( ajax_data, page, query ) {
+        // return early on ajax failure, undefined data, or empty data
+        if ( ! ajax_data.success || ! ajax_data.data || ! ajax_data.data.length ) {
+            if ( l10n.debug ) {
+                console.warn( 'app.handle_results ajax_data.data', ajax_data.data );
+            }
+            return { results: [] };
+        }
+
+        var items = [];
+
+        $.each( ajax_data.data, function( i, item ) {
+            var new_item = {
+                'id'      : item.id,
+                'text'    : item.text,
+                'details' : item.details,
+            };
+
+            items.push( new_item );
+        });
+
+        return { results: items };
     };
 
     // Function to controle toggle on Advanced Options fields
@@ -86,46 +116,6 @@ window.MUCD_Admin = window.MUCD_Admin || {};
          app.$.showHideAdvanced.toggle();
          $(this).hide();
          app.$.statusAdvOptions.val(value);
-    };
-
-    // Handle setting up our ajax data
-    app.select2_ajax_data = function( term, id ) {
-        var data = {
-            q      : term,
-            action : 'mucd_fetch_sites',
-            nonce  : l10n.nonce,
-        };
-
-        if ( id ) {
-            data.id = id;
-        }
-        return data;
-    };
-
-    // Handle our ajax results
-    app.handle_results = function( ajax_data, page, query ) {
-        var items=[];
-
-        // return early on ajax failure, undefined data, and empty data
-        if ( 
-            ( false == ajax_data.success )
-            || ( 'undefined' === typeof ajax_data.data )
-            || ( ajax_data.data.length < 1 )
-        ) {
-            return false;
-        }
-
-        $.each( ajax_data.data, function( i, item ) {
-            var new_item = {
-                'id'   : item.id,
-                'text' : item.text,
-                'details' : item.details,
-            };
-
-            items.push( new_item );
-        });
-
-        return { results: items };
     };
 
     $( document ).ready( app.init );
