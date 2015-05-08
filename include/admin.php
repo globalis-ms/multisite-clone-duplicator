@@ -232,11 +232,6 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 wp_send_json_error( $_GET );
             }
 
-            // if we have an id value, we know we're trying to get the inital select2 value
-            if ( isset( $_GET['id'] ) ) {
-                self::send_initial_value( $_GET['id'] );
-            }
-
             // @info $site_id is actually the 'network' id
             global $wpdb, $site_id;
 
