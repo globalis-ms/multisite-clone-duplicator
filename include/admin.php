@@ -136,7 +136,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
             if ( $use_select2 ) {
 
-                $select_site_list = self::select2_site_input();
+                $select_site_list = self::select2_site_list();
 
             } else {
 
@@ -156,7 +156,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
         }
 
-        public static function select2_site_input() {
+        public static function select2_site_list() {
             $source_id = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
 
             $select2_html = '<select name="site[source]" id="mucd-site-source">';
