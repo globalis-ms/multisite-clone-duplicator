@@ -93,14 +93,6 @@ if( !class_exists( 'MUCD_Admin' ) ) {
         }
 
         /**
-         * Are we using the enhanced site select?
-         * @since 1.4.0
-         */
-        protected static function use_enhanced_select() {
-           return ( 'yes' === get_site_option( 'mucd_enhanced_site_select' ) );
-        }
-
-        /**
          * Check result from Duplication page / print the page
          * @since 0.2.0
          */
@@ -138,11 +130,11 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 }
             }
 
-            $select2 = self::use_enhanced_select();
+            $use_select2 = ( 'yes' === get_site_option( 'mucd_enhanced_site_select' ) );
 
-            self::enqueue_script_network_duplicate( $select2 );
+            self::enqueue_script_network_duplicate( $use_select2 );
 
-            if ( $select2 ) {
+            if ( $use_select2 ) {
 
                 $select_site_list = self::select2_site_input();
 
