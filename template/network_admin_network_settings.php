@@ -9,7 +9,7 @@
             <label><input <?php checked( get_site_option( 'mucd_duplicables', 'all' ), 'all' ); ?> type="radio" id="radio-duplicables-all" name="duplicables" value="all"><?php echo MUCD_NETWORK_SETTINGS_DUPLICABLE_ALL; ?></label><br><br>
             <label><input <?php checked( get_site_option( 'mucd_duplicables', 'all' ), 'selected' ); ?> type="radio" id="radio-duplicables-selected" name="duplicables" value="selected"><?php echo MUCD_NETWORK_SETTINGS_DUPLICABLE_SELECTED; ?></label><br><br>
 
-    
+
             <?php
             $network_blogs = wp_get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
             echo '<div class="multiselect" id="site-select-box">';
@@ -18,6 +18,13 @@
             }
             echo '</div>';
             ?>
+        </td>
+    </tr>
+
+    <tr>
+        <th scope="row"><?php echo MUCD_NETWORK_PAGE_USE_ENHANCED_FOR_SITE_SELECT; ?></th>
+        <td>
+            <label><input <?php checked( get_site_option( 'mucd_enhanced_site_select', 'no' ), 'yes' ); ?> id="use-enhanced-select" name="mucd_enhanced_site_select" type="checkbox" value="yes" /><?php echo MUCD_NETWORK_PAGE_USE_ENHANCED_FOR_SITE_SELECT_TEXT_1; ?></label>
         </td>
     </tr>
 
@@ -40,14 +47,6 @@
         <td>
             <label><input <?php checked( get_site_option( 'mucd_log', 'no' ), 'yes' ); ?> id="log-box" name="mucd_log" type="checkbox" value="yes" /><?php echo MUCD_NETWORK_PAGE_DUPLICATE_LOG_TEXT_1; ?></label>
             <br /><br /><label><?php echo MUCD_NETWORK_PAGE_DUPLICATE_LOG_TEXT_2; ?> : <input id="log-path" name="mucd_log_dir" type="text"  class="large-text" value="<?php echo MUCD_Option::get_option_log_directory(); ?>" /></label>
-        </td>
-    </tr>
-
-
-    <tr>
-        <th scope="row"><?php echo MUCD_NETWORK_PAGE_USE_ENHANCED_FOR_SITE_SELECT; ?></th>
-        <td>
-            <label><input <?php checked( get_site_option( 'mucd_enhanced_site_select', 'no' ), 'yes' ); ?> id="use-enhanced-select" name="mucd_enhanced_site_select" type="checkbox" value="yes" /><?php echo MUCD_NETWORK_PAGE_USE_ENHANCED_FOR_SITE_SELECT_TEXT_1; ?></label>
         </td>
     </tr>
 
