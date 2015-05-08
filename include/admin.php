@@ -235,13 +235,15 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             // @info $site_id is actually the 'network' id
             global $wpdb, $site_id;
 
+            $path_or_domain = defined( 'SUBDOMAIN_INSTALL' ) && SUBDOMAIN_INSTALL ? 'domain' : 'path';
+
             $query = "
                 SELECT
                     `blog_id`
                 FROM
                     `$wpdb->blogs`
                 WHERE
-                    `path` LIKE '%%%s%%'
+                    `$path_or_domain` LIKE '%%%s%%'
                     AND `site_id` = %d
                 LIMIT 10
             ";
