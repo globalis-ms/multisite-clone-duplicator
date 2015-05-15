@@ -23,6 +23,7 @@ define( 'MUCD_NETWORK_CUSTOMIZE', __( 'Customize', MUCD_DOMAIN ) );
 define( 'MUCD_YES', __( 'Yes', MUCD_DOMAIN ) );
 define( 'MUCD_NO', __( 'No', MUCD_DOMAIN ) );
 define( 'MUCD_BLOGNAME', __( 'Blog Name', MUCD_DOMAIN ) );
+define( 'MUCD_THE_ID', __( 'ID', MUCD_DOMAIN ) );
 define( 'MUCD_POST_COUNT', __( 'Post Count', MUCD_DOMAIN ) );
 define( 'MUCD_IS_PUBLIC', __( 'Public', MUCD_DOMAIN ) );
 define( 'MUCD_IS_ARCHIVED', __( 'Archived', MUCD_DOMAIN ) );

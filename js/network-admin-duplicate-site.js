@@ -68,6 +68,7 @@ window.MUCD_Admin = window.MUCD_Admin || {};
         var markup = '<div class="site-wrapper clearfix">'
             + '<span>' + site.text + '</span>'
             + '<br><strong>'+ l10n.blogname +'</strong>: ' + site.details.blogname
+            + ', <strong>'+ l10n.the_id +'</strong>: ' + site.id
             + ', <strong>'+ l10n.post_count +'</strong>: ' + site.details.post_count
             + ', <strong>'+ l10n.is_public +'</strong>: ' + ( 1 == site.details['public'] ? l10n.yes : l10n.no )
             + ', <strong>'+ l10n.is_archived +'</strong>: ' + ( 1 == site.details.archived  ? l10n.yes : l10n.no )

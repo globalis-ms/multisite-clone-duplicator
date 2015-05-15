@@ -369,6 +369,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				'placeholder_value_text'      => MUCD_JAVASCRIPT_REQUIRED,
 				'placeholder_no_results_text' => MUCD_NO_RESULTS,
 				'blogname'                    => MUCD_BLOGNAME,
+				'the_id'                      => MUCD_THE_ID,
 				'post_count'                  => MUCD_POST_COUNT,
 				'is_public'                   => MUCD_IS_PUBLIC,
 				'is_archived'                 => MUCD_IS_ARCHIVED,
