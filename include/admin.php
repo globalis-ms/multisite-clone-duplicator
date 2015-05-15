@@ -235,7 +235,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 			// Enqueue script for user suggest on mail input
 			wp_enqueue_script( 'user-suggest' );
 			// Enqueue script for advanced options and enable / disable log path text input
-			wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network-admin_duplicate-site.js' );
+			wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network-admin-duplicate-site.js' );
 		}
 
 		/**
