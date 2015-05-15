@@ -43,6 +43,7 @@ window.MUCD_Admin = window.MUCD_Admin || {};
     app.select2_init = function() {
         app.$input.select2({
             width : '75%',
+            language : l10n.locale,
             placeholder : l10n.placeholder_text,
             minimumInputLength: 1,
             templateResult: app.format_sites,
