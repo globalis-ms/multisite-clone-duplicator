@@ -154,6 +154,11 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 		}
 
+		/**
+		 * Get select2 select-box
+		 * @since 1.4.0
+		 * @return string the output
+		 */
 		public static function select2_site_list() {
 			$source_id = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
 			$select2_html = '<select name="site[source]" id="mucd-site-source">';
@@ -204,6 +209,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 		/**
 		 * Search for sites using path
+		 * @since 1.4.0
 		 * @return    null    outputs a JSON string to be consumed by an AJAX call
 		 */
 		public static function mucd_fetch_sites() {
@@ -248,7 +254,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		/**
 		 * Returns select2 value based on the field's saved blog id value
 		 *
-		 * @since  0.1.0
+		 * @since  1.4.0
 		 *
 		 * @param  int  $id Stored blog id
 		 */
@@ -269,6 +275,8 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 		/**
 		 * Returns select2 options based on the current search query
+		 *
+		 * @since  1.4.0
 		 *
 		 * @param  array  $results Array of DB results for the queried string
 		 */
@@ -291,6 +299,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 		/**
 		 * Print log-error box
+		 *
 		 * @since 0.2.0
 		 */
 		public static function log_error_message() {

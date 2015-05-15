@@ -176,9 +176,9 @@ if ( ! class_exists( 'MUCD_Data' ) ) {
 
 		/**
 		 * Restore options that should be preserved in the new blog
-		 * @since 0.2.0
-		 * @param  int $from_site_id duplicated site id
+		 * @since 1.4.0
 		 * @param  int $to_site_id   new site id
+		 * @param  array $saved_options   the options
 		 */
 		public static function db_restore_data( $to_site_id, $saved_options ) {
 
