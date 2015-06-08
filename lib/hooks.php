@@ -1,6 +1,6 @@
 <?php
 
-if ( ! function_exists( 'mucd_save_cloned_url' ) ) {
+if ( ! function_exists( 'mucd_save_from_site_id' ) ) {
 
 	/**
 	 * Save $from_site_id as option of the new site
