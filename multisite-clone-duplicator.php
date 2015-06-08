@@ -32,6 +32,9 @@ if ( ! class_exists( 'MUCD' ) ) {
 	// Load Functions
 	require_once MUCD_COMPLETE_PATH . '/lib/functions.php';
 
+	// Load plugin default hooks
+	require_once MUCD_COMPLETE_PATH . '/lib/hooks.php';
+
 	if ( is_admin() ) {
 		require_once MUCD_COMPLETE_PATH . '/include/admin.php';
 		MUCD_Admin::hooks();
