@@ -25,6 +25,24 @@ if ( ! class_exists( 'MUCD_Data' ) ) {
 		}
 
 		/**
+		 * Copy and Update tables from a site to another
+		 * @since 0.2.0
+		 * @param  int $from_site_id duplicated site id
+		 * @param  int $to_site_id   new site id
+		 */
+		public static function clone_over_primary( $from_site_id ) {
+
+			self::$to_site_id = $to_site_id;
+
+			// Copy
+			$tables = self::db_copy_tables_to_primary( $from_site_id );
+
+			// Update
+			self::db_update_data_primary( $from_site_id, $tables, $saved_options );
+
+		}
+
+		/**
 		 * Copy tables from a site to another
 		 * @since 0.2.0
 		 * @param  int $from_site_id duplicated site id
@@ -80,6 +98,60 @@ if ( ! class_exists( 'MUCD_Data' ) ) {
 			self::db_restore_data( $to_site_id,  $saved_options );
 
 		   	return $saved_options;
+	   	}
+
+		/**
+		 * Copy tables from a site to another
+		 * @since 0.2.0
+		 * @param  int $from_site_id duplicated site id
+		 * @param  int $to_site_id   new site id
+		 */
+		public static function db_copy_tables_to_primary( $from_site_id ) {
+			global $wpdb;
+
+			// Source Site information
+			$from_site_prefix = $wpdb->get_blog_prefix( $from_site_id );	// prefix
+			$from_site_prefix_length = strlen( $from_site_prefix );			// prefix length
+
+			// Destination Site information
+			$to_site_prefix = $wpdb->get_blog_prefix( MUCD_PRIMARY_SITE_ID );		// prefix
+			$to_site_prefix_length = strlen( MUCD_PRIMARY_SITE_ID );				// prefix length
+
+			// Bugfix : escape '_' , '%' and '/' character for mysql 'like' queries
+			$from_site_prefix_like = $wpdb->esc_like( $from_site_prefix );
+
+			// SCHEMA - TO FIX for HyperDB
+			$schema = DB_NAME;
+
+			// Get sources Tables
+			if ( $from_site_id == MUCD_PRIMARY_SITE_ID ) {
+				$from_site_table = self::get_primary_tables( $from_site_prefix );
+			}
+			else {
+				$sql_query = $wpdb->prepare( 'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \'%s\' AND TABLE_NAME LIKE \'%s\'', $schema, $from_site_prefix_like . '%' );
+				$from_site_table = self::do_sql_query( $sql_query, 'col' );
+			}
+
+
+			$new_tables = array();
+
+			foreach ( $from_site_table as $table ) {
+
+				$table_name = $to_site_prefix . substr( $table, $from_site_prefix_length );
+				$new_tables[] = $table_name;
+
+				// Drop table if exists
+				self::do_sql_query( 'DROP TABLE IF EXISTS `' . $table_name . '`' );
+
+				// Create new table from source table
+				self::do_sql_query( 'CREATE TABLE IF NOT EXISTS `' . $table_name . '` LIKE `' . $schema . '`.`' . $table . '`' );
+
+				// Populate database with data from source table
+				self::do_sql_query( 'INSERT `' . $table_name . '` SELECT * FROM `' . $schema . '`.`' . $table . '`' );
+
+			}
+
+		   	return $new_tables;
 	   	}
 
 		/**
@@ -175,6 +247,69 @@ if ( ! class_exists( 'MUCD_Data' ) ) {
 		}
 
 		/**
+		 * Updated tables from a site to another
+		 * @since 0.2.0
+		 * @param  int $from_site_id duplicated site id
+		 * @param  int $to_site_id   new site id
+		 */
+		public static function db_update_data_primary( $from_site_id, $new_tables ) {
+			global $wpdb;
+
+			$to_blog_prefix = $wpdb->get_blog_prefix( MUCD_PRIMARY_SITE_ID );
+
+			// Looking for uploads dirs
+			switch_to_blog( $from_site_id );
+			$dir = wp_upload_dir();
+			$from_upload_url = str_replace( network_site_url(), get_bloginfo( 'url' ) . '/', $dir['baseurl'] );
+			$from_blog_url = get_blog_option( $from_site_id, 'siteurl' );
+
+			switch_to_blog( MUCD_PRIMARY_SITE_ID );
+			$dir = wp_upload_dir();
+			$to_upload_url = str_replace( network_site_url(), get_bloginfo( 'url' ) . '/', $dir['baseurl'] );
+			$to_blog_url = get_blog_option( MUCD_PRIMARY_SITE_ID, 'siteurl' );
+
+			restore_current_blog();
+
+			$tables = array();
+
+			foreach ( $new_tables as $table ) {
+				$results = self::do_sql_query( 'SHOW COLUMNS FROM `' . $table . '`', 'col', false );
+
+				$columns = array();
+
+				foreach ( $results as $k => $v ) {
+					$columns[] = $v;
+				}
+
+				$tables[ $table ] = $columns;
+			}
+
+			$default_tables = MUCD_Option::get_fields_to_update();
+
+			foreach ( $default_tables as $table => $fields ) {
+				$tables[ $to_blog_prefix . $table ] = $fields;
+			}
+
+			$from_site_prefix = $wpdb->get_blog_prefix( $from_site_id );
+			$to_site_prefix = $wpdb->get_blog_prefix( MUCD_PRIMARY_SITE_ID );
+
+			$string_to_replace = array(
+				$from_upload_url => $to_upload_url,
+				$from_blog_url => $to_blog_url,
+				$from_site_prefix => $to_site_prefix,
+			);
+
+			$string_to_replace = apply_filters( 'mucd_string_to_replace', $string_to_replace, $from_site_id, MUCD_PRIMARY_SITE_ID );
+
+			foreach ( $tables as $table => $fields ) {
+				foreach ( $string_to_replace as $from_string => $to_string ) {
+					self::update( $table, $fields, $from_string, $to_string );
+				}
+			}
+
+		}
+
+		/**
 		 * Restore options that should be preserved in the new blog
 		 * @since 1.4.0
 		 * @param  int $to_site_id   new site id
@@ -200,6 +335,7 @@ if ( ! class_exists( 'MUCD_Data' ) ) {
 		 * @param  string $to_string new string
 		 */
 		public static function update( $table, $fields, $from_string, $to_string ) {
+
 			if ( is_array( $fields ) || ! empty( $fields ) ) {
 				global $wpdb;
 
@@ -280,7 +416,7 @@ if ( ! class_exists( 'MUCD_Data' ) ) {
 		 * @param  string $to_string
 		 * @return the new data
 		 */
-		public static function try_replace( $row, $field, $from_string, $to_string ) {
+		function try_replace( $row, $field, $from_string, $to_string ) {
 			if ( is_serialized( $row[ $field ] ) ) {
 				$double_serialize = false;
 				$row[ $field ] = @unserialize( $row[ $field ] );
@@ -313,7 +449,12 @@ if ( ! class_exists( 'MUCD_Data' ) ) {
 				}
 			}
 			else {
-				$row[ $field ] = self::replace( $row[ $field ], $from_string, $to_string );
+				if ( is_array( $row[ $field ] ) ) {
+					$row[ $field ] = self::replace_recursive( $row[ $field ], $from_string, $to_string );
+				}
+				else {
+					$row[ $field ] = self::replace( $row[ $field ], $from_string, $to_string );
+				}
 			}
 			return $row[ $field ];
 		}
@@ -328,7 +469,7 @@ if ( ! class_exists( 'MUCD_Data' ) ) {
 		 */
 		public static function do_sql_query( $sql_query, $type = '', $log = true ) {
 			global $wpdb;
-			$wpdb->hide_errors();
+			//$wpdb->hide_errors();
 
 			switch ( $type ) {
 				case 'col':

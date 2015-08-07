@@ -7,51 +7,6 @@ if ( ! class_exists( 'MUCD_Option' ) ) {
 	class MUCD_Option {
 
 		/**
-		 * Init 'mucd_duplicable' options
-		 * @param string $blogs_value the value for blogs options
-		 * @param string $network_value the value for site option
-		 * @since 0.2.0
-		 */
-		public static function init_duplicable_option( $blogs_value = 'no', $network_value = 'all' ) {
-			$network_blogs = wp_get_sites( array( 'limit' => MUCD_MAX_NUMBER_OF_SITE ) );
-			foreach ( $network_blogs as $blog ) {
-				$blog_id = $blog['blog_id'];
-				add_blog_option( $blog_id, 'mucd_duplicable', $blogs_value );
-			}
-			add_site_option( 'mucd_duplicables', $network_value );
-		}
-
-		/**
-		 * Delete 'mucd_duplicable' option for all sites
-		 * @since 0.2.0
-		 */
-		public static function delete_duplicable_option() {
-			$network_blogs = wp_get_sites( array( 'limit' => MUCD_MAX_NUMBER_OF_SITE ) );
-			foreach ( $network_blogs as $blog ) {
-				$blog_id = $blog['blog_id'];
-				delete_blog_option( $blog_id, 'mucd_duplicable' );
-			}
-			delete_site_option( 'mucd_duplicables' );
-		}
-
-		/**
-		 * Set 'mucd_duplicable' option to "yes" for the list of blogs, other to "no"
-		 * @since 0.2.0
-		 * @param array $blogs list of blogs we want the option set to "yes"
-		 */
-		public static function set_duplicable_option( $blogs ) {
-			$network_blogs = wp_get_sites( array( 'limit' => MUCD_MAX_NUMBER_OF_SITE ) );
-			foreach ( $network_blogs as $blog ){
-				if ( in_array( $blog['blog_id'], $blogs ) ) {
-					update_blog_option( $blog['blog_id'], 'mucd_duplicable', 'yes' );
-				}
-				else {
-					update_blog_option( $blog['blog_id'], 'mucd_duplicable', 'no' );
-				}
-			}
-		}
-
-		/**
 		 * Add plugin default options
 		 * @since 1.3.0
 		 */
@@ -60,8 +15,6 @@ if ( ! class_exists( 'MUCD_Option' ) ) {
 			add_site_option( 'mucd_keep_users', 'yes' );
 			add_site_option( 'mucd_log', 'no' );
 			add_site_option( 'mucd_log_dir', MUCD_COMPLETE_PATH . '/logs/' );
-			add_site_option( 'mucd_enhanced_site_select', 'yes' );
-			MUCD_Option::init_duplicable_option();
 		}
 
 		/**
@@ -73,8 +26,6 @@ if ( ! class_exists( 'MUCD_Option' ) ) {
 			delete_site_option( 'mucd_keep_users' );
 			delete_site_option( 'mucd_log' );
 			delete_site_option( 'mucd_log_dir' );
-			delete_site_option( 'mucd_enhanced_site_select' );
-			MUCD_Option::delete_duplicable_option();
 		}
 
 		/**

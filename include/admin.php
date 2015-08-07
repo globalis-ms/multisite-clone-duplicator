@@ -13,6 +13,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 			// Network admin case
 			if ( is_network_admin() ) {
 				add_action( 'network_admin_menu', array( __CLASS__, 'network_menu_add_duplicate' ) );
+				add_action( 'network_admin_menu', array( __CLASS__, 'network_menu_add_clone_over_primary_site' ) );
 			}
 			add_action( 'admin_init', array( __CLASS__, 'admin_init' ) );
 
@@ -52,15 +53,13 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 				foreach ( (array) $wp_admin_bar->user->blogs as $blog ) {
 
-					if ( MUCD_Functions::is_duplicable( $blog->userblog_id ) ) {
-							$menu_id  = 'blog-' . $blog->userblog_id;
-							$wp_admin_bar->add_menu( array(
-								'parent' => $menu_id,
-								'id'     => $menu_id . '-duplicate',
-								'title'  => MUCD_NETWORK_MENU_DUPLICATE,
-								'href'   => network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION .'&amp;id=' . $blog->userblog_id ),
-							) );
-					}
+					$menu_id  = 'blog-' . $blog->userblog_id;
+					$wp_admin_bar->add_menu( array(
+						'parent' => $menu_id,
+						'id'     => $menu_id . '-duplicate',
+						'title'  => MUCD_NETWORK_MENU_DUPLICATE,
+						'href'   => network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION .'&amp;id=' . $blog->userblog_id ),
+					) );
 				}
 			}
 
@@ -73,11 +72,9 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		 * @param int $blog_id
 		 */
 		public static function add_site_row_action( $actions, $blog_id ) {
-			if ( MUCD_Functions::is_duplicable( $blog_id ) ) {
-				$actions = array_merge( $actions, array(
-					'duplicate_link' => '<a href="'. network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION .'&amp;id=' . $blog_id ).'">'. MUCD_NETWORK_MENU_DUPLICATE.'</a>'
-				));
-			}
+			$actions = array_merge( $actions, array(
+				'duplicate_link' => '<a href="'. network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION .'&amp;id=' . $blog_id ).'">'. MUCD_NETWORK_MENU_DUPLICATE.'</a>'
+			));
 			return $actions;
 		}
 
@@ -88,6 +85,15 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		*/
 		public static function network_menu_add_duplicate() {
 			add_submenu_page( 'sites.php', MUCD_NETWORK_PAGE_DUPLICATE_TITLE, MUCD_NETWORK_MENU_DUPLICATE, 'manage_sites', MUCD_SLUG_NETWORK_ACTION, array( __CLASS__, 'network_page_admin_duplicate_site' ) );
+		}
+
+		/**
+		* Adds 'Duplication' entry in sites menu
+		* @since 0.2.0
+		* @return [type] [description]
+		*/
+		public static function network_menu_add_clone_over_primary_site() {
+			add_submenu_page( 'sites.php', __( 'Clone over primary site', MUCD_DOMAIN ), __( 'Clone over primary site', MUCD_DOMAIN ), 'manage_sites', MUCD_SLUG_NETWORK_ACTION_CLONE_OVER, array( __CLASS__, 'network_page_admin_clone_over_primary' ) );
 		}
 
 		/**
@@ -128,27 +134,57 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				}
 			}
 
-			$use_select2 = ( 'yes' === get_site_option( 'mucd_enhanced_site_select' ) );
+			self::enqueue_script_network_duplicate();
 
-			self::enqueue_script_network_duplicate( $use_select2 );
-
-			if ( $use_select2 ) {
-
-				$select_site_list = self::select2_site_list();
-
-			} else {
-
-				$site_list = MUCD_Functions::get_site_list();
-
-				// bail early if we don't have any sites
-				if ( ! $site_list ) {
-					return new WP_Error( 'mucd_error', MUCD_GAL_ERROR_NO_SITE );
-				}
-
-				$select_site_list = self::select_site_list( $site_list, $data['source'] );
-			}
+			$select_site_list = self::select2_site_list();
 
 			require_once MUCD_COMPLETE_PATH . '/template/network-admin-duplicate-site.php';
+
+			MUCD_Duplicate::close_log();
+
+		}
+
+		/**
+		 * Check result from Clone over page / print the page
+		 * @since 0.2.0
+		 */
+		public static function network_page_admin_clone_over_primary() {
+
+			global $current_site;
+
+			// Capabilities test
+			if ( ! current_user_can( 'manage_sites' ) ) {
+				wp_die( MUCD_GAL_ERROR_CAPABILITIES );
+			}
+
+			// Form Data
+			$data = array(
+				'source'        => ( isset( $_GET['id'] ))?intval( $_GET['id'] ):0,
+				'copy_files'    => 'yes',
+				'keep_users'    => 'yes',
+				'log'           => 'no',
+				'log-path'      => '',
+			);
+
+
+			// Manage Form Post
+			if ( isset($_REQUEST['action']) && MUCD_SLUG_ACTION_DUPLICATE_OVER_PRIMARY == $_REQUEST['action'] && ! empty($_POST) ) {
+
+				$data = self::check_form_clone_over( $data );
+
+				if ( isset($data['error']) ) {
+					$form_message['error'] = $data['error']->get_error_message();
+				}
+				else {
+					$form_message = MUCD_Clone_Over_Primary::duplicate_site_over_primary( $data );
+				}
+			}
+
+			self::enqueue_script_network_duplicate();
+
+			$select_site_list = self::select2_site_list();
+
+			require_once MUCD_COMPLETE_PATH . '/template/network-admin-clone-over-primary-site.php';
 
 			MUCD_Duplicate::close_log();
 
@@ -167,44 +203,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				$select2_html .= sprintf( '<option value="%s" selected="selected">%s</option>', esc_attr( $value['id'] ), esc_html( $value['text'] ) );
 			}
 			$select2_html .= '</select>';
-			$select2_html .= '&emsp;<a href="'. network_admin_url( 'settings.php#mucd_duplication' ) .'" title="'.MUCD_NETWORK_PAGE_DUPLICATE_TOOLTIP.'">?</a>';
 			return $select2_html;
-		}
-
-		/**
-		 * Get select box with duplicable site list
-		 * @since 0.2.0
-		 * @param  array $site_list all the sites
-		 * @param  id $current_blog_id parameters
-		 * @return string the output
-		 */
-		public static function select_site_list( $site_list, $current_blog_id = null ) {
-			// return early if we're overriding
-			$override = apply_filters( 'mucd_override_site_select', null, $site_list, $current_blog_id );
-
-			if ( null !== $override ) {
-				return $override;
-			}
-
-			$output = '';
-			if ( 1 == count( $site_list ) ) { // Yoda style ;)
-				$blog_id = $site_list[0]['blog_id'];
-			}
-			else if ( isset( $current_blog_id ) && MUCD_Functions::value_in_array( $current_blog_id, $site_list, 'blog_id' ) && MUCD_Functions::is_duplicable( $current_blog_id ) ) {
-				 $blog_id = $current_blog_id;
-			}
-			$output .= '<select name="site[source]">';
-			foreach ( $site_list as $site ) {
-				if ( isset( $blog_id ) && $site['blog_id'] == $blog_id ) {
-					$output .= '    <option selected value="'.$site['blog_id'].'">' . substr( $site['domain'] . $site['path'], 0, -1 ) . '</option>';
-				}
-				else {
-					$output .= '    <option value="'.$site['blog_id'].'">' . substr( $site['domain'] . $site['path'], 0, -1 ) . '</option>';
-				}
-			}
-			$output .= '</select>';
-			$output .= '&emsp;<a href="'. network_admin_url( 'settings.php#mucd_duplication' ) .'" title="'.MUCD_NETWORK_PAGE_DUPLICATE_TOOLTIP.'">?</a>';
-			return $output;
 		}
 
 		/**
@@ -510,6 +509,57 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 			return $data;
 		}
 
+/**
+		 * Duplication form validation
+		 * @since 0.2.0
+		 * @param  array $init_data default data
+		 * @return array $data validated data, or errors
+		 */
+		public static function check_form_clone_over( $init_data ) {
+
+			global $current_site;
+
+			$data = $init_data;
+			$data['copy_files'] = 'yes';
+			$data['keep_users'] = 'yes';
+			$data['log'] = 'no';
+			$data['domain'] = 'primary';
+			$data['newdomain'] = $current_site->domain;
+			$data['path'] = $current_site->path;
+			$data['network_id'] = $current_site->id;
+
+			// Check referer and nonce
+			if ( check_admin_referer( MUCD_DOMAIN ) ) {
+
+				global $current_site;
+
+				$error = array();
+
+				// Merge $data / $_POST['site'] to get Posted data and fill form
+				$data = array_merge( $data, $_POST['site'] );
+
+				// format and check source
+				$data['from_site_id'] = intval( $data['source'] );
+				if ( $data['from_site_id'] < 2 || ! get_blog_details( $data['from_site_id'], false ) ) {
+					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_MISSING_FIELDS );
+				}			
+
+				if ( isset( $data['log'] ) && 'yes' == $data['log'] && ( ! isset( $data['log-path'] ) || $data['log-path'] == '' || ! MUCD_Functions::valid_path( $data['log-path'] ) ) ) {
+					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_VIEW_LOG_PATH_EMPTY );
+				}
+
+				if ( isset( $error[0] ) ) {
+					$data['error'] = $error[0];
+				}
+			}
+
+			else {
+				$data['error'] = MUCD_GAL_ERROR_CAPABILITIES;
+			}
+
+			return $data;
+		}
+
 		/**
 		 * Save duplication options on network settings page
 		 * @since 0.2.0
@@ -519,24 +569,6 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 			if ( ! empty( $_POST ) && isset( $_POST[ MUCD_SLUG_ACTION_SETTINGS ] ) ) {
 
 				if ( check_admin_referer( 'siteoptions' ) ) {
-
-					if ( isset( $_POST['duplicables'] ) ) {
-
-						if ( 'all' == $_POST['duplicables'] ) {
-							update_site_option( 'mucd_duplicables', 'all' );
-						}
-
-						else {
-							update_site_option( 'mucd_duplicables', 'selected' );
-
-							if ( isset( $_POST['duplicables-list'] ) ) {
-								MUCD_Option::set_duplicable_option( $_POST['duplicables-list'] );
-							}
-							else {
-								MUCD_Option::set_duplicable_option( array() );
-							}
-						}
-					}
 
 					if ( isset( $_POST['mucd_copy_files']) && 'yes' == $_POST['mucd_copy_files'] ) {
 						update_site_option( 'mucd_copy_files', 'yes' );
@@ -564,12 +596,6 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 						update_site_option( 'mucd_log', 'no' );
 					}
 
-					if ( isset( $_POST['mucd_enhanced_site_select'] ) && 'yes' == $_POST['mucd_enhanced_site_select'] ) {
-						update_site_option( 'mucd_enhanced_site_select', 'yes' );
-					}
-					else {
-						update_site_option( 'mucd_enhanced_site_select', 'no' );
-					}
 				}
 			}
 

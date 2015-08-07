@@ -59,41 +59,6 @@ if ( ! class_exists( 'MUCD_Functions' ) ) {
 		}
 
 		/**
-		 * Check if site is duplicable
-		 * @since 0.2.0
-		 * @param  int $blog_id the blog id
-		 * @return boolean true | false
-		 */
-		public static function is_duplicable( $blog_id ) {
-			if ( 'all' == get_site_option( 'mucd_duplicables', 'all', 'selected' ) ) {
-				return true;
-			}
-
-			if ( 'yes' == get_blog_option( $blog_id, 'mucd_duplicable' , 'no' ) ) {
-				return true;
-			}
-			return false;
-		}
-
-		/**
-		 * Get all duplicable sites
-		 * @since 0.2.0
-		 * @return array of blog data
-		 */
-		public static function get_site_list() {
-			$site_list = array();
-
-			$network_blogs = wp_get_sites( apply_filters( 'mucd_get_site_list_args', array( 'limit' => MUCD_MAX_NUMBER_OF_SITE ) ) );
-			foreach ( $network_blogs as $blog ) {
-				if ( MUCD_Functions::is_duplicable( $blog['blog_id'] ) && MUCD_SITE_DUPLICATION_EXCLUDE != $blog['blog_id'] ) {
-					$site_list[] = $blog;
-				}
-			}
-
-			return $site_list;
-		}
-
-		/**
 		 * Check if a value is in an array for a specific key
 		 * @since 0.2.0
 		 * @param  mixte $value the value
@@ -168,6 +133,10 @@ if ( ! class_exists( 'MUCD_Functions' ) ) {
 			}
 
 			return false;
+		}
+
+		public static function user_array_map( $a ) {
+			return $a[0];
 		}
 
 	}

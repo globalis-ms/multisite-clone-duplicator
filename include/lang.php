@@ -17,7 +17,6 @@ define( 'MUCD_GENERAL_ERROR', __( 'ERROR', MUCD_DOMAIN ) );
  */
 define( 'MUCD_NETWORK_MENU_DUPLICATE', __( 'Duplicate', MUCD_DOMAIN ) );
 define( 'MUCD_NETWORK_MENU_DUPLICATION', __( 'Duplication', MUCD_DOMAIN ) );
-define( 'MUCD_NETWORK_DUPLICABLE', __( 'Duplicable', MUCD_DOMAIN ) );
 define( 'MUCD_NETWORK_SELECT_SITE', __( 'Start typing to search for a site', MUCD_DOMAIN ) );
 define( 'MUCD_NETWORK_CUSTOMIZE', __( 'Customize', MUCD_DOMAIN ) );
 define( 'MUCD_YES', __( 'Yes', MUCD_DOMAIN ) );
@@ -66,13 +65,4 @@ define( 'MUCD_NETWORK_PAGE_DUPLICATE_LOG', __( 'Log', MUCD_DOMAIN ) );
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_LOG_TEXT_1', __( 'Generate log file', MUCD_DOMAIN ) );
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_LOG_TEXT_2', __( 'Log directory', MUCD_DOMAIN ) );
 define( 'MUCD_NETWORK_PAGE_DUPLICATE_BUTTON_COPY', __( 'Duplicate', MUCD_DOMAIN ) );
-define( 'MUCD_NETWORK_PAGE_DUPLICATE_TOOLTIP', __( 'Edit duplicable sites list', MUCD_DOMAIN ) );
-define( 'MUCD_NETWORK_PAGE_USE_ENHANCED_FOR_SITE_SELECT', __( 'Use Enhanced Site Select', MUCD_DOMAIN ) );
-define( 'MUCD_NETWORK_PAGE_USE_ENHANCED_FOR_SITE_SELECT_TEXT_1', __( 'Use Select2 for Site Select ', MUCD_DOMAIN ) );
-
-/**
- * Settings
- */
-define( 'MUCD_NETWORK_SETTINGS_DUPLICABLE_WEBSITES', __( 'Dublicable websites', MUCD_DOMAIN ) );
-define( 'MUCD_NETWORK_SETTINGS_DUPLICABLE_ALL', __( 'Allow duplication of all sites of the network', MUCD_DOMAIN ) );
-define( 'MUCD_NETWORK_SETTINGS_DUPLICABLE_SELECTED', __( 'Allow duplication of following sites only :', MUCD_DOMAIN ) );
+define( 'MUCD_NETWORK_PAGE_CLONE_OVER_BUTTON_COPY', __( 'Clone over', MUCD_DOMAIN ) );

@@ -5,6 +5,7 @@ if ( ! class_exists( 'MUCD_Duplicate' ) ) {
 	require_once MUCD_COMPLETE_PATH . '/lib/files.php';
 	require_once MUCD_COMPLETE_PATH . '/lib/data.php';
 	require_once MUCD_COMPLETE_PATH . '/lib/log.php';
+	require_once MUCD_COMPLETE_PATH . '/lib/clone-over-primary-site.php';
 
 	class MUCD_Duplicate {
 
@@ -28,7 +29,7 @@ if ( ! class_exists( 'MUCD_Duplicate' ) ) {
 
 			global $wpdb;
 			$form_message = array();
-			$wpdb->hide_errors();
+			//$wpdb->hide_errors();
 
 			self::init_log( $data );
 
@@ -93,12 +94,12 @@ if ( ! class_exists( 'MUCD_Duplicate' ) ) {
 				do_action( 'mucd_after_copy_users', $from_site_id, $to_site_id );
 			}
 
-			update_blog_option( $to_site_id, 'mucd_duplicable', 'no' );
-
 			$form_message['msg'] = MUCD_NETWORK_PAGE_DUPLICATE_NOTICE_CREATED;
 			$form_message['site_id'] = $to_site_id;
 
 			MUCD_Duplicate::write_log( 'End site duplication : new site ID = ' . $to_site_id );
+
+			update_blog_option( $to_site_id, 'mucd_duplicated_site_id', $from_site_id );
 
 			wp_cache_flush();
 			return $form_message;
@@ -111,13 +112,28 @@ if ( ! class_exists( 'MUCD_Duplicate' ) ) {
 		 * @param  string $domain the domain
 		 * @return int id of the user
 		 */
-		public static function create_admin( $email, $domain ) {
+		public static function create_admin( $email, $username = '' ) {
 			// Create New site Admin if not exists
 			$password = 'N/A';
 			$user_id = email_exists( $email );
 			if ( ! $user_id ) { // Create a new user with a random password
 				$password = wp_generate_password( 12, false );
-				$user_id = wpmu_create_user( $domain, $password, $email );
+
+				if( empty( $username ) ) {
+					global $current_site;
+					$i = 001;
+					$username = $current_site->domain . $i;
+					while ( null != username_exists( $username ) ) {
+						++$i;
+						$username = $current_site->domain . $i;
+						if( $i > 999 ) {
+							return new WP_Error( 'file_copy', MUCD_NETWORK_PAGE_DUPLICATE_ADMIN_ERROR_CREATE_USER );
+						}
+					}
+				}
+
+
+				$user_id = wpmu_create_user( $username, $password, $email );
 				if ( false == $user_id ) {
 					return new WP_Error( 'file_copy', MUCD_NETWORK_PAGE_DUPLICATE_ADMIN_ERROR_CREATE_USER );
 				}
@@ -153,12 +169,6 @@ if ( ! class_exists( 'MUCD_Duplicate' ) ) {
 
 			switch_to_blog( $to_site_id );
 
-			// Bugfix Pierre Dargham : relocating this declaration outside of the loop
-			// PHP < 5.3
-			function user_array_map( $a ) {
-				return $a[0];
-			}
-
 			foreach ( $users as $user ) {
 				if ( $user->user_email != $admin_email ) {
 
@@ -167,7 +177,7 @@ if ( ! class_exists( 'MUCD_Duplicate' ) ) {
 					// PHP >= 5.3
 					//$all_meta = array_map( function( $a ){ return $a[0]; }, get_user_meta( $user->ID ) );
 					// PHP < 5.3
-					$all_meta = array_map( 'user_array_map', get_user_meta( $user->ID ) );
+					$all_meta = array_map( array( 'MUCD_Functions', 'user_array_map'), get_user_meta( $user->ID ) );
 
 					foreach ( $all_meta as $metakey => $metavalue ) {
 						$prefix = substr( $metakey, 0, $from_site_prefix_length );
