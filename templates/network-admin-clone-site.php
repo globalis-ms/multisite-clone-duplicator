@@ -1,3 +1,5 @@
+<?php global $current_site; ?>
+
 <div class="wrap">
 	<h2 id="duplicate-site"><?php _e( 'Duplicate Site', MUCD_DOMAIN ) ?></h2>
 
@@ -47,7 +49,6 @@
 		<p>
 			<a id="show-advanced-options" href="#"><?php _e( 'Show advanced options', MUCD_DOMAIN ); ?> &rsaquo;</a>
 			<a id="hide-advanced-options" style="display: none;" href="#"><?php _e( 'Hide advanced options', MUCD_DOMAIN ); ?> &lsaquo;</a>
-			<input id="status-advanced-options" type="hidden" name="site[advanced]" value="<?php echo $data['advanced']; ?>" />
 		</p>
 
 		<table class="form-table" id="advanced-options" style="display: none;">
@@ -73,10 +74,6 @@
 				</td>
 			</tr>
 		</table>
-
-		<p style="display: none;" >
-			<a id="clone-over-the-primary-site" href="<?php echo network_admin_url( 'sites.php?page=' . MUCD_SLUG_NETWORK_ACTION_CLONE_OVER ); ?>"><?php _e( 'Clone over the primary site', MUCD_DOMAIN ); ?></a>
-		</p>
 
 		<p class="submit">
 			<input class='button button-primary' type='submit' value='<?php _e( 'Duplicate', MUCD_DOMAIN ) ; ?>' />

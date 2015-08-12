@@ -115,4 +115,6 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		}
 
 	}
+
+	MUCD_Select2::hooks();
 }

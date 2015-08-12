@@ -10,22 +10,35 @@ if ( ! class_exists( 'MUCD_Data_Validation' ) ) {
 		 * @param  array $init_data default data
 		 * @return array $data validated data, or errors
 		 */
-		public static function check_form( $init_data ) {
-
-			$data = $init_data;
-			$data['copy_files'] = 'no';
-			$data['keep_users'] = 'no';
-			$data['log'] = 'no';
+		public static function check_form_clone_site() {
 
 			// Check referer and nonce
 			if ( check_admin_referer( MUCD_DOMAIN ) ) {
 
+				if ( ! isset( $_POST['site']  )) {
+					$data['error'] = __( 'Missing fields', MUCD_DOMAIN );
+					return $data;
+				}
+
+				$data = $_POST['site'];
+
+				// FOR EACH DATA :
+				  // TEST ISSET
+				  // TEST VALID
+				  // FORMAT
+				  // RETURN
+
+
+				if ( ! isset( $data['source']  )) {
+					$data['error'] = __( 'Missing fields', MUCD_DOMAIN );
+					return $data;
+				}
+
+				var_dump($data); die;
+
 				global $current_site;
 
 				$error = array();
-
-				// Merge $data / $_POST['site'] to get Posted data and fill form
-				$data = array_merge( $data, $_POST['site'] );
 
 				// format and check source
 				$data['from_site_id'] = intval( $data['source'] );
@@ -106,7 +119,7 @@ if ( ! class_exists( 'MUCD_Data_Validation' ) ) {
 		 * @param  array $init_data default data
 		 * @return array $data validated data, or errors
 		 */
-		public static function check_form_clone_over( $init_data ) {
+		public static function check_form_clone_site_over_primary() {
 
 			global $current_site;
 

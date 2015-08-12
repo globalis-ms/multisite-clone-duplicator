@@ -9,16 +9,33 @@ if ( ! class_exists( 'MUCD_Scripts' ) ) {
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_conditionnal' ) );
 		}		
 
-		public static function enqueue_conditionnal() {
-			self::enqueue_script_network_duplicate();
-			self::enqueue_script_network_settings();
+		public static function enqueue_conditionnal( $hook ) {
+			if( $hook == 'settings.php' ) {
+				self::enqueue_script_network_settings();
+			}
+			else if( $hook == 'sites_page_multisite-clone-duplicator-clone-site' ) {
+				self::enqueue_script_network_clone_site();
+			}
+			else if( $hook == 'sites_page_multisite-clone-duplicator-clone-site-over-primary'  ) {
+				self::enqueue_script_network_clone_site_over_primary();
+			}
+		}
+
+
+		/**
+		 * Enqueue scripts and style for Network Settings page
+		 * @since 0.2.0
+		 */
+		public static function enqueue_script_network_settings() {
+			// Enqueue script for network settings page
+			wp_enqueue_script( 'mucd-duplicate', MUCD_URL_PLUGIN_SCRIPTS . '/network-admin-settings.js', array( 'jquery' ), MUCD::VERSION, true );
 		}
 
 		/**
 		 * Enqueue scripts for Duplication page
 		 * @since 0.2.0
 		 */
-		public static function enqueue_script_network_duplicate() {
+		public static function enqueue_script_network_clone_site() {
 
 			// Enqueue script for user suggest on mail input
 			wp_enqueue_script( 'user-suggest' );
@@ -70,14 +87,10 @@ if ( ! class_exists( 'MUCD_Scripts' ) ) {
 			wp_localize_script( 'mucd-duplicate', 'mucd_config', $localize_args );
 		}
 
-		/**
-		 * Enqueue scripts and style for Network Settings page
-		 * @since 0.2.0
-		 */
-		public static function enqueue_script_network_settings() {
-			// Enqueue script for network settings page
-			wp_enqueue_script( 'mucd-duplicate', MUCD_URL_PLUGIN_SCRIPTS . '/network-admin-settings.js', array( 'jquery' ), MUCD::VERSION, true );
+		public static function enqueue_script_network_clone_site_over_primary() {
+			self::enqueue_script_network_clone_site();
 		}
+
 	}
 
 	MUCD_Scripts::hooks();

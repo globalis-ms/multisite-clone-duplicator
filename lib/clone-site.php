@@ -97,6 +97,9 @@ if ( ! class_exists( 'MUCD_Duplicate' ) ) {
 			update_blog_option( $to_site_id, 'mucd_duplicated_site_id', $from_site_id );
 
 			wp_cache_flush();
+
+			self::close_log();
+
 			return $form_message;
 		}
 

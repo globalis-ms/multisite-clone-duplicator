@@ -14,7 +14,6 @@ window.MUCD_Admin = window.MUCD_Admin || {};
         app.$.siteEmail        = $( document.getElementById( 'site_email' ) );
         app.$.showHideAdvanced = $( '#show-advanced-options, #hide-advanced-options' );
         app.$.advOptions       = $( document.getElementById( 'advanced-options' ) );
-        app.$.statusAdvOptions = $( document.getElementById( 'status-advanced-options' ) );
         app.$input             = $( document.getElementById( 'mucd-site-source' ) );
     };
 
@@ -32,11 +31,6 @@ window.MUCD_Admin = window.MUCD_Admin || {};
         app.$.showHideAdvanced.click(function() {
              app.toggle_advanced_options( $(this).attr('id') );
         });
-
-        // If display when user Post, Form reload with Advanced Options field displayed
-        if( app.$.statusAdvOptions.val() == 'show-advanced-options'){
-            app.toggle_advanced_options ( app.$.statusAdvOptions.val());
-        }
         
         app.select2_init();
     };
@@ -118,7 +112,6 @@ window.MUCD_Admin = window.MUCD_Admin || {};
          app.$.advOptions.toggle();
          app.$.showHideAdvanced.toggle();
          $(this).hide();
-         app.$.statusAdvOptions.val(value);
     };
 
     $( document ).ready( app.init );
