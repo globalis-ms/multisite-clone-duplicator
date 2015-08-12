@@ -2,11 +2,6 @@
 
 if ( ! class_exists( 'MUCD_Duplicate' ) ) {
 
-	require_once MUCD_COMPLETE_PATH . '/lib/files.php';
-	require_once MUCD_COMPLETE_PATH . '/lib/data.php';
-	require_once MUCD_COMPLETE_PATH . '/lib/log.php';
-	require_once MUCD_COMPLETE_PATH . '/lib/clone-over-primary-site.php';
-
 	class MUCD_Duplicate {
 
 		public static $log;

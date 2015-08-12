@@ -100,19 +100,6 @@ if ( ! class_exists( 'MUCD_Functions' ) ) {
 		}
 
 		/**
-		 * Set locale to en_US
-		 * @since 1.3.1
-		 */
-		public static function set_locale_to_en_us() {
-
-			// Bugfix Pierre Dargham : relocating this declaration outside of the call to add_filter
-			// PHP < 5.3 does not accept anonymous functions
-			function mucd_locale_en_us( $locale ) { return 'en_US'; }
-
-			add_filter( 'locale', 'mucd_locale_en_us' );
-		}
-
-		/**
 		 * Get network data for a given id.
 		 *
 		 * @author wp-cli
@@ -137,6 +124,31 @@ if ( ! class_exists( 'MUCD_Functions' ) ) {
 
 		public static function user_array_map( $a ) {
 			return $a[0];
+		}
+
+		/**
+		 * Deactivate the plugin if we are not on a multisite installation
+		 * @since 0.2.0
+		 */
+		public static function check_if_multisite() {
+			if ( ! function_exists( 'is_multisite' ) || ! is_multisite() ) {
+				deactivate_plugins( plugin_basename( __FILE__ ) );
+				wp_die( __( 'MultiSite Clone Duplicator works only for multisite installation', MUCD_DOMAIN ));
+			}
+		}
+
+		/**
+		 * Deactivate the plugin if we are not on a multisite installation
+		 * @since 0.2.0
+		 */
+		public static function print_notices() {
+			if ( MUCD_Duplicate::log_error() ) {
+				require_once MUCD_PATH_TEMPLATES . '/message-clone-log-error.php';
+			}
+
+			if ( isset( $form_message ) ) {
+				require_once MUCD_PATH_TEMPLATES . '/message-clone-result.php';
+			}
 		}
 
 	}

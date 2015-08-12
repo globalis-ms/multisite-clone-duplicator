@@ -6,15 +6,26 @@ if ( ! class_exists( 'MUCD_Option' ) ) {
 
 	class MUCD_Option {
 
+
+		/**
+		 * Do some actions at the beginning of an admin script
+		 */
+		public static function hooks() {
+			// Network setting page
+			add_action( 'wpmu_options', array( __CLASS__, 'admin_network_option_page' ) );
+			// Save Network setting page
+			add_action( 'wpmuadminedit', array( __CLASS__, 'save_admin_network_option_page' ) );
+		}
+
 		/**
 		 * Add plugin default options
 		 * @since 1.3.0
 		 */
 		public static function init_options() {
-			add_site_option( 'mucd_copy_files', 'yes' );
-			add_site_option( 'mucd_keep_users', 'yes' );
-			add_site_option( 'mucd_log', 'no' );
-			add_site_option( 'mucd_log_dir', MUCD_COMPLETE_PATH . '/logs/' );
+			add_site_option( 'mucd_copy_files', MUCD_DEFAULT_OPTION_COPY_FILES );
+			add_site_option( 'mucd_keep_users', MUCD_DEFAULT_OPTION_KEEP_USERS );
+			add_site_option( 'mucd_log', MUCD_DEFAULT_OPTION_LOG );
+			add_site_option( 'mucd_log_dir', MUCD_Functions::get_primary_upload_dir() . MUCD_DEFAULT_OPTION_LOG_DIRNAME );
 		}
 
 		/**
@@ -28,24 +39,41 @@ if ( ! class_exists( 'MUCD_Option' ) ) {
 			delete_site_option( 'mucd_log_dir' );
 		}
 
+		public static function mod_copy_files() {
+			return get_site_option( 'mucd_copy_files', MUCD_DEFAULT_OPTION_COPY_FILES );
+		}
+
+		public static function set_mod_copy_files( $value ) {
+			update_site_option( 'mucd_copy_files', $value );
+		}
+
+		public static function mod_keep_users() {
+			return get_site_option( 'mucd_keep_users', MUCD_DEFAULT_OPTION_KEEP_USERS );
+		}
+
+		public static function set_mod_keep_users( $value ) {
+			update_site_option( 'mucd_keep_users', $value );
+		}
+
+		public static function mod_log() {
+			return get_site_option( 'mucd_log', MUCD_DEFAULT_OPTION_LOG );
+		}
+
+		public static function set_mod_log( $value ) {
+			update_site_option( 'mucd_log', $value );
+		}
+
 		/**
 		 * Get log directory option
 		 * @since 0.2.0
 		 * @return string the path
 		 */
-		public static function get_option_log_directory() {
-			return get_site_option( 'mucd_log_dir', MUCD_COMPLETE_PATH . '/logs/' );
+		public static function log_directory() {
+			return get_site_option( 'mucd_log_dir', MUCD_Functions::get_primary_upload_dir() . MUCD_DEFAULT_OPTION_LOG_DIRNAME );
 		}
 
-		/**
-		 * Get directories to exclude from file copy when duplicated site is primary site
-		 * @since 0.2.0
-		 * @return  array of string
-		 */
-		public static function get_primary_dir_exclude() {
-			return array(
-				'sites',
-			);
+		public static function set_log_directory( $value ) {
+			update_site_option( 'mucd_log_dir', $value );
 		}
 
 		/**
@@ -130,5 +158,57 @@ if ( ! class_exists( 'MUCD_Option' ) ) {
 			return apply_filters( 'mucd_default_primary_tables_to_copy', MUCD_Option::get_default_primary_tables_to_copy() );
 		}
 
+		/**
+		 * Save duplication options on network settings page
+		 * @since 0.2.0
+		 */
+		public static function save_admin_network_option_page() {
+
+			if ( ! empty( $_POST ) && isset( $_POST[ MUCD_SLUG_ACTION_SETTINGS ] ) ) {
+
+				if ( check_admin_referer( 'siteoptions' ) ) {
+
+					if ( isset( $_POST['mucd_copy_files']) && 'yes' == $_POST['mucd_copy_files'] ) {
+						update_site_option( 'mucd_copy_files', 'yes' );
+					}
+					else {
+						update_site_option( 'mucd_copy_files', 'no' );
+					}
+
+					if ( isset( $_POST['mucd_keep_users']) && 'yes' == $_POST['mucd_keep_users'] ) {
+						update_site_option( 'mucd_keep_users', 'yes' );
+					}
+					else {
+						update_site_option( 'mucd_keep_users', 'no' );
+					}
+
+					if ( isset( $_POST['mucd_log']) && 'yes' == $_POST['mucd_log'] ) {
+
+						update_site_option( 'mucd_log', 'yes' );
+
+						if ( isset( $_POST['mucd_log_dir'] ) ) {
+							update_site_option( 'mucd_log_dir', $_POST['mucd_log_dir'] );
+						}
+					}
+					else {
+						update_site_option( 'mucd_log', 'no' );
+					}
+
+				}
+			}
+
+		}
+
+		/**
+		 * Print duplication options on network settings page
+		 * @since 0.2.0
+		 */
+		public static function admin_network_option_page() {
+			require_once MUCD_PATH_TEMPLATES . '/network-admin-settings.php';
+		}
+
 	}
+
+	MUCD_Option::hooks();
+
 }

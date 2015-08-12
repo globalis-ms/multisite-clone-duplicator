@@ -98,7 +98,7 @@ if ( ! class_exists( 'MUCD_Log' ) ) {
 				if ( ! $this->fp = @fopen( $this->log_file_path, 'a' ) ) {
 					return false;
 				}
-				chmod( $this->log_file_path, 0777 );
+				//chmod( $this->log_file_path, 0777 );
 				return true;
 			}
 			return false;

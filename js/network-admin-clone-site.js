@@ -37,10 +37,8 @@ window.MUCD_Admin = window.MUCD_Admin || {};
         if( app.$.statusAdvOptions.val() == 'show-advanced-options'){
             app.toggle_advanced_options ( app.$.statusAdvOptions.val());
         }
-
-        if ( l10n.use_select2 ) {
-            app.select2_init();
-        }
+        
+        app.select2_init();
     };
 
     app.select2_init = function() {

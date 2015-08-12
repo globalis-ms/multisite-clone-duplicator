@@ -15,7 +15,7 @@ if ( ! class_exists( 'MUCD_Files' ) ) {
 			switch_to_blog( $from_site_id );
 			$wp_upload_info = wp_upload_dir();
 			$from_dir['path'] = str_replace( ' ', '\\ ', trailingslashit( $wp_upload_info['basedir'] ) );
-			$from_site_id == MUCD_PRIMARY_SITE_ID ? $from_dir['exclude'] = MUCD_Option::get_primary_dir_exclude() : $from_dir['exclude'] = array();
+			$from_site_id == MUCD_PRIMARY_SITE_ID ? $from_dir['exclude'] = array( 'sites' ) : $from_dir['exclude'] = array();
 
 			// Switch to Destination site and get uploads info
 			switch_to_blog( $to_site_id );
