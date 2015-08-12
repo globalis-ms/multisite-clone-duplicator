@@ -6,7 +6,7 @@
  * Author:              Julien OGER, Pierre DARGHAM, GLOBALIS media systems
  * Author URI:          https://github.com/pierre-dargham/multisite-clone-duplicator
  *
- * Version:             1.4.0
+ * Version:             2.0.0.a.1
  * Requires at least:   4.0.0
  * Tested up to:        4.2.4
  */
@@ -47,7 +47,7 @@ if ( ! class_exists( 'MUCD' ) ) {
 		/**
 		 * Plugin's version number
 		 */
-		const VERSION = '1.4.0';
+		const VERSION = '2.0.0.a.1';
 
 		/**
 		 * Register hooks used by the plugin
