@@ -94,7 +94,7 @@ if ( ! class_exists( 'MUCD_Duplicate' ) ) {
 				do_action( 'mucd_after_copy_users', $from_site_id, $to_site_id );
 			}
 
-			$form_message['msg'] = MUCD_NETWORK_PAGE_DUPLICATE_NOTICE_CREATED;
+			$form_message['msg'] = __( 'New site was created', MUCD_DOMAIN );
 			$form_message['site_id'] = $to_site_id;
 
 			MUCD_Duplicate::write_log( 'End site duplication : new site ID = ' . $to_site_id );
@@ -127,7 +127,7 @@ if ( ! class_exists( 'MUCD_Duplicate' ) ) {
 						++$i;
 						$username = $current_site->domain . $i;
 						if( $i > 999 ) {
-							return new WP_Error( 'file_copy', MUCD_NETWORK_PAGE_DUPLICATE_ADMIN_ERROR_CREATE_USER );
+							return new WP_Error( 'file_copy', __( 'There was an error creating the user.', MUCD_DOMAIN ) );
 						}
 					}
 				}
@@ -135,7 +135,7 @@ if ( ! class_exists( 'MUCD_Duplicate' ) ) {
 
 				$user_id = wpmu_create_user( $username, $password, $email );
 				if ( false == $user_id ) {
-					return new WP_Error( 'file_copy', MUCD_NETWORK_PAGE_DUPLICATE_ADMIN_ERROR_CREATE_USER );
+					return new WP_Error( 'file_copy', __( 'There was an error creating the user.', MUCD_DOMAIN ) );
 				}
 				else {
 					wp_new_user_notification( $user_id, $password );

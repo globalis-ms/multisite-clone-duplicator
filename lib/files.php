@@ -123,12 +123,12 @@ if ( ! class_exists( 'MUCD_Files' ) ) {
 		public static function mkdir_error( $dir_path ) {
 			$error_1 = 'ERROR DURING FILE COPY : CANNOT CREATE ' . $dir_path;
 			MUCD_Duplicate::write_log( $error_1 );
-			$error_2 = sprintf( MUCD_NETWORK_PAGE_DUPLICATE_COPY_FILE_ERROR , MUCD_Functions::get_primary_upload_dir() );
+			$error_2 = sprintf( __( 'Failed to copy files : check permissions on <strong>%s</strong>', MUCD_DOMAIN ) , MUCD_Functions::get_primary_upload_dir() );
 			MUCD_Duplicate::write_log( $error_2 );
 			MUCD_Duplicate::write_log( 'Duplication interrupted on FILE COPY ERROR' );
 			echo '<br />Duplication failed :<br /><br />' . $error_1 . '<br /><br />' . $error_2 . '<br /><br />';
 			if ( $log_url = MUCD_Duplicate::log_url() ) {
-				echo '<a href="' . $log_url . '">' . MUCD_NETWORK_PAGE_DUPLICATE_VIEW_LOG . '</a>';
+				echo '<a href="' . $log_url . '">' . __( 'View log', MUCD_DOMAIN ) . '</a>';
 			}
 			MUCD_Functions::remove_blog( self::$to_site_id );
 			wp_die();

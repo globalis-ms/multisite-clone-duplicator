@@ -7,8 +7,8 @@
  * Author URI:          https://github.com/pierre-dargham/multisite-clone-duplicator
  *
  * Version:             1.4.0
- * Requires at least:   3.5.0
- * Tested up to:        4.1.2
+ * Requires at least:   4.0.0
+ * Tested up to:        4.2.4
  */
 
 // Block direct requests
@@ -25,9 +25,6 @@ if ( ! class_exists( 'MUCD' ) ) {
 
 	// Load textdomain
 	load_plugin_textdomain( MUCD_DOMAIN, null, MUCD_PATH . '/language/' );
-
-	// Load language
-	require_once MUCD_COMPLETE_PATH . '/include/lang.php';
 
 	// Load Functions
 	require_once MUCD_COMPLETE_PATH . '/lib/functions.php';
@@ -60,8 +57,6 @@ if ( ! class_exists( 'MUCD' ) ) {
 			register_activation_hook( __FILE__, array( __CLASS__, 'activate' ) );
 			register_deactivation_hook( __FILE__, array( __CLASS__, 'deactivate' ) );
 			register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
-
-			add_action( 'init', array( __CLASS__, 'init' ) );
 			add_action( 'admin_init', array( __CLASS__, 'check_if_multisite' ) );
 		}
 
@@ -99,12 +94,7 @@ if ( ! class_exists( 'MUCD' ) ) {
 			MUCD_Option::delete_options();
 		}
 
-		/**
-		 * Plugin init
-		 */
-		public static function init() {
-			 // Nothing for now.
-		}
 	}
+
 	MUCD::hooks();
 }

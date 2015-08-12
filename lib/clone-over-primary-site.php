@@ -63,7 +63,7 @@ if ( ! class_exists( 'MUCD_Clone_Over_Primary' ) ) {
 				do_action( 'mucd_after_copy_users', $from_site_id, MUCD_PRIMARY_SITE_ID );
 			}
 
-			$form_message['msg'] = MUCD_NETWORK_PAGE_DUPLICATE_NOTICE_CREATED;
+			$form_message['msg'] = __( 'New site was created', MUCD_DOMAIN );
 			$form_message['site_id'] = MUCD_PRIMARY_SITE_ID;
 
 			update_blog_option( MUCD_PRIMARY_SITE_ID, 'mucd_duplicated_site_id', $from_site_id );

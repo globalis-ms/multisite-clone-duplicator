@@ -515,7 +515,7 @@ if ( ! class_exists( 'MUCD_Data' ) ) {
 			MUCD_Duplicate::write_log( 'Duplication interrupted on SQL ERROR' );
 			echo '<br />Duplication failed :<br /><br />' . $error_1 . '<br /><br />' . $error_2 . '<br /><br />';
 			if ( $log_url = MUCD_Duplicate::log_url() ) {
-				echo '<a href="' . $log_url . '">' . MUCD_NETWORK_PAGE_DUPLICATE_VIEW_LOG . '</a>';
+				echo '<a href="' . $log_url . '">' . __( 'View log', MUCD_DOMAIN ) . '</a>';
 			}
 			MUCD_Functions::remove_blog( self::$to_site_id );
 			wp_die();

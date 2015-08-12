@@ -18,23 +18,23 @@
 
 		<table class="form-table">
 		   <tr class="form-required">
-				<th scope='row'><?php echo MUCD_NETWORK_PAGE_DUPLICATE_FIELD_SOURCE ; ?></th>
+				<th scope='row'><?php echo __( 'Original site to copy', MUCD_DOMAIN ) ; ?></th>
 				<td>
 					<?php echo $select_site_list; ?>
 				</td>
 			</tr>
 
 			<tr>
-				<th scope="row"><?php echo MUCD_NETWORK_PAGE_DUPLICATE_FILES; ?></th>
+				<th scope="row"><?php echo __( 'Files', MUCD_DOMAIN ); ?></th>
 				<td>
-					<label><input <?php checked( get_site_option( 'mucd_copy_files', 'yes' ), 'yes' ); ?> name="site[copy_files]" type="checkbox" value="yes" /><?php echo MUCD_NETWORK_PAGE_DUPLICATE_FILES_TEXT_1; ?></label>
+					<label><input <?php checked( get_site_option( 'mucd_copy_files', 'yes' ), 'yes' ); ?> name="site[copy_files]" type="checkbox" value="yes" /><?php echo __( 'Duplicate files from duplicated site upload directory', MUCD_DOMAIN ); ?></label>
 				</td>
 			</tr>
 
 			<tr>
-				<th scope="row"><?php echo MUCD_NETWORK_PAGE_DUPLICATE_USERS; ?></th>
+				<th scope="row"><?php echo __( 'Users and roles', MUCD_DOMAIN ); ?></th>
 				<td>
-					<label><input id="site_keep_users" <?php checked( get_site_option( 'mucd_keep_users', 'yes' ), 'yes' ); ?> name="site[keep_users]" type="checkbox" value="yes" /><?php echo MUCD_NETWORK_PAGE_DUPLICATE_USERS_TEXT_1; ?></label>
+					<label><input id="site_keep_users" <?php checked( get_site_option( 'mucd_keep_users', 'yes' ), 'yes' ); ?> name="site[keep_users]" type="checkbox" value="yes" /><?php echo __( 'Keep users and roles from duplicated site', MUCD_DOMAIN ); ?></label>
 				</td>
 			</tr>
 

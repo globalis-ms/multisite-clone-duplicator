@@ -47,7 +47,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				$wp_admin_bar->add_menu( array(
 					'parent' => 'network-admin',
 					'id'     => 'network-admin-duplicate',
-					'title'  => MUCD_NETWORK_MENU_DUPLICATION,
+					'title'  => __( 'Duplication', MUCD_DOMAIN ),
 					'href'   => network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION ),
 				) );
 
@@ -57,7 +57,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 					$wp_admin_bar->add_menu( array(
 						'parent' => $menu_id,
 						'id'     => $menu_id . '-duplicate',
-						'title'  => MUCD_NETWORK_MENU_DUPLICATE,
+						'title'  => __( 'Duplicate', MUCD_DOMAIN ),
 						'href'   => network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION .'&amp;id=' . $blog->userblog_id ),
 					) );
 				}
@@ -73,7 +73,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		 */
 		public static function add_site_row_action( $actions, $blog_id ) {
 			$actions = array_merge( $actions, array(
-				'duplicate_link' => '<a href="'. network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION .'&amp;id=' . $blog_id ).'">'. MUCD_NETWORK_MENU_DUPLICATE.'</a>'
+				'duplicate_link' => '<a href="'. network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION .'&amp;id=' . $blog_id ).'">'. __( 'Duplicate', MUCD_DOMAIN ).'</a>'
 			));
 			return $actions;
 		}
@@ -84,7 +84,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		* @return [type] [description]
 		*/
 		public static function network_menu_add_duplicate() {
-			add_submenu_page( 'sites.php', MUCD_NETWORK_PAGE_DUPLICATE_TITLE, MUCD_NETWORK_MENU_DUPLICATE, 'manage_sites', MUCD_SLUG_NETWORK_ACTION, array( __CLASS__, 'network_page_admin_duplicate_site' ) );
+			add_submenu_page( 'sites.php', __( 'Duplicate Site', MUCD_DOMAIN ), __( 'Duplicate', MUCD_DOMAIN ), 'manage_sites', MUCD_SLUG_NETWORK_ACTION, array( __CLASS__, 'network_page_admin_duplicate_site' ) );
 		}
 
 		/**
@@ -105,7 +105,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 			// Capabilities test
 			if ( ! current_user_can( 'manage_sites' ) ) {
-				wp_die( MUCD_GAL_ERROR_CAPABILITIES );
+				wp_die( __( 'Sorry, you don\'t have permissions to use this page.', MUCD_DOMAIN ) );
 			}
 
 			// Form Data
@@ -154,7 +154,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 			// Capabilities test
 			if ( ! current_user_can( 'manage_sites' ) ) {
-				wp_die( MUCD_GAL_ERROR_CAPABILITIES );
+				wp_die( __( 'Sorry, you don\'t have permissions to use this page.', MUCD_DOMAIN ) );
 			}
 
 			// Form Data
@@ -265,7 +265,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				'id'   => $id,
 				'text' => isset( $blog_details->domain )
 					? $blog_details->domain . $blog_details->path
-					: MUCD_GENERAL_ERROR,
+					: __( 'ERROR', MUCD_DOMAIN ),
 				'details' => $blog_details,
 			);
 
@@ -306,11 +306,11 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 			echo '<div id="message" class="error">';
 			echo '    <p>';
 			if ( $log_dir == '' ) {
-				echo MUCD_LOG_ERROR;
+				echo __( 'The log file cannot be written', MUCD_DOMAIN );
 			}
 			else {
-				echo MUCD_CANT_WRITE_LOG . ' <strong>'. $log_dir .'</strong><br />';
-				echo MUCD_CHANGE_RIGHTS_LOG . '<br /><code>chmod 777 '. $log_dir .'</code>';
+				echo __( 'The log file cannot be written to location', MUCD_DOMAIN ) . ' <strong>'. $log_dir .'</strong><br />';
+				echo __( 'To enable logging, change permissions on log directory', MUCD_DOMAIN ) . '<br /><code>chmod 777 '. $log_dir .'</code>';
 			}
 			echo '    </p>';
 			echo '</div>';
@@ -333,11 +333,11 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				echo '      <strong>' . $form_message['msg'] . ' : ' . '</strong>';
 				switch_to_blog( $form_message['site_id'] );
 				$user = get_current_user_id();
-				echo '      <a href="' . get_dashboard_url( $user ) . '">' . MUCD_NETWORK_PAGE_DUPLICATE_DASHBOARD . '</a> - ';
-				echo '      <a href="' . get_site_url() . '">' . MUCD_NETWORK_PAGE_DUPLICATE_VISIT . '</a> - ';
-				echo '      <a href="' . admin_url( 'customize.php' ) . '">' .MUCD_NETWORK_CUSTOMIZE . '</a>';
+				echo '      <a href="' . get_dashboard_url( $user ) . '">' . __( 'Dashboard', MUCD_DOMAIN ) . '</a> - ';
+				echo '      <a href="' . get_site_url() . '">' .  __( 'Visit', MUCD_DOMAIN ) . '</a> - ';
+				echo '      <a href="' . admin_url( 'customize.php' ) . '">' .__( 'Customize', MUCD_DOMAIN ) . '</a>';
 				if ( $log_url = MUCD_Duplicate::log_url() ) {
-					echo ' - <a href="' . $log_url . '">' . MUCD_NETWORK_PAGE_DUPLICATE_VIEW_LOG . '</a>';
+					echo ' - <a href="' . $log_url . '">' . __( 'View log', MUCD_DOMAIN ) . '</a>';
 				}
 				restore_current_blog();
 				echo '  </p>';
@@ -382,16 +382,16 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				'use_select2'                 => $select2,
 				'debug'                       => $debug,
 				'nonce'                       => wp_create_nonce( 'mucd-fetch-sites' ),
-				'placeholder_text'            => MUCD_NETWORK_SELECT_SITE,
-				'placeholder_value_text'      => MUCD_JAVASCRIPT_REQUIRED,
-				'placeholder_no_results_text' => MUCD_NO_RESULTS,
-				'blogname'                    => MUCD_BLOGNAME,
-				'the_id'                      => MUCD_THE_ID,
-				'post_count'                  => MUCD_POST_COUNT,
-				'is_public'                   => MUCD_IS_PUBLIC,
-				'is_archived'                 => MUCD_IS_ARCHIVED,
-				'yes'                         => MUCD_YES,
-				'no'                          => MUCD_NO,
+				'placeholder_text'            => __( 'Start typing to search for a site', MUCD_DOMAIN ),
+				'placeholder_value_text'      => __( 'This feature will not work without javascript', MUCD_DOMAIN ),
+				'placeholder_no_results_text' => __( 'No results found', MUCD_DOMAIN ),
+				'blogname'                    => __( 'Site Name', MUCD_DOMAIN ),
+				'the_id'                      => __( 'ID', MUCD_DOMAIN ),
+				'post_count'                  => __( 'Post Count', MUCD_DOMAIN ),
+				'is_public'                   =>  __( 'Public', MUCD_DOMAIN ),
+				'is_archived'                 => __( 'Archived', MUCD_DOMAIN ),
+				'yes'                         => __( 'Yes', MUCD_DOMAIN ),
+				'no'                          => __( 'No', MUCD_DOMAIN ),
 			);
 
 			// Add select2 language option
@@ -439,7 +439,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				// format and check source
 				$data['from_site_id'] = intval( $data['source'] );
 				if ( $data['from_site_id'] < 1 || ! get_blog_details( $data['from_site_id'], false ) ) {
-					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_MISSING_FIELDS );
+					$error[] = new WP_Error( 'mucd_error', __( 'Missing fields', MUCD_DOMAIN ) );
 				}
 
 				$domain = '';
@@ -452,12 +452,12 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 					/** This filter is documented in wp-includes/ms-functions.php */
 					$subdirectory_reserved_names = apply_filters( 'subdirectory_reserved_names', array( 'page', 'comments', 'blog', 'files', 'feed' ) );
 					if ( in_array( $domain, $subdirectory_reserved_names ) ) {
-						$error[] = new WP_Error( 'mucd_error', sprintf( MUCD_NETWORK_PAGE_DUPLICATE_DOMAIN_ERROR_RESERVED_WORDS , implode( '</code>, <code>', $subdirectory_reserved_names ) ) );
+						$error[] = new WP_Error( 'mucd_error', sprintf( __( 'The following words are reserved for use by WordPress functions and cannot be used as blog names : <code>%s</code>', MUCD_DOMAIN ) , implode( '</code>, <code>', $subdirectory_reserved_names ) ) );
 					}
 				}
 
 				if ( empty( $domain ) ) {
-					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_DOMAIN_ERROR_REQUIRE );
+					$error[] = new WP_Error( 'mucd_error', __( 'Missing or invalid site address', MUCD_DOMAIN ) );
 				}
 				if ( is_subdomain_install() ) {
 					$newdomain = $domain . '.' . preg_replace( '|^www\.|', '', $current_site->domain );
@@ -469,19 +469,19 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 				// format and check title
 				if ( empty( $data['title'] ) ) {
-					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_TITLE_ERROR_REQUIRE );
+					$error[] = new WP_Error( 'mucd_error', __( 'Missing or invalid title', MUCD_DOMAIN ) );
 				}
 
 				// format and check email admin
 				if ( empty( $data['email'] ) ) {
-					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_EMAIL_MISSING );
+					$error[] = new WP_Error( 'mucd_error', __( 'Missing admin email address', MUCD_DOMAIN ) );
 				}
 				$valid_mail = sanitize_email( $data['email'] );
 				if ( is_email( $valid_mail ) ) {
 					$data['email'] = $valid_mail;
 				}
 				else {
-					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_EMAIL_ERROR_FORMAT );
+					$error[] = new WP_Error( 'mucd_error', __( 'Invalid admin email address', MUCD_DOMAIN ) );
 				}
 
 				$data['domain'] = $domain;
@@ -494,7 +494,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				$data['network_id'] = $current_site->id;
 
 				if ( isset( $data['log'] ) && 'yes' == $data['log'] && ( ! isset( $data['log-path'] ) || $data['log-path'] == '' || ! MUCD_Functions::valid_path( $data['log-path'] ) ) ) {
-					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_VIEW_LOG_PATH_EMPTY );
+					$error[] = new WP_Error( 'mucd_error', __( 'Missing or invalid log directory path', MUCD_DOMAIN ) );
 				}
 
 				if ( isset( $error[0] ) ) {
@@ -503,7 +503,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 			}
 
 			else {
-				$data['error'] = MUCD_GAL_ERROR_CAPABILITIES;
+				$data['error'] = __( 'Sorry, you don\'t have permissions to use this page.', MUCD_DOMAIN );
 			}
 
 			return $data;
@@ -541,11 +541,11 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				// format and check source
 				$data['from_site_id'] = intval( $data['source'] );
 				if ( $data['from_site_id'] < 2 || ! get_blog_details( $data['from_site_id'], false ) ) {
-					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_MISSING_FIELDS );
+					$error[] = new WP_Error( 'mucd_error', __( 'Missing fields', MUCD_DOMAIN ) );
 				}			
 
 				if ( isset( $data['log'] ) && 'yes' == $data['log'] && ( ! isset( $data['log-path'] ) || $data['log-path'] == '' || ! MUCD_Functions::valid_path( $data['log-path'] ) ) ) {
-					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_VIEW_LOG_PATH_EMPTY );
+					$error[] = new WP_Error( 'mucd_error', __( 'Missing or invalid log directory path', MUCD_DOMAIN ) );
 				}
 
 				if ( isset( $error[0] ) ) {
@@ -554,7 +554,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 			}
 
 			else {
-				$data['error'] = MUCD_GAL_ERROR_CAPABILITIES;
+				$data['error'] = __( 'Sorry, you don\'t have permissions to use this page.', MUCD_DOMAIN );
 			}
 
 			return $data;
