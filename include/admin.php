@@ -409,8 +409,6 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		public static function enqueue_script_network_settings() {
 			// Enqueue script for network settings page
 			wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network-admin-settings.js', array( 'jquery' ), MUCD::VERSION, true );
-			// Enqueue style for network settings page
-			wp_enqueue_style( 'mucd-duplicate-css', MUCD_URL . '/css/network-admin-settings.css', array(), MUCD::VERSION );
 		}
 
 		/**
