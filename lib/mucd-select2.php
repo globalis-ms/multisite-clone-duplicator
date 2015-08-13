@@ -13,14 +13,27 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		 * @since 2.0.0.a.1
 		 * @return string the output
 		 */
-		public static function select2_site_list() {
-			$source_id = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
+		public static function select2_site_list( $validated_data ) {
+
+			if( isset( $validated_data['from_site_id'] ) ) {
+				$source_id = $validated_data['from_site_id'];
+			}
+			else if ( isset( $_GET['id'] ) ) {
+				$source_id = intval( $_GET['id'] );
+			}
+			else {
+				$source_id = false;
+			}
+			
 			$select2_html = '<select name="site[source]" id="mucd-site-source">';
+
 			if ( $source_id ) {
 				$value = self::fetch_initial_value( $source_id );
 				$select2_html .= sprintf( '<option value="%s" selected="selected">%s</option>', esc_attr( $value['id'] ), esc_html( $value['text'] ) );
 			}
+
 			$select2_html .= '</select>';
+
 			return $select2_html;
 		}
 
@@ -52,13 +65,14 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				FROM
 					`$wpdb->blogs`
 				WHERE
-					`$path_or_domain` LIKE '%%%s%%'
+					( `$path_or_domain` LIKE '%%%s%%'
+						OR `blog_id` LIKE '%d%%' )
 					AND `site_id` = %d
 				LIMIT 10
 			";
 
 			// Get our sites based on the search string
-			$results = $wpdb->get_results( $wpdb->prepare( $query, esc_attr( $_GET['q'] ), $site_id ) );
+			$results = $wpdb->get_results( $wpdb->prepare( $query, esc_attr( $_GET['q'] ), esc_attr( $_GET['q'] ), $site_id ) );
 
 			// bail if we found no results
 			if ( empty( $results ) ) {

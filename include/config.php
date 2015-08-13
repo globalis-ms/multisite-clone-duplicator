@@ -48,10 +48,10 @@ define( 'MUCD_SLUG_ACTION_SETTINGS', '_mucdsettings' );
 
 define( 'MUCD_PRIMARY_SITE_ID', 1 );
 
-define( 'MUCD_DEFAULT_OPTION_COPY_FILES', 'yes' );
+define( 'MUCD_DEFAULT_OPTION_COPY_FILES', true );
 
-define( 'MUCD_DEFAULT_OPTION_KEEP_USERS', 'yes' );
+define( 'MUCD_DEFAULT_OPTION_KEEP_USERS', true );
 
-define( 'MUCD_DEFAULT_OPTION_LOG', 'no' );
+define( 'MUCD_DEFAULT_OPTION_LOG', false );
 
 define( 'MUCD_DEFAULT_OPTION_LOG_DIRNAME', '/multisite-clone-duplicator-logs/' );

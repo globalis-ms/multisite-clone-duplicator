@@ -169,29 +169,29 @@ if ( ! class_exists( 'MUCD_Option' ) ) {
 				if ( check_admin_referer( 'siteoptions' ) ) {
 
 					if ( isset( $_POST['mucd_copy_files']) && 'yes' == $_POST['mucd_copy_files'] ) {
-						update_site_option( 'mucd_copy_files', 'yes' );
+						self::set_mod_copy_files( true );
 					}
 					else {
-						update_site_option( 'mucd_copy_files', 'no' );
+						self::set_mod_copy_files( false );
 					}
 
 					if ( isset( $_POST['mucd_keep_users']) && 'yes' == $_POST['mucd_keep_users'] ) {
-						update_site_option( 'mucd_keep_users', 'yes' );
+						self::set_mod_keep_users( true );
 					}
 					else {
-						update_site_option( 'mucd_keep_users', 'no' );
+						self::set_mod_keep_users( false );
 					}
 
 					if ( isset( $_POST['mucd_log']) && 'yes' == $_POST['mucd_log'] ) {
 
-						update_site_option( 'mucd_log', 'yes' );
+						self::set_mod_log( true );
 
 						if ( isset( $_POST['mucd_log_dir'] ) ) {
-							update_site_option( 'mucd_log_dir', $_POST['mucd_log_dir'] );
+							self::set_log_directory( $_POST['mucd_log_dir'] );
 						}
 					}
 					else {
-						update_site_option( 'mucd_log', 'no' );
+						self::set_mod_log( false );
 					}
 
 				}

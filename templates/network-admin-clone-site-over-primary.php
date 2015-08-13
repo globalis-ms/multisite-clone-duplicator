@@ -1,4 +1,13 @@
-<?php global $current_site; ?>
+<?php
+
+global $current_site;
+
+$data['copy_files'] = isset( $validated_data['copy_files'] ) ? checked( $validated_data['copy_files'], true, false ) : checked( MUCD_Option::mod_copy_files(), true, false );
+$data['keep_users'] = isset( $validated_data['keep_users'] ) ? checked( $validated_data['keep_users'], true, false ) : checked( MUCD_Option::mod_keep_users(), true, false );
+$data['log']        = isset( $validated_data['log'] ) ? checked( $validated_data['log'], true, false ) : checked( MUCD_Option::mod_log(), true, false );
+$data['log-path']   = isset( $validated_data['log-path'] ) ? $validated_data['log-path'] : MUCD_Option::log_directory();
+
+?>
 
 <div class="wrap">
 	<h2 id="duplicate-site"><?php _e( 'Clone over primary site', MUCD_DOMAIN ) ?></h2>
@@ -32,22 +41,22 @@
 			<tr>
 				<th scope="row"><?php _e( 'Files', MUCD_DOMAIN ); ?></th>
 				<td>
-					<label><input <?php checked( get_site_option( 'mucd_copy_files', 'yes' ), 'yes' ); ?> name="site[copy_files]" type="checkbox" value="yes" /><?php _e( 'Duplicate files from duplicated site upload directory', MUCD_DOMAIN ); ?></label>
+					<label><input <?php echo $data['copy_files']; ?> id="site_copy_files" name="site[copy_files]" type="checkbox" value="yes" /><?php _e( 'Duplicate files from duplicated site upload directory', MUCD_DOMAIN ); ?></label>
 				</td>
 			</tr>
 
 			<tr>
 				<th scope="row"><?php _e( 'Users and roles', MUCD_DOMAIN ); ?></th>
 				<td>
-					<label><input id="site_keep_users" <?php checked( get_site_option( 'mucd_keep_users', 'yes' ), 'yes' ); ?> name="site[keep_users]" type="checkbox" value="yes" /><?php _e( 'Keep users and roles from duplicated site', MUCD_DOMAIN ); ?></label>
+					<label><input <?php echo $data['keep_users']; ?> id="site_keep_users" name="site[keep_users]" type="checkbox" value="yes" /><?php _e( 'Keep users and roles from duplicated site', MUCD_DOMAIN ); ?></label>
 				</td>
 			</tr>
 
 			<tr>
 				<th scope="row"><?php _e( 'Log', MUCD_DOMAIN ); ?></th>
 				<td>
-					<label><input <?php checked( get_site_option( 'mucd_log', 'no' ), 'yes' ); ?> id="log-box" name="site[log]" type="checkbox" value="yes" /><?php _e( 'Generate log file', MUCD_DOMAIN ); ?></label>
-					<br /><br /><label><?php _e( 'Log directory', MUCD_DOMAIN ); ?> : <input id="log-path" name="site[log-path]" type="text"  class="large-text" value="<?php echo MUCD_Option::log_directory(); ?>"/></label>
+					<label><input <?php echo $data['log']; ?> id="log-box" name="site[log]" type="checkbox" value="yes" /><?php _e( 'Generate log file', MUCD_DOMAIN ); ?></label>
+					<br /><br /><label><?php _e( 'Log directory', MUCD_DOMAIN ); ?> : <input id="log-path" name="site[log-path]" type="text"  class="large-text" value="<?php echo $data['log-path']; ?>"/></label>
 				</td>
 			</tr>
 		</table>

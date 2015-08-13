@@ -142,6 +142,9 @@ if ( ! class_exists( 'MUCD_Functions' ) ) {
 		 * @since 0.2.0
 		 */
 		public static function print_notices() {
+
+			global $form_message;
+			
 			if ( MUCD_Duplicate::log_error() ) {
 				require_once MUCD_PATH_TEMPLATES . '/message-clone-log-error.php';
 			}

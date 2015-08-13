@@ -50,9 +50,16 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 				$wp_admin_bar->add_menu( array(
 					'parent' => 'network-admin',
-					'id'     => 'network-admin-duplicate',
+					'id'     => 'network-admin-clone-site',
 					'title'  => __( 'Duplication', MUCD_DOMAIN ),
 					'href'   => network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION ),
+				) );
+
+				$wp_admin_bar->add_menu( array(
+					'parent' => 'network-admin',
+					'id'     => 'network-admin-clone-site-over-primary',
+					'title'  => __( 'Primary site', MUCD_DOMAIN ),
+					'href'   => network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION_CLONE_OVER ),
 				) );
 
 				foreach ( (array) $wp_admin_bar->user->blogs as $blog ) {
@@ -60,10 +67,20 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 					$menu_id  = 'blog-' . $blog->userblog_id;
 					$wp_admin_bar->add_menu( array(
 						'parent' => $menu_id,
-						'id'     => $menu_id . '-duplicate',
+						'id'     => $menu_id . 'clone-site',
 						'title'  => __( 'Duplicate', MUCD_DOMAIN ),
 						'href'   => network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION .'&amp;id=' . $blog->userblog_id ),
 					) );
+
+					if ( MUCD_PRIMARY_SITE_ID == $blog->userblog_id ) {
+						$menu_id  = 'blog-' . $blog->userblog_id;
+						$wp_admin_bar->add_menu( array(
+							'parent' => $menu_id,
+							'id'     => $menu_id . 'clone-site-over-primary',
+							'title'  => __( 'Clone over', MUCD_DOMAIN ),
+							'href'   => network_admin_url( 'sites.php?page='. MUCD_SLUG_NETWORK_ACTION_CLONE_OVER ),
+						) );
+					}
 				}
 			}
 
@@ -80,21 +97,24 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				wp_die( __( 'Sorry, you don\'t have permissions to use this page.', MUCD_DOMAIN ) );
 			}
 
+			$validated_data = array();
+
 			// Manage Form Post
 			if ( isset($_REQUEST['action']) && MUCD_SLUG_ACTION_DUPLICATE == $_REQUEST['action'] && ! empty($_POST) ) {
 
-				$data = MUCD_Data_Validation::check_form_clone_site();
+				global $form_message;
+				$validated_data = MUCD_Data_Validation::check_form_clone_site();
 
-				if ( isset($data['error'] ) ) {
-					$form_message['error'] = $data['error']->get_error_message();
+				if ( isset( $validated_data['error'] ) ) {
+					$form_message['error'] = $validated_data['error']->get_error_message();
 				}
 				else {
-					$form_message = MUCD_Duplicate::duplicate_site( $data );
+					$form_message = MUCD_Duplicate::duplicate_site( $validated_data );
 				}
 
 			}
 
-			$select_site_list = MUCD_Select2::select2_site_list();
+			$select_site_list = MUCD_Select2::select2_site_list( $validated_data );
 
 			require_once MUCD_PATH_TEMPLATES . '/network-admin-clone-site.php';
 		}
@@ -106,21 +126,25 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				wp_die( __( 'Sorry, you don\'t have permissions to use this page.', MUCD_DOMAIN ) );
 			}
 
+			$validated_data = array();
+
 			// Manage Form Post
 			if ( isset($_REQUEST['action']) && MUCD_SLUG_ACTION_DUPLICATE_OVER_PRIMARY == $_REQUEST['action'] && ! empty($_POST) ) {
 
-				$data = MUCD_Data_Validation::check_form_clone_site_over_primary();
+				global $form_message;
 
-				if ( isset($data['error'] ) ) {
-					$form_message['error'] = $data['error']->get_error_message();
+				$validated_data = MUCD_Data_Validation::check_form_clone_site_over_primary();
+
+				if ( isset($validated_data['error'] ) ) {
+					$form_message['error'] = $validated_data['error']->get_error_message();
 				}
 				else {
-					$form_message = MUCD_Duplicate::duplicate_site_over_primary( $data );
+					$form_message = MUCD_Duplicate::duplicate_site_over_primary( $validated_data );
 				}
 
 			}
 
-			$select_site_list = MUCD_Select2::select2_site_list();
+			$select_site_list = MUCD_Select2::select2_site_list( $validated_data );
 
 			require_once MUCD_PATH_TEMPLATES . '/network-admin-clone-site-over-primary.php';
 		}
