@@ -1,8 +1,8 @@
 <?php
 
-if ( ! class_exists( 'MUCD_Data' ) ) {
+if ( ! class_exists( 'MUCD_Clone_DB' ) ) {
 
-	class MUCD_Data {
+	class MUCD_Clone_DB {
 
 		private static $to_site_id;
 
@@ -490,8 +490,8 @@ if ( ! class_exists( 'MUCD_Data' ) ) {
 			}
 
 			if ( $log ) {
-				MUCD_Duplicate::write_log( 'SQL :' .$sql_query );
-				MUCD_Duplicate::write_log( 'Result :' . var_export( $results, true ) );
+				MUCD_Log::write( 'SQL :' .$sql_query );
+				MUCD_Log::write( 'Result :' . var_export( $results, true ) );
 			}
 
 			if ( $wpdb->last_error != '' ) {
@@ -509,12 +509,12 @@ if ( ! class_exists( 'MUCD_Data' ) ) {
 		 */
 		public static function sql_error( $sql_query, $sql_error ) {
 			$error_1 = 'ERROR SQL ON : ' . $sql_query;
-			MUCD_Duplicate::write_log( $error_1 );
+			MUCD_Log::write( $error_1 );
 			$error_2 = 'WPDB ERROR : ' . $sql_error;
-			MUCD_Duplicate::write_log( $error_2 );
-			MUCD_Duplicate::write_log( 'Duplication interrupted on SQL ERROR' );
+			MUCD_Log::write( $error_2 );
+			MUCD_Log::write( 'Duplication interrupted on SQL ERROR' );
 			echo '<br />Duplication failed :<br /><br />' . $error_1 . '<br /><br />' . $error_2 . '<br /><br />';
-			if ( $log_url = MUCD_Duplicate::log_url() ) {
+			if ( $log_url = MUCD_Log::get_url() ) {
 				echo '<a href="' . $log_url . '">' . __( 'View log', MUCD_DOMAIN ) . '</a>';
 			}
 			MUCD_Functions::remove_blog( self::$to_site_id );

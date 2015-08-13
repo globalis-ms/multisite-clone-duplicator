@@ -18,7 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'MUCD' ) ) {
 
-	require_once realpath( dirname( __FILE__ ) ) . '/include/load.php';
+	if ( defined( 'WP_CLI' ) && WP_CLI ) {
+		require_once realpath( dirname( __FILE__ ) ) . '/include/load-cli.php';
+	}
+	else {
+		require_once realpath( dirname( __FILE__ ) ) . '/include/load.php';
+	}
 
 
 	/**
@@ -44,9 +49,6 @@ if ( ! class_exists( 'MUCD' ) ) {
 
 			// Uninstall hook
 			register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
-
-			// Admin init hook (runs each time the dashboard is loaded)
-			add_action( 'admin_init', array( 'MUCD_Functions', 'check_if_multisite' ) );
 		}
 
 		/**

@@ -1,8 +1,8 @@
 <?php
 
-if ( ! class_exists( 'MUCD_Files' ) ) {
+if ( ! class_exists( 'MUCD_Clone_Files' ) ) {
 
-	class MUCD_Files {
+	class MUCD_Clone_Files {
 
 		/**
 		 * Copy files from one site to another
@@ -34,11 +34,11 @@ if ( ! class_exists( 'MUCD_Files' ) ) {
 			$dirs = apply_filters( 'mucd_copy_dirs', $dirs, $from_site_id, $to_site_id );
 
 			foreach ( $dirs as $dir ) {
-				if ( isset( $dir['to_dir_path'] ) && ! MUCD_Files::init_dir( $dir['to_dir_path'] ) ) {
-					MUCD_Files::mkdir_error( $dir['to_dir_path'] );
+				if ( isset( $dir['to_dir_path'] ) && ! MUCD_Clone_Files::init_dir( $dir['to_dir_path'] ) ) {
+					MUCD_Clone_Files::mkdir_error( $dir['to_dir_path'] );
 				}
-				MUCD_Duplicate::write_log( 'Copy files from ' . $dir['from_dir_path'] . ' to ' . $dir['to_dir_path'] );
-				MUCD_Files::recurse_copy( $dir['from_dir_path'], $dir['to_dir_path'], $dir['exclude_dirs'] );
+				MUCD_Log::write( 'Copy files from ' . $dir['from_dir_path'] . ' to ' . $dir['to_dir_path'] );
+				MUCD_Clone_Files::recurse_copy( $dir['from_dir_path'], $dir['to_dir_path'], $dir['exclude_dirs'] );
 			}
 
 			return true;
@@ -58,7 +58,7 @@ if ( ! class_exists( 'MUCD_Files' ) ) {
 				if ( ( $file != '.' ) && ( $file != '..' ) ) {
 					if ( is_dir( $src . '/' . $file ) ) {
 						if ( ! in_array( $file, $exclude_dirs ) ) {
-							MUCD_Files::recurse_copy( $src . '/' . $file,$dst . '/' . $file );
+							MUCD_Clone_Files::recurse_copy( $src . '/' . $file,$dst . '/' . $file );
 						}
 					}
 					else {
@@ -122,16 +122,55 @@ if ( ! class_exists( 'MUCD_Files' ) ) {
 		 */
 		public static function mkdir_error( $dir_path ) {
 			$error_1 = 'ERROR DURING FILE COPY : CANNOT CREATE ' . $dir_path;
-			MUCD_Duplicate::write_log( $error_1 );
+			MUCD_Log::write( $error_1 );
 			$error_2 = sprintf( __( 'Failed to copy files : check permissions on <strong>%s</strong>', MUCD_DOMAIN ) , MUCD_Functions::get_primary_upload_dir() );
-			MUCD_Duplicate::write_log( $error_2 );
-			MUCD_Duplicate::write_log( 'Duplication interrupted on FILE COPY ERROR' );
+			MUCD_Log::write( $error_2 );
+			MUCD_Log::write( 'Duplication interrupted on FILE COPY ERROR' );
 			echo '<br />Duplication failed :<br /><br />' . $error_1 . '<br /><br />' . $error_2 . '<br /><br />';
-			if ( $log_url = MUCD_Duplicate::log_url() ) {
+			if ( $log_url = MUCD_Log::get_url() ) {
 				echo '<a href="' . $log_url . '">' . __( 'View log', MUCD_DOMAIN ) . '</a>';
 			}
 			MUCD_Functions::remove_blog( self::$to_site_id );
 			wp_die();
+		}
+
+		public static function empty_primary_dir() {
+
+			switch_to_blog( MUCD_PRIMARY_SITE_ID );
+			$wp_upload_info = wp_upload_dir();
+			$dir = str_replace( ' ', '\\ ', trailingslashit( $wp_upload_info['basedir'] ) );
+			restore_current_blog();
+
+			self::rrmdir_inside_and_exclude( $dir, array( 'sites' ) );
+		}
+
+		public static function copy_dirs_over_primary( $dirs ) {
+
+			switch_to_blog( MUCD_PRIMARY_SITE_ID );
+			$wp_upload_info = wp_upload_dir();
+			$dir = str_replace( ' ', '\\ ', trailingslashit( $wp_upload_info['basedir'] ) );
+			restore_current_blog();
+
+			$dirs[0]['to_dir_path'] = $dir;
+
+			return $dirs;
+		}
+
+		public static function rrmdir_inside_and_exclude( $dir, $exclude ) {
+			if ( is_dir( $dir ) ) {
+				$objects = scandir( $dir );
+				foreach ( $objects as $object ) {
+					if ( $object != '.' && $object != '..' && ! in_array( $object, $exclude ) ) {
+						if ( 'dir' == filetype( $dir . '/' . $object ) ) {
+							MUCD_Clone_Files::rrmdir( $dir . '/' . $object );
+						}
+						else {
+							unlink( $dir . '/' . $object );
+						}
+				   	}
+				}
+				reset( $objects );
+		   	}
 		}
 
 	}

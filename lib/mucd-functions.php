@@ -55,7 +55,7 @@ if ( ! class_exists( 'MUCD_Functions' ) ) {
 			wpmu_delete_blog( $blog_id, true );
 
 			// wpmu_delete_blog leaves an empty site upload directory, that we want to remove :
-			MUCD_Files::rrmdir( $dir );
+			MUCD_Clone_Files::rrmdir( $dir );
 		}
 
 		/**
@@ -145,13 +145,22 @@ if ( ! class_exists( 'MUCD_Functions' ) ) {
 
 			global $form_message;
 			
-			if ( MUCD_Duplicate::log_error() ) {
+			if ( MUCD_Log::has_error() ) {
 				require_once MUCD_PATH_TEMPLATES . '/message-clone-log-error.php';
 			}
 
 			if ( isset( $form_message ) ) {
 				require_once MUCD_PATH_TEMPLATES . '/message-clone-result.php';
 			}
+		}
+
+		/**
+		 * Bypass limit server if possible
+		 * @since 0.2.0
+		 */
+		public static function bypass_server_limit() {
+			@ini_set( 'memory_limit','1024M' );
+			@ini_set( 'max_execution_time','0' );
 		}
 
 	}

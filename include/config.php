@@ -28,6 +28,7 @@ define( 'MUCD_URL_PLUGIN_SCRIPTS', MUCD_URL_PLUGIN . '/js' );
 define( 'MUCD_PATH_TEMPLATES', MUCD_PATH_PLUGIN . '/templates' );
 define( 'MUCD_URL_PLUGIN_TEMPLATES', MUCD_URL_PLUGIN . '/templates' );
 
+define( 'MUCD_PATH_CLI', MUCD_PATH_PLUGIN . '/wp-cli' );
 
 
 /* ------------------- SLUGS --------------------------- */

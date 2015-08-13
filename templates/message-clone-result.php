@@ -16,7 +16,7 @@ if ( isset ( $form_message ) ) {
 		echo '      <a href="' . get_dashboard_url( $user ) . '">' . __( 'Dashboard', MUCD_DOMAIN ) . '</a> - ';
 		echo '      <a href="' . get_site_url() . '">' .  __( 'Visit', MUCD_DOMAIN ) . '</a> - ';
 		echo '      <a href="' . admin_url( 'customize.php' ) . '">' .__( 'Customize', MUCD_DOMAIN ) . '</a>';
-		if ( $log_url = MUCD_Duplicate::log_url() ) {
+		if ( $log_url = MUCD_Log::get_url() ) {
 			echo ' - <a href="' . $log_url . '">' . __( 'View log', MUCD_DOMAIN ) . '</a>';
 		}
 		restore_current_blog();

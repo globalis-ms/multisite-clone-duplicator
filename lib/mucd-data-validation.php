@@ -1,8 +1,8 @@
 <?php
 
-if ( ! class_exists( 'MUCD_Data_Validation' ) ) {
+if ( ! class_exists( 'MUCD_Clone_DB_Validation' ) ) {
 
-	class MUCD_Data_Validation {
+	class MUCD_Clone_DB_Validation {
 
 		/**
 		 * Duplication form validation

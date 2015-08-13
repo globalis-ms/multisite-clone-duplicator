@@ -103,13 +103,13 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 			if ( isset($_REQUEST['action']) && MUCD_SLUG_ACTION_DUPLICATE == $_REQUEST['action'] && ! empty($_POST) ) {
 
 				global $form_message;
-				$validated_data = MUCD_Data_Validation::check_form_clone_site();
+				$validated_data = MUCD_Clone_DB_Validation::check_form_clone_site();
 
 				if ( isset( $validated_data['error'] ) ) {
 					$form_message['error'] = $validated_data['error']->get_error_message();
 				}
 				else {
-					$form_message = MUCD_Duplicate::duplicate_site( $validated_data );
+					$form_message = MUCD_Clone_Site::clone_site( $validated_data );
 				}
 
 			}
@@ -133,13 +133,13 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 				global $form_message;
 
-				$validated_data = MUCD_Data_Validation::check_form_clone_site_over_primary();
+				$validated_data = MUCD_Clone_DB_Validation::check_form_clone_site_over_primary();
 
 				if ( isset($validated_data['error'] ) ) {
 					$form_message['error'] = $validated_data['error']->get_error_message();
 				}
 				else {
-					$form_message = MUCD_Duplicate::duplicate_site_over_primary( $validated_data );
+					$form_message = MUCD_Clone_Site_Over_Primary::clone_site_over_primary( $validated_data );
 				}
 
 			}
