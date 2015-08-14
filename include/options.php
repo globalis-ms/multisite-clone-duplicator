@@ -103,34 +103,6 @@ if ( ! class_exists( 'MUCD_Option' ) ) {
 		}
 
 		/**
-		 * Get default fields to scan for an update after data copy
-		 * @since 0.2.0
-		 * @return array '%table_name' => array('%field_name_1','%field_name_2','%field_name_3', ...)
-		 */
-		public static function get_default_fields_to_update() {
-			return array(
-				'commentmeta' 			=> array(),
-				'comments' 				=> array(),
-				'links' 				=> array( 'link_url', 'link_image' ),
-				'options' 				=> array( 'option_name', 'option_value' ),
-				'postmeta' 				=> array( 'meta_value' ),
-				'posts' 				=> array( 'post_content', 'guid' ),
-				'terms' 				=> array(),
-				'term_relationships'	=> array(),
-				'term_taxonomy' 		=> array(),
-			);
-		}
-
-		/**
-		 * Get filtered fields to scan for an update after data copy
-		 * @since 0.2.0
-		 * @return  array of string (filtered)
-		 */
-		public static function get_fields_to_update() {
-			return apply_filters( 'mucd_default_fields_to_update', MUCD_Option::get_default_fields_to_update() );
-		}
-
-		/**
 		 * Get default tables to duplicate when duplicated site is primary site
 		 * @since 0.2.0
 		 * @return  array of string

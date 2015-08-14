@@ -139,7 +139,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 					$form_message['error'] = $validated_data['error']->get_error_message();
 				}
 				else {
-					$form_message = MUCD_Clone_Site_Over_Primary::clone_site_over_primary( $validated_data );
+					$form_message = MUCD_Clone_Site::clone_site( $validated_data, true );
 				}
 
 			}

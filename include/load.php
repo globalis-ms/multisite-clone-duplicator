@@ -30,9 +30,6 @@ require_once MUCD_PATH_LIB . '/clone-users.php';
 // Clone-site
 require_once MUCD_PATH_LIB . '/clone-site.php';
 
-// Clone-site-over-primary
-require_once MUCD_PATH_LIB . '/clone-site-over-primary.php';
-
 // Select2
 require_once MUCD_PATH_LIB . '/mucd-select2.php';
 
