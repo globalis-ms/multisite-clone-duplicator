@@ -68,3 +68,5 @@ $data['log-path']   = isset( $validated_data['log-path'] ) ? $validated_data['lo
 
 	</form>
 </div>
+
+<?php require_once MUCD_PATH_TEMPLATES . '/mucd-links.php'; ?>

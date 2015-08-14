@@ -6,10 +6,11 @@ define( 'MUCD_VERSION', '2.0.0.a.1' );
 
 define( 'MUCD_DOMAIN', 'multisite-clone-duplicator' );
 
+define( 'MUCD_GITHUB', 'https://github.com/pierre-dargham/multisite-clone-duplicator/tree/2.0.0.a.1' );
+
 
 
 /* ------------------- PATHS AND URLS ------------------ */
-
 
 define( 'MUCD_PATH', plugin_basename( realpath( dirname( __FILE__ ) . '/..' ) ) );
 
@@ -29,6 +30,7 @@ define( 'MUCD_PATH_TEMPLATES', MUCD_PATH_PLUGIN . '/templates' );
 define( 'MUCD_URL_PLUGIN_TEMPLATES', MUCD_URL_PLUGIN . '/templates' );
 
 define( 'MUCD_PATH_CLI', MUCD_PATH_PLUGIN . '/wp-cli' );
+
 
 
 /* ------------------- SLUGS --------------------------- */
