@@ -106,12 +106,29 @@ if ( ! class_exists( 'MUCD_Clone_Files' ) ) {
 							self::rrmdir( $dir . '/' . $object );
 						}
 						else {
-							unlink( $dir . '/' . $object );
+							@unlink( $dir . '/' . $object );
 						}
 				   	}
 				}
 				reset( $objects );
-				rmdir( $dir );
+				@rmdir( $dir );
+		   	}
+		}
+
+		public static function rrmdir_inside_and_exclude( $dir, $exclude ) {
+			if ( is_dir( $dir ) ) {
+				$objects = scandir( $dir );
+				foreach ( $objects as $object ) {
+					if ( $object != '.' && $object != '..' && ! in_array( $object, $exclude ) ) {
+						if ( 'dir' == filetype( $dir . '/' . $object ) ) {
+							MUCD_Clone_Files::rrmdir( $dir . '/' . $object );
+						}
+						else {
+							@unlink( $dir . '/' . $object );
+						}
+				   	}
+				}
+				reset( $objects );
 		   	}
 		}
 
@@ -141,7 +158,13 @@ if ( ! class_exists( 'MUCD_Clone_Files' ) ) {
 			$dir = str_replace( ' ', '\\ ', trailingslashit( $wp_upload_info['basedir'] ) );
 			restore_current_blog();
 
-			self::rrmdir_inside_and_exclude( $dir, array( 'sites' ) );
+			$exclude = array( 'sites' );
+
+			if( false !== strstr( MUCD_Log::get_dir(), $dir ) ) {
+				$exclude[] = basename( MUCD_Log::get_dir() );
+			}
+
+			self::rrmdir_inside_and_exclude( $dir, $exclude );
 		}
 
 		public static function copy_dirs_over_primary( $dirs ) {
@@ -154,23 +177,6 @@ if ( ! class_exists( 'MUCD_Clone_Files' ) ) {
 			$dirs[0]['to_dir_path'] = $dir;
 
 			return $dirs;
-		}
-
-		public static function rrmdir_inside_and_exclude( $dir, $exclude ) {
-			if ( is_dir( $dir ) ) {
-				$objects = scandir( $dir );
-				foreach ( $objects as $object ) {
-					if ( $object != '.' && $object != '..' && ! in_array( $object, $exclude ) ) {
-						if ( 'dir' == filetype( $dir . '/' . $object ) ) {
-							MUCD_Clone_Files::rrmdir( $dir . '/' . $object );
-						}
-						else {
-							unlink( $dir . '/' . $object );
-						}
-				   	}
-				}
-				reset( $objects );
-		   	}
 		}
 
 	}
