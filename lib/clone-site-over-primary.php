@@ -1,8 +1,8 @@
 <?php
 
-if ( ! class_exists( 'MUCD_Clone_Over_Primary' ) ) {
+if ( ! class_exists( 'MUCD_Clone_Site_Over_Primary' ) ) {
 
-	class MUCD_Clone_Over_Primary {
+	class MUCD_Clone_Site_Over_Primary {
 
 		public static function clone_site_over_primary( $data ) {
 
@@ -72,6 +72,7 @@ if ( ! class_exists( 'MUCD_Clone_Over_Primary' ) ) {
 		}
 
 		public static function start_duplication_log( $data ) {
+			$data['domain'] = 'clone-over-primary';
 			MUCD_Log::init( $data );
 			MUCD_Log::write( 'Start cloning over the primary site : from site ' . $data['from_site_id'] );
 		}
