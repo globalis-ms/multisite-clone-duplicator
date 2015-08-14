@@ -165,7 +165,6 @@ if ( ! class_exists( 'MUCD_Option' ) ) {
 					else {
 						self::set_mod_log( false );
 					}
-
 				}
 			}
 

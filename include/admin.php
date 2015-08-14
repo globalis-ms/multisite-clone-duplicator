@@ -111,7 +111,6 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				else {
 					$form_message = MUCD_Clone_Site::clone_site( $validated_data );
 				}
-
 			}
 
 			$select_site_list = MUCD_Select2::select2_site_list( $validated_data );
@@ -141,7 +140,6 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 				else {
 					$form_message = MUCD_Clone_Site::clone_site( $validated_data, true );
 				}
-
 			}
 
 			$select_site_list = MUCD_Select2::select2_site_list( $validated_data );

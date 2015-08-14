@@ -24,7 +24,7 @@ $data['log-path']   = isset( $validated_data['log-path'] ) ? $validated_data['lo
 
 		<table class="form-table">
 		   <tr class="form-required">
-				<th scope='row'><?php _e( 'Original site to copy', MUCD_DOMAIN ) ; ?></th>
+				<th scope='row'><?php _e( 'Original site to copy', MUCD_DOMAIN ); ?></th>
 				<td>
 					<?php echo $select_site_list; ?>
 				</td>

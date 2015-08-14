@@ -44,7 +44,7 @@ if ( ! class_exists( 'MUCD_Clone_DB' ) ) {
 			$to_site_prefix_length = strlen( $to_site_prefix );				// prefix length
 			$to_site_prefix_like = $wpdb->esc_like( $to_site_prefix );      // escape for SQL LIKE usage
 
-			if( $mod_save_options ) {
+			if ( $mod_save_options ) {
 				// Options that should be preserved in the new blog.
 				$saved_options = MUCD_Option::get_saved_option();
 				foreach ( $saved_options as $option_name => $option_value ) {
@@ -53,7 +53,7 @@ if ( ! class_exists( 'MUCD_Clone_DB' ) ) {
 			}
 			else {
 				$saved_options = array();
-			}			
+			}
 
 			// SCHEMA - TO FIX for HyperDB
 			$schema = DB_NAME;
@@ -73,7 +73,7 @@ if ( ! class_exists( 'MUCD_Clone_DB' ) ) {
 
 				$table_shortname = substr( $table, $from_site_prefix_length );
 				$table_name = $to_site_prefix . $table_shortname;
-				self::$new_tables[$table_shortname] = array();
+				self::$new_tables[ $table_shortname ] = array();
 
 				// Drop table if exists
 				self::do_sql_query( 'DROP TABLE IF EXISTS `' . $table_name . '`' );
@@ -276,11 +276,11 @@ if ( ! class_exists( 'MUCD_Clone_DB' ) ) {
 		function try_replace( $row, $field, $from_string, $to_string ) {
 			if ( is_serialized( $row[ $field ] ) ) {
 				$double_serialize = false;
-				$row[ $field ] = @unserialize( $row[ $field ] );
+				$row[ $field ] = unserialize( $row[ $field ] );
 
 				// FOR SERIALISED OPTIONS, like in wp_carousel plugin
 				if ( is_serialized( $row[ $field ] ) ) {
-					$row[ $field ] = @unserialize( $row[ $field ] );
+					$row[ $field ] = unserialize( $row[ $field ] );
 					$double_serialize = true;
 				}
 

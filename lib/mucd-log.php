@@ -98,7 +98,7 @@ if ( ! class_exists( 'MUCD_Log' ) ) {
 		 */
 		private function init_file() {
 			if ( false !== MUCD_Clone_Files::init_dir( $this->log_dir_path ) ) {
-				if ( ! $this->fp = @fopen( $this->log_file_path, 'a' ) ) {
+				if ( ! $this->fp = fopen( $this->log_file_path, 'a' ) ) {
 					return false;
 				}
 				//chmod( $this->log_file_path, 0777 );
@@ -115,7 +115,7 @@ if ( ! class_exists( 'MUCD_Log' ) ) {
 		 */
 		private function write_log( $message ) {
 			if ( false !== $this->mod && $this->can_write() ) {
-				$time = @date( '[d/M/Y:H:i:s]' );
+				$time = date( '[d/M/Y:H:i:s]' );
 				fwrite( $this->fp, "$time $message" . "\r\n" );
 				return true;
 			}
@@ -127,7 +127,7 @@ if ( ! class_exists( 'MUCD_Log' ) ) {
 		 * @since 0.2.0
 		 */
 		private function close_log() {
-			@fclose( $this->fp );
+			fclose( $this->fp );
 		}
 
 		/**
@@ -139,7 +139,7 @@ if ( ! class_exists( 'MUCD_Log' ) ) {
 			// INIT LOG AND SAVE OPTION
 			if ( isset( $data['log'] ) && true === $data['log'] ) {
 				if ( isset( $data['log-path'] ) && ! empty( $data['log-path'] ) ) {
-					$log_name = @date( 'Y_m_d_His' ) . '-' . $data['domain'] . '.log';
+					$log_name = date( 'Y_m_d_His' ) . '-' . $data['domain'] . '.log';
 					if ( substr( $data['log-path'], -1 ) != '/' ) {
 						$data['log-path'] = $data['log-path'] . '/';
 					}

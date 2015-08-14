@@ -17,15 +17,15 @@ if ( ! class_exists( 'MUCD_Clone_Site' ) ) {
 			$wpdb->hide_errors();
 
 			// DATA
-			extract($data);
+			extract( $data );
 
 			// RESULTS
-			$form_message = array();	
+			$form_message = array();
 
 			// SERVER
 			MUCD_Functions::bypass_server_limit();
 
-			// LOG		
+			// LOG
 			self::start_duplication_log( $data, $over_primary );
 
 			$mod_save_options = ! $over_primary;
@@ -37,7 +37,6 @@ if ( ! class_exists( 'MUCD_Clone_Site' ) ) {
 				add_action( 'mucd_before_copy_files', array( 'MUCD_Clone_Files', 'empty_primary_dir' ), 10, 0 );
 				add_action( 'mucd_before_copy_users', array( 'MUCD_Clone_Users', 'remove_users_from_primary_site' ), 10, 0 );
 			}
-
 
 			$user_id = MUCD_Clone_Users::create_admin( $email, $domain );
 
@@ -55,7 +54,7 @@ if ( ! class_exists( 'MUCD_Clone_Site' ) ) {
 				$to_site_id = wpmu_create_blog( $newdomain, $path, $title, $user_id , array( 'public' => $public ), $network_id );
 
 			}
-			
+
 			$wpdb->show_errors();
 
 			if ( is_wp_error( $to_site_id ) ) {
@@ -101,7 +100,7 @@ if ( ! class_exists( 'MUCD_Clone_Site' ) ) {
 		}
 
 		public static function start_duplication_log( $data, $over_primary = false ) {
-			if(  $over_primary ) {
+			if ( $over_primary ) {
 				$data['domain'] = 'clone-over-primary';
 				MUCD_Log::init( $data );
 				MUCD_Log::write( 'Start cloning over the primary site : from site ' . $data['from_site_id'] );

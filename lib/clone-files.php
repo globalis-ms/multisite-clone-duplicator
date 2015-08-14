@@ -53,7 +53,7 @@ if ( ! class_exists( 'MUCD_Clone_Files' ) ) {
 		 */
 		public static function recurse_copy( $src, $dst, $exclude_dirs = array() ) {
 			$dir = opendir( $src );
-			@mkdir( $dst );
+			mkdir( $dst );
 			while ( false !== ( $file = readdir( $dir ) ) ) {
 				if ( ( $file != '.' ) && ( $file != '..' ) ) {
 					if ( is_dir( $src . '/' . $file ) ) {
@@ -106,12 +106,12 @@ if ( ! class_exists( 'MUCD_Clone_Files' ) ) {
 							self::rrmdir( $dir . '/' . $object );
 						}
 						else {
-							@unlink( $dir . '/' . $object );
+							unlink( $dir . '/' . $object );
 						}
 				   	}
 				}
 				reset( $objects );
-				@rmdir( $dir );
+				rmdir( $dir );
 		   	}
 		}
 
@@ -124,7 +124,7 @@ if ( ! class_exists( 'MUCD_Clone_Files' ) ) {
 							MUCD_Clone_Files::rrmdir( $dir . '/' . $object );
 						}
 						else {
-							@unlink( $dir . '/' . $object );
+							unlink( $dir . '/' . $object );
 						}
 				   	}
 				}
@@ -160,7 +160,7 @@ if ( ! class_exists( 'MUCD_Clone_Files' ) ) {
 
 			$exclude = array( 'sites' );
 
-			if( false !== strstr( MUCD_Log::get_dir(), $dir ) ) {
+			if ( false !== strstr( MUCD_Log::get_dir(), $dir ) ) {
 				$exclude[] = basename( MUCD_Log::get_dir() );
 			}
 

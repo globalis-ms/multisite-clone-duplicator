@@ -22,19 +22,19 @@ $data['log-path']   = isset( $validated_data['log-path'] ) ? $validated_data['lo
 
 		<table class="form-table">
 		   <tr class="form-required">
-				<th scope='row'><?php _e( 'Original site to copy', MUCD_DOMAIN ) ; ?></th>
+				<th scope='row'><?php _e( 'Original site to copy', MUCD_DOMAIN ); ?></th>
 				<td>
 					<?php echo $select_site_list; ?>
 				</td>
 			</tr>
 
 			<tr class="form-required">
-				<th scope='row'><?php _e( 'New Site - Address', MUCD_DOMAIN ) ; ?></th>
+				<th scope='row'><?php _e( 'New Site - Address', MUCD_DOMAIN ); ?></th>
 				<td>
 				<?php if ( is_subdomain_install() ) { ?>
-				<input id="site_domain" name="site[domain]" type="text" class="large-text" title="<?php _e( 'New Site - Address', MUCD_DOMAIN ) ; ?>"  value="<?php echo $data['domain']; ?>"/><span class="no-break">.<?php echo preg_replace( '|^www\.|', '', $current_site->domain ); ?></span>
+				<input id="site_domain" name="site[domain]" type="text" class="large-text" title="<?php _e( 'New Site - Address', MUCD_DOMAIN ); ?>"  value="<?php echo $data['domain']; ?>"/><span class="no-break">.<?php echo preg_replace( '|^www\.|', '', $current_site->domain ); ?></span>
 				<?php } else {
-					echo $current_site->domain . $current_site->path ?><br /><input id="site_domain" name="site[domain]" class="large-text" type="text" title="<?php _e( 'New Site - Address', MUCD_DOMAIN ) ; ?>" value="<?php echo $data['domain']; ?>"/>
+					echo $current_site->domain . $current_site->path; ?><br /><input id="site_domain" name="site[domain]" class="large-text" type="text" title="<?php _e( 'New Site - Address', MUCD_DOMAIN ); ?>" value="<?php echo $data['domain']; ?>"/>
 				<?php }
 				echo '<p>' . __( 'Only lowercase letters (a-z) and numbers are allowed.', MUCD_DOMAIN ) . '</p>';
 				?>
@@ -43,7 +43,7 @@ $data['log-path']   = isset( $validated_data['log-path'] ) ? $validated_data['lo
 
 			<tr class="form-required">
 				<th scope='row'><?php _e( 'New Site - Title', MUCD_DOMAIN ); ?></th>
-				<td><input id="site_title" name="site[title]" type="text" title="<?php _e( 'New Site - Title', MUCD_DOMAIN ) ; ?>" class="large-text" value="<?php echo $data['title']; ?>"/></td>
+				<td><input id="site_title" name="site[title]" type="text" title="<?php _e( 'New Site - Title', MUCD_DOMAIN ); ?>" class="large-text" value="<?php echo $data['title']; ?>"/></td>
 			</tr>
 
 			<!-- Copy from  wp-admin/network/site-new.php : 141 to 147 -->
@@ -88,7 +88,7 @@ $data['log-path']   = isset( $validated_data['log-path'] ) ? $validated_data['lo
 		</table>
 
 		<p class="submit">
-			<input class='button button-primary' type='submit' value='<?php _e( 'Duplicate', MUCD_DOMAIN ) ; ?>' />
+			<input class='button button-primary' type='submit' value='<?php _e( 'Duplicate', MUCD_DOMAIN ); ?>' />
 		</p>
 
 	</form>

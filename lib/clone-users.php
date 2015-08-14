@@ -18,19 +18,18 @@ if ( ! class_exists( 'MUCD_Clone_Users' ) ) {
 			if ( ! $user_id ) { // Create a new user with a random password
 				$password = wp_generate_password( 12, false );
 
-				if( empty( $username ) ) {
+				if ( empty( $username ) ) {
 					global $current_site;
 					$i = 001;
 					$username = $current_site->domain . $i;
 					while ( null != username_exists( $username ) ) {
 						++$i;
 						$username = $current_site->domain . $i;
-						if( $i > 999 ) {
-							return new WP_Error( 'file_copy', __( 'There was an error creating the user.', MUCD_DOMAIN ) );
+						if ( $i > 999 ) {
+							return new WP_Error( 'create_user', __( 'There was an error creating the user.', MUCD_DOMAIN ) );
 						}
 					}
 				}
-
 
 				$user_id = wpmu_create_user( $username, $password, $email );
 				if ( false == $user_id ) {
@@ -73,10 +72,7 @@ if ( ! class_exists( 'MUCD_Clone_Users' ) ) {
 
 					add_user_to_blog( $to_site_id, $user->ID, 'subscriber' );
 
-					// PHP >= 5.3
-					//$all_meta = array_map( function( $a ){ return $a[0]; }, get_user_meta( $user->ID ) );
-					// PHP < 5.3
-					$all_meta = array_map( array( 'MUCD_Functions', 'user_array_map'), get_user_meta( $user->ID ) );
+					$all_meta = array_map( array( 'MUCD_Functions', 'user_array_map' ), get_user_meta( $user->ID ) );
 
 					foreach ( $all_meta as $metakey => $metavalue ) {
 						$prefix = substr( $metakey, 0, $from_site_prefix_length );

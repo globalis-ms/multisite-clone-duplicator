@@ -15,7 +15,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		 */
 		public static function select2_site_list( $validated_data ) {
 
-			if( isset( $validated_data['from_site_id'] ) ) {
+			if ( isset( $validated_data['from_site_id'] ) ) {
 				$source_id = $validated_data['from_site_id'];
 			}
 			else if ( isset( $_GET['id'] ) ) {
@@ -24,7 +24,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 			else {
 				$source_id = false;
 			}
-			
+
 			$select2_html = '<select name="site[source]" id="mucd-site-source">';
 
 			if ( $source_id ) {

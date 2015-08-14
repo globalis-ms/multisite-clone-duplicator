@@ -23,5 +23,4 @@ if ( isset ( $form_message ) ) {
 		echo '  </p>';
 		echo '</div>';
 	}
-	
 }

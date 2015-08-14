@@ -73,7 +73,7 @@ if ( ! class_exists( 'MUCD_Clone_DB_Validation' ) ) {
 				}
 			}
 
-			if( ! $valid && ! isset( $return['error'] ) ) {
+			if ( ! $valid && ! isset( $return['error'] ) ) {
 				$return['error'] = self::missing_field( __( 'Original site to copy', MUCD_DOMAIN ) );
 			}
 
@@ -99,7 +99,7 @@ if ( ! class_exists( 'MUCD_Clone_DB_Validation' ) ) {
 					/** This filter is documented in wp-includes/ms-functions.php */
 					$subdirectory_reserved_names = apply_filters( 'subdirectory_reserved_names', array( 'page', 'comments', 'blog', 'files', 'feed' ) );
 					if ( in_array( $domain, $subdirectory_reserved_names ) ) {
-						$return['error'] = self::error( sprintf( __('The following words are reserved for use by WordPress functions and cannot be used as blog names: <code>%s</code>' ) , implode( '</code>, <code>', $subdirectory_reserved_names ) ) );
+						$return['error'] = self::error( sprintf( __( 'The following words are reserved for use by WordPress functions and cannot be used as blog names: <code>%s</code>' ) , implode( '</code>, <code>', $subdirectory_reserved_names ) ) );
 						return $return;
 					}
 				}
@@ -115,11 +115,9 @@ if ( ! class_exists( 'MUCD_Clone_DB_Validation' ) ) {
 					$return['domain'] = $domain;
 					$valid = true;
 				}
-
-
 			}
 
-			if( ! $valid && ! isset( $return['error'] ) ) {
+			if ( ! $valid && ! isset( $return['error'] ) ) {
 				$return['error'] = self::missing_field( __( 'New Site - Address', MUCD_DOMAIN ) );
 			}
 
@@ -136,7 +134,7 @@ if ( ! class_exists( 'MUCD_Clone_DB_Validation' ) ) {
 				$valid = true;
 			}
 
-			if( ! $valid && ! isset( $return['error'] ) ) {
+			if ( ! $valid && ! isset( $return['error'] ) ) {
 				$return['error'] = self::missing_field( __( 'New Site - Title', MUCD_DOMAIN ) );
 			}
 
@@ -156,7 +154,7 @@ if ( ! class_exists( 'MUCD_Clone_DB_Validation' ) ) {
 				}
 			}
 
-			if( ! $valid && ! isset( $return['error'] ) ) {
+			if ( ! $valid && ! isset( $return['error'] ) ) {
 				$return['error'] = self::missing_field( __( 'New Site - Admin Email', MUCD_DOMAIN ) );
 			}
 
@@ -198,20 +196,19 @@ if ( ! class_exists( 'MUCD_Clone_DB_Validation' ) ) {
 
 			if ( isset( $input_data['log'] ) && 'yes' == $input_data['log'] ) {
 
-				if( ! isset( $input_data['log-path'] ) || empty( $input_data['log-path'] ) || ! MUCD_Functions::valid_path( $input_data['log-path'] ) ) {
+				if ( ! isset( $input_data['log-path'] ) || empty( $input_data['log-path'] ) || ! MUCD_Functions::valid_path( $input_data['log-path'] ) ) {
 					$valid  = false;
 				}
 				else {
 					$return['log'] = true;
 					$return['log-path'] = $input_data['log-path'];
 				}
-
 			}
 			else {
 					$return['log'] = false;
 			}
 
-			if( ! $valid && ! isset( $return['error'] ) ) {
+			if ( ! $valid && ! isset( $return['error'] ) ) {
 				$return['error'] = self::missing_field( __( 'Log directory', MUCD_DOMAIN ) );
 			}
 

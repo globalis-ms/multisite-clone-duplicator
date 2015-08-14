@@ -133,7 +133,7 @@ if ( ! class_exists( 'MUCD_Functions' ) ) {
 		public static function check_if_multisite() {
 			if ( ! function_exists( 'is_multisite' ) || ! is_multisite() ) {
 				deactivate_plugins( plugin_basename( __FILE__ ) );
-				wp_die( __( 'MultiSite Clone Duplicator works only for multisite installation', MUCD_DOMAIN ));
+				wp_die( __( 'MultiSite Clone Duplicator works only for multisite installation', MUCD_DOMAIN ) );
 			}
 		}
 
@@ -144,7 +144,7 @@ if ( ! class_exists( 'MUCD_Functions' ) ) {
 		public static function print_notices() {
 
 			global $form_message;
-			
+
 			if ( MUCD_Log::has_error() ) {
 				require_once MUCD_PATH_TEMPLATES . '/message-clone-log-error.php';
 			}
