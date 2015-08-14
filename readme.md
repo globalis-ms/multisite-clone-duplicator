@@ -1,4 +1,4 @@
-MultiSite Clone Duplicator
+MultiSite Clone Duplicator 2.0.0 beta 1
 =============
 
 * Contributors: GLOBALIS media systems
