@@ -252,3 +252,5 @@ Thank’s
 The original version of this plugin has been developed by [Julien OGER](https://github.com/julienOG) who keeps following the project carefully.  
 
 Some code for search and replace in SQL serialised data were initialy taken from [Lionel Pointet Wordpress Migration tool](https://github.com/lpointet/wordpress_migration)
+
+Please get more from us at [http://www.globalis-ms.com/](http://www.globalis-ms.com/) !
