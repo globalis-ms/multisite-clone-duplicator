@@ -10,7 +10,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 		/**
 		 * Get select2 select-box
-		 * @since 2.0.0.a.1
+		 * @since 2.0.0.b.1
 		 * @return string the output
 		 */
 		public static function select2_site_list( $validated_data ) {
@@ -39,7 +39,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 
 		/**
 		 * Search for sites using path
-		 * @since 2.0.0.a.1
+		 * @since 2.0.0.b.1
 		 * @return    null    outputs a JSON string to be consumed by an AJAX call
 		 */
 		public static function mucd_fetch_sites() {
@@ -85,7 +85,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		/**
 		 * Returns select2 value based on the field's saved blog id value
 		 *
-		 * @since  2.0.0.a.1
+		 * @since  2.0.0.b.1
 		 *
 		 * @param  int  $id Stored blog id
 		 */
@@ -107,7 +107,7 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 		/**
 		 * Returns select2 options based on the current search query
 		 *
-		 * @since  2.0.0.a.1
+		 * @since  2.0.0.b.1
 		 *
 		 * @param  array  $results Array of DB results for the queried string
 		 */

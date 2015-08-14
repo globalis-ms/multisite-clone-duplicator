@@ -168,7 +168,7 @@ if ( ! class_exists( 'MUCD_Clone_DB' ) ) {
 
 		/**
 		 * Restore options that should be preserved in the new blog
-		 * @since 2.0.0.a.1
+		 * @since 2.0.0.b.1
 		 * @param  int $to_site_id   new site id
 		 * @param  array $saved_options   the options
 		 */

@@ -2,11 +2,11 @@
 
 /* ------------------- ENVIRONMENT --------------------- */
 
-define( 'MUCD_VERSION', '2.0.0.a.1' );
+define( 'MUCD_VERSION', '2.0.0.b.1' );
 
 define( 'MUCD_DOMAIN', 'multisite-clone-duplicator' );
 
-define( 'MUCD_GITHUB', 'https://github.com/pierre-dargham/multisite-clone-duplicator/tree/2.0.0.a.1' );
+define( 'MUCD_GITHUB', 'https://github.com/pierre-dargham/multisite-clone-duplicator/tree/2.0.0.b.1' );
 
 
 

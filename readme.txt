@@ -1,9 +1,9 @@
 === MultiSite Clone Duplicator ===
 Contributors: GLOBALIS media systems
 Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
-Requires at least: 3.5.0
-Tested up to: 4.1.2
-Stable tag: 2.0.0.a.1
+Requires at least: 4.0.0
+Tested up to: 4.2.4
+Stable tag: 2.0.0.b.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,8 @@ Arguments are : `wp site duplicate --slug=<slug> --source=<site_id> [--title=<ti
   [--email=<email>] [--network_id=<network-id>] [--private] [--porcelain] [--v]
   [--do_not_copy_files] [--keep_users] [--log=<dir_path>]`
 
+Type `wp-cli help site clone` to print full help instructions
+
 = Which languages are currently supported? = 
 As of now, following languages are supported : English (en_US), French (fr_FR), Spanish (es_ES), Lithuanian (lt_LT) and Greek (el). If you wish to, you can translate the interface in your own language in the [standard WordPress way](http://codex.wordpress.org/Translating_WordPress) or with [Transifex](https://www.transifex.com/projects/p/multisite-clone-duplicator/)
 
@@ -90,6 +92,14 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 5. **Log warning**
 
 == Changelog ==
+
+= 2.0.0.b.1 =
+* 2.0.0 Beta version 1 released on github
+* New feature : clone over the primary site
+* New feature : select site to clone with select2 dynamic select-box
+* Remove the old lang.php file
+* Fix most of WordPress coding standards issues
+* Lot of refactoring, cleaning the code and everything
 
 = 1.3.2 =
 * Bugfix : Check on admin referer broke some admin page
