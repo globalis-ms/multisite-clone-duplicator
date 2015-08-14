@@ -64,7 +64,8 @@ Does it support subdirectory AND subdomain installations ?
 -----
 Yes, it supports both !
 
-= Can I clone the primary site ? = 
+Can I clone the primary site ?
+-----
 Yes you can, but you want to be careful : WordPress saves network tables and primary blog tables with the same prefix, and some of their data are mixed. It forces us to restrict primary blog cloning to copy only the default wp tables. If you want to change this (for example, include your plugin tables in the cloning), use mucd_default_primary_tables_to_copy filter. In the future, you want probably not to copy again and again the primary blog : use a "template" blog dedicated to clonage instead.
 
 Does it clone plugins settings ?
@@ -79,7 +80,8 @@ After cloning, new site was created, but it goes on 404 page, why ?
 -----
 Check your host / server configuration : you probably cloned your site into a domain that is not available !
 
-= How to duplicate with command line commands ? =
+How to duplicate with command line commands ?
+-----
 Install [WP-CLI](http://wp-cli.org/), go to your wordpress multisite directory, and type `wp-cli site duplicate --source=<id_of_the_site_to_clone> --slug="<slug_of_the_new_site>"`
 
 Arguments are : `wp site duplicate --slug=<slug> --source=<site_id> [--title=<title>]
