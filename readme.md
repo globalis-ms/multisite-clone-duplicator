@@ -1,7 +1,7 @@
 MultiSite Clone Duplicator 2.0.0 beta 1
 =============
 
-* Contributors: Pierre Dargham, Globalis media-systems
+* Contributors: Pierre DARGHAM, Julien OGER, GLOBALIS media systems
 * Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
 * Requires at least: 4.0.0
 * Tested up to: 4.2.4
