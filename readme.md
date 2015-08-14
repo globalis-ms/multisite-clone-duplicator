@@ -1,7 +1,7 @@
 MultiSite Clone Duplicator 2.0.0 beta 1
 =============
 
-* Contributors: GLOBALIS media systems
+* Contributors: Pierre Dargham, Globalis media-systems
 * Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
 * Requires at least: 4.0.0
 * Tested up to: 4.2.4
@@ -26,10 +26,10 @@ Features
 -------
 * Clones any site of your wordpress multisite installation
 * Copies all posts and settings
+* Clones any site over your primary site
 * Generates log files (if option is checked)
 * Copy all files from duplicated site (if option is checked)
 * Keep users and roles from duplicated site (if option is checked)
-* Configure which site is clonable (so you can define an unique "pattern" site)
 * Fully hookable
 * Command line ready (provides a WP-CLI subcommand)
 
