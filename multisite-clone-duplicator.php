@@ -8,7 +8,7 @@
  *
  * Version:             2.0.0.b.1
  * Requires at least:   4.0.0
- * Tested up to:        4.2.4
+ * Tested up to:        4.3.0
  */
 
 // Block direct requests

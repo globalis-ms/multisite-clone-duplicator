@@ -2,7 +2,7 @@
 Contributors: Pierre DARGHAM, Julien OGER, GLOBALIS media systems
 Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
 Requires at least: 4.0.0
-Tested up to: 4.2.4
+Tested up to: 4.3.0
 Stable tag: 2.0.0.b.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
