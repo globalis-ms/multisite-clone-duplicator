@@ -32,7 +32,7 @@ if ( ! class_exists( 'MUCD_Clone_Site' ) ) {
 
 			// CLONE OVER PRIMARY SITE SETTINGS
 			if ( $over_primary ) {
-				$email = get_blog_option( MUCD_PRIMARY_SITE_ID, 'admin_email' );
+				$email  = get_blog_option( MUCD_PRIMARY_SITE_ID, 'admin_email' );
 				$domain = '';
 				add_filter( 'mucd_copy_dirs', array( 'MUCD_Clone_Files', 'copy_dirs_over_primary' ), 10, 1 );
 				add_action( 'mucd_before_copy_files', array( 'MUCD_Clone_Files', 'empty_primary_dir' ), 10, 0 );
