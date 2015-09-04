@@ -24,8 +24,6 @@ if( !class_exists( 'MUCD' ) ) {
     define( 'MUCD_COMPLETE_PATH', str_replace( '/include/', '', plugin_dir_path( __FILE__ ) ) );
     define( 'MUCD_URL', str_replace( '/include/', '', plugin_dir_url( __FILE__ ) ) );
 
-    wp_die( '<xmp>MUCD_COMPLETE_PATH: '. print_r( MUCD_COMPLETE_PATH, true ) .'</xmp>' );
-
     // Load configuration
     require_once realpath( dirname( __FILE__ ) ) . '/include/config.php';
 
