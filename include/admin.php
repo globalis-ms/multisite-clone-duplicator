@@ -422,10 +422,8 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_MISSING_FIELDS );
 				}
 
-				$domain = isset( $data['domain'] ) ? $data['domain'] : null;
-				if ( preg_match( '|^([a-zA-Z0-9-] )+$|', $domain ) ) {
-					$domain = strtolower( $data['domain'] );
-				}
+				// check for domain
+				$domain = isset( $data['domain'] ) ? strtolower( $data['domain'] ) : null;
 
 				// If not a subdomain install, make sure the domain isn't a reserved word
 				if ( ! is_subdomain_install() ) {
