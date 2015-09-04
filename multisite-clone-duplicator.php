@@ -17,6 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'MUCD' ) ) {
+    /**
+     * Remember plugin path & URL
+     */
+    define( 'MUCD_PATH', plugin_basename( realpath( dirname( __FILE__ ).'/..') ) );
+    define( 'MUCD_COMPLETE_PATH', str_replace( '/include/', '', plugin_dir_path( __FILE__ ) ) );
+    define( 'MUCD_URL', str_replace( '/include/', '', plugin_dir_url( __FILE__ ) ) );
+
 	// Load configuration
 	require_once realpath( dirname( __FILE__ ) ) . '/include/config.php';
 
