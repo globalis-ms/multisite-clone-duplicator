@@ -16,6 +16,16 @@ if ( !defined('ABSPATH') )
     die('-1');
 
 if( !class_exists( 'MUCD' ) ) {
+
+    /**
+     * Remember plugin path & URL
+     */
+    define( 'MUCD_PATH', plugin_basename( realpath( dirname( __FILE__ ).'/..') ) );
+    define( 'MUCD_COMPLETE_PATH', str_replace( '/include/', '', plugin_dir_path( __FILE__ ) ) );
+    define( 'MUCD_URL', str_replace( '/include/', '', plugin_dir_url( __FILE__ ) ) );
+
+    wp_die( '<xmp>MUCD_COMPLETE_PATH: '. print_r( MUCD_COMPLETE_PATH, true ) .'</xmp>' );
+
     // Load configuration
     require_once realpath( dirname( __FILE__ ) ) . '/include/config.php';
 
@@ -40,7 +50,7 @@ if( !class_exists( 'MUCD' ) ) {
         require_once MUCD_COMPLETE_PATH . '/lib/duplicate.php';
         MUCD_Functions::set_locale_to_en_US();
         require_once MUCD_COMPLETE_PATH . '/wp-cli/wp-cli-site-duplicate-subcommand.php';
-    }    
+    }
 
     /**
      * Main class of the plugin
@@ -81,7 +91,7 @@ if( !class_exists( 'MUCD' ) ) {
          */
         public static function activate() {
             MUCD::check_if_multisite();
-            MUCD_Option::init_options();              
+            MUCD_Option::init_options();
         }
 
         /**
@@ -103,7 +113,7 @@ if( !class_exists( 'MUCD' ) ) {
          */
         public static function init() {
              // Nothing for now.
-        }   
+        }
     }
     MUCD::hooks();
 }
