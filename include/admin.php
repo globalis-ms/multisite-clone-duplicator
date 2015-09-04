@@ -422,8 +422,8 @@ if ( ! class_exists( 'MUCD_Admin' ) ) {
 					$error[] = new WP_Error( 'mucd_error', MUCD_NETWORK_PAGE_DUPLICATE_MISSING_FIELDS );
 				}
 
-				$domain = '';
-				if ( preg_match( '|^([a-zA-Z0-9-] )+$|', $data['domain'] ) ) {
+				$domain = isset( $data['domain'] ) ? $data['domain'] : null;
+				if ( preg_match( '|^([a-zA-Z0-9-] )+$|', $domain ) ) {
 					$domain = strtolower( $data['domain'] );
 				}
 
