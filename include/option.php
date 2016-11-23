@@ -165,6 +165,7 @@ if ( ! class_exists( 'MUCD_Option' ) ) {
 				'terms',
 				'term_relationships',
 				'term_taxonomy',
+				'termmeta',
 			);
 		}
 
