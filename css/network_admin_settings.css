@@ -1,0 +1,23 @@
+.multiselect {
+	max-width: 500px;
+    max-height:100px;
+	overflow:auto;
+	background-color: #ffffff;
+	border: 1px solid #DDDDDD;
+	margin-left: 20px;
+}
+ 
+.multiselect label {
+    display:block;
+    margin: 1px;
+}
+
+.multiselect-on {
+    color:#ffffff;
+    background-color:#BBBBBB;
+}
+
+.multiselect-off {
+    color:#ffffff;
+    background-color:#AAAAAA;
+}

@@ -1,0 +1,207 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Duplicate Site 0.2.0\n"
+"POT-Creation-Date: 2014-07-18 14:29+0100\n"
+"PO-Revision-Date: 2015-03-06 11:19+0100\n"
+"Last-Translator: \n"
+"Language-Team: César Caballero <webmaster@ccaballero.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.4\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"Language: es_ES\n"
+"X-Poedit-SearchPath-0: ../include\n"
+
+#: ../include/lang.php:6
+msgid "Sorry, you don't have permissions to use this page."
+msgstr "Lo sentimos, no tiene permisos para utilizar esta página."
+
+#: ../include/lang.php:7
+msgid "Sorry, there is no site available for duplication."
+msgstr "Lo sentimos, no hay sitio disponible para la duplicación."
+
+#: ../include/lang.php:8
+msgid "The log file cannot be written"
+msgstr "El archivo de registro no se puede escribir"
+
+#: ../include/lang.php:9
+msgid "The log file cannot be written to location"
+msgstr "El archivo no se puede mover a esta ubicación."
+
+#: ../include/lang.php:10
+msgid "To enable logging, change permissions on log directory"
+msgstr ""
+"Para habilitar el registro, cambiar los permisos del directorio de registros"
+
+#: ../include/lang.php:15 ../include/lang.php:59
+msgid "Duplicate"
+msgstr "Duplicar"
+
+#: ../include/lang.php:16
+msgid "Duplication"
+msgstr "Duplicado"
+
+#: ../include/lang.php:17
+msgid "Duplicable"
+msgstr "Duplicable"
+
+#: ../include/lang.php:18
+msgid "Customize"
+msgstr "Personalizar"
+
+#: ../include/lang.php:19
+msgid "Yes"
+msgstr "Sí"
+
+#: ../include/lang.php:20
+msgid "No"
+msgstr "No"
+
+#: ../include/lang.php:25
+msgid "Dashboard"
+msgstr "Escritorio"
+
+#: ../include/lang.php:26
+msgid "Visit"
+msgstr "Visita"
+
+#: ../include/lang.php:27
+msgid "View log"
+msgstr "Ver log"
+
+#: ../include/lang.php:28
+msgid "Missing fields"
+msgstr "Faltan campos"
+
+#: ../include/lang.php:29
+msgid "Missing or invalid title"
+msgstr "Revise el titulo"
+
+#: ../include/lang.php:30
+#, php-format
+msgid ""
+"The following words are reserved for use by WordPress functions and cannot "
+"be used as blog names : <code>%s</code>"
+msgstr ""
+"Las siguientes palabras están reservadas paa funciones de Wordpress y no "
+"pueden ser usadas: <code>%s</code>"
+
+#: ../include/lang.php:31
+msgid "Missing or invalid site address"
+msgstr "Revise la dirección web"
+
+#: ../include/lang.php:32
+msgid "Missing admin email address"
+msgstr "Revise el email del administrador"
+
+#: ../include/lang.php:33
+msgid "Invalid admin email address"
+msgstr "El email del administrador no es válido"
+
+#: ../include/lang.php:34
+msgid "Missing or invalid log directory path"
+msgstr "Revise el la ruta del directorio"
+
+#: ../include/lang.php:35
+msgid "New site was created"
+msgstr "Sitio web creado"
+
+#: ../include/lang.php:36
+msgid "There was an error creating the user."
+msgstr "Se ha producido un error al crear usuario"
+
+#: ../include/lang.php:37
+#, php-format
+msgid "Failed to copy files : check permissions on <strong>%s</strong>"
+msgstr "Error al copiar ficheros: revise los permisos para <strong>%s</strong>"
+
+#: ../include/lang.php:42
+msgid "Duplicate Site"
+msgstr "Duplicar sitio"
+
+#: ../include/lang.php:43
+msgid "Original site to copy"
+msgstr "Sitio original"
+
+#: ../include/lang.php:44
+msgid "New Site - Address"
+msgstr "Nuevo sitios - Dirección"
+
+#: ../include/lang.php:45
+msgid "Only lowercase letters (a-z) and numbers are allowed."
+msgstr "Solo se permiten letras en minúsculas (a-z) y números."
+
+#: ../include/lang.php:46
+msgid "New Site - Title"
+msgstr "Nuevo sitio - Título"
+
+#: ../include/lang.php:47
+msgid "New Site - Admin Email"
+msgstr "Nuevo sitio - Email Administrador"
+
+#: ../include/lang.php:48
+msgid ""
+"A new user will be created if the above email address is not in the database."
+msgstr ""
+"Un nuevo usuario será creado en la BD si la dirección de correo no existe."
+
+#: ../include/lang.php:49
+msgid "The username and password will be mailed to this email address."
+msgstr ""
+"El usuario y contraseña serán enviados a esta dirección de correo electrónico"
+
+#: ../include/lang.php:50
+msgid "Show advanced options"
+msgstr "Mostrar opciones avanzadas"
+
+#: ../include/lang.php:51
+msgid "Hide advanced options"
+msgstr "Ocultar opciones avanzadas"
+
+#: ../include/lang.php:52
+msgid "Files"
+msgstr "Ficheros"
+
+#: ../include/lang.php:53
+msgid "Duplicate files from duplicated site upload directory"
+msgstr "Duplicar ficheros subidos del sitio original "
+
+#: ../include/lang.php:54
+msgid "Users and roles"
+msgstr "Usuarios y roles"
+
+#: ../include/lang.php:55
+msgid "Keep users and roles from duplicated site"
+msgstr "Mantener usuarios y roles del sitio duplicado"
+
+#: ../include/lang.php:56
+msgid "Log"
+msgstr "Log"
+
+#: ../include/lang.php:57
+msgid "Generate log file"
+msgstr "Generar fichero log"
+
+#: ../include/lang.php:58
+msgid "Log directory"
+msgstr "Directorio Log"
+
+#: ../include/lang.php:60
+msgid "Edit duplicable sites list"
+msgstr "Editar sitios webs duplicados"
+
+#: ../include/lang.php:65
+msgid "Dublicable websites"
+msgstr "Sitios duplicables"
+
+#: ../include/lang.php:66
+msgid "Allow duplication of all sites of the network"
+msgstr "Permitir duplicar todos los sitios de la red"
+
+#: ../include/lang.php:67
+msgid "Allow duplication of following sites only :"
+msgstr "Permitir solo duplicar los siguientes sitios web:"
