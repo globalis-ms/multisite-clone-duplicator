@@ -180,7 +180,7 @@ if( !class_exists( 'MUCD_Functions' ) ) {
                 }
                 return $sites;
             } else {
-                return wp_get_sites( $arsg );
+                return wp_get_sites( $args );
             }
         }
 
