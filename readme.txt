@@ -1,9 +1,9 @@
 === MultiSite Clone Duplicator ===
-Contributors: pdargham, julienog, globalis
+Contributors: pdargham, julienog, daviddaug, globalis
 Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
-Requires at least: 3.5.0
-Tested up to: 4.1.2
-Stable tag: 1.3.2
+Requires at least: 4.0.0
+Tested up to: 4.7.0
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,9 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 5. **Log warning**
 
 == Changelog ==
+
+= 1.3.3 =
+* Bugfix : Compatibility : WordPress 4.7 (wp_get_sites was deprecated)
 
 = 1.3.2 =
 * Bugfix : Check on admin referer broke some admin page

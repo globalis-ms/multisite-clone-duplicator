@@ -3,7 +3,7 @@
  * Plugin Name:         MultiSite Clone Duplicator
  * Plugin URI:          http://wordpress.org/plugins/multisite-clone-duplicator/
  * Description:         Clones an existing site into a new one in a multisite installation : copies all the posts, settings and files
- * Author:              Julien OGER, Pierre DARGHAM, GLOBALIS media systems
+ * Author:              Julien OGER, Pierre DARGHAM, David DAUGREILH, GLOBALIS media systems
  * Author URI:          https://github.com/pierre-dargham/multisite-clone-duplicator
  *
  * Version:             1.3.3
