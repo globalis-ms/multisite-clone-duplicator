@@ -83,8 +83,7 @@ if( !class_exists( 'MUCD_Functions' ) ) {
          */
         public static function get_site_list() {
             $site_list = array();
-
-            $network_blogs = wp_get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
+            $network_blogs = MUCD_Functions::get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
             foreach( $network_blogs as $blog ){
                 if (MUCD_Functions::is_duplicable($blog['blog_id']) && MUCD_SITE_DUPLICATION_EXCLUDE != $blog['blog_id']) {
                     $site_list[] = $blog;
@@ -171,6 +170,18 @@ if( !class_exists( 'MUCD_Functions' ) ) {
             }
 
             return false;
+        }
+
+        public static function get_sites( $args = array() ) {
+            if(version_compare(get_bloginfo('version'), '4.6', '>=')) {
+                $sites = get_sites($args);
+                foreach($sites as $key => $site) {
+                    $sites[$key] = (array) $site;
+                }
+                return $sites;
+            } else {
+                return wp_get_sites( $arsg );
+            }
         }
 
     }
