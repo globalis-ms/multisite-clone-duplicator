@@ -59,7 +59,8 @@ if( !class_exists( 'MUCD_Option' ) ) {
             add_site_option('mucd_copy_files', 'yes');
             add_site_option('mucd_keep_users', 'yes');
             add_site_option('mucd_log', 'no');
-            add_site_option('mucd_log_dir', MUCD_COMPLETE_PATH . '/logs/');
+            $upload_dir = wp_upload_dir();
+            add_site_option('mucd_log_dir', $upload_dir['basedir'] . '/multisite-clone-duplicator-logs/');
             MUCD_Option::init_duplicable_option();
         }
 
@@ -81,7 +82,8 @@ if( !class_exists( 'MUCD_Option' ) ) {
          * @return string the path
          */
         public static function get_option_log_directory() {
-            return get_site_option('mucd_log_dir', MUCD_COMPLETE_PATH . '/logs/');
+            $upload_dir = wp_upload_dir();   
+            return get_site_option('mucd_log_dir', $upload_dir['basedir'] . '/multisite-clone-duplicator-logs/');
         }
 
         /**
