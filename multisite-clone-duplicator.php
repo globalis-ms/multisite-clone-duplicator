@@ -83,7 +83,21 @@ if( !class_exists( 'MUCD' ) ) {
          * What to do on plugin deactivation
          */
         public static function deactivate() {
-            // Nothing for now.
+        
+            $plugins = get_option( 'active_plugins' );
+            $mucd = plugin_basename( __FILE__ );
+            $update  = false;
+            foreach ( $plugins as $i => $plugin ) {
+                if ( $plugin === $mucd ) {
+                    $plugins[$i] = false;
+                    $update = true;
+                }
+            }
+
+            if ( $update ) {
+                update_option( 'active_plugins', array_filter( $plugins ) );
+            }
+
         }
 
         /**
