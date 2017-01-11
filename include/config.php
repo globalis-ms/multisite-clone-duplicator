@@ -3,8 +3,8 @@
  * Remember plugin path & URL
  */
 define( 'MUCD_PATH', plugin_basename( realpath( dirname( __FILE__ ).'/..') ) );
-define( 'MUCD_COMPLETE_PATH', WP_PLUGIN_DIR.'/'.MUCD_PATH );
-define( 'MUCD_URL', WP_PLUGIN_URL.'/'.MUCD_PATH );
+define( 'MUCD_COMPLETE_PATH', untrailingslashit(plugin_dir_path(dirname( __FILE__ ))) );
+define( 'MUCD_URL', plugins_url().'/'.MUCD_PATH );
 
 /**
  * Domaine
