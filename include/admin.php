@@ -244,6 +244,12 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             // Get our sites based on the search string
             $results = $wpdb->get_results( $wpdb->prepare( $query, esc_attr( $_GET['q'] ), $site_id ) );
 
+            foreach ($results as $key => $object) {
+                if(!MUCD_Functions::is_duplicable($object->blog_id)) {
+                    unset($results[$key]);
+                }
+            }
+
             // bail if we found no results
             if ( empty( $results ) ) {
                 wp_send_json_error( $_GET );
