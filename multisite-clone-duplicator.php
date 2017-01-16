@@ -71,7 +71,18 @@ if( !class_exists( 'MUCD' ) ) {
         public static function check_if_multisite() {
             if (!function_exists('is_multisite') || !is_multisite()) {
                 deactivate_plugins( plugin_basename( __FILE__ ) );
-                wp_die('MultiSite Clone Duplicator works only for multisite installation');
+                wp_die('multisite-clone-duplicator works only for multisite installation');
+            }
+        }
+
+        /**
+         * Deactivate the plugin if we are not on the network admin
+         * @since 1.4.0
+         */
+        public static function check_if_network_admin() {
+            if (!is_network_admin() ) {
+                deactivate_plugins( plugin_basename( __FILE__ ) );
+                wp_die('multisite-clone-duplicator works only as multisite network-wide plugin');
             }
         }
 
@@ -80,7 +91,8 @@ if( !class_exists( 'MUCD' ) ) {
          */
         public static function activate() {
             MUCD::check_if_multisite();
-            MUCD_Option::init_options();              
+            MUCD::check_if_network_admin();
+            MUCD_Option::init_options();
         }
 
         /**
