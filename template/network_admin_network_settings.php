@@ -11,7 +11,7 @@
 
 
             <?php
-            $network_blogs = MUCD_Functions::get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
+            $network_blogs = MUCD_Functions::get_sites();
             echo '<div class="multiselect" id="site-select-box">';
             foreach( $network_blogs as $blog ) {
                 echo '    <label><input ' . checked(get_blog_option( $blog['blog_id'], 'mucd_duplicable', "no"), 'yes', false) . ' class="duplicables-list" type="checkbox" name="duplicables-list[]" value="'.$blog['blog_id'].'" />' . substr($blog['domain'] . $blog['path'], 0, -1) . '</label>';
