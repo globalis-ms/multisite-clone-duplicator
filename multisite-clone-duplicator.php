@@ -16,6 +16,7 @@ if ( !defined('ABSPATH') )
     die('-1');
 
 if( !class_exists( 'MUCD' ) ) {
+
     // Load configuration
     require_once realpath( dirname( __FILE__ ) ) . '/include/config.php';
 
@@ -46,6 +47,11 @@ if( !class_exists( 'MUCD' ) ) {
      * Main class of the plugin
      */
     class MUCD {
+        /**
+        * Plugin's version number
+        */
+        const VERSION = '1.4.0';
+        
         /**
          * Register hooks used by the plugin
          */
