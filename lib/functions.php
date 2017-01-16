@@ -176,6 +176,7 @@ if( !class_exists( 'MUCD_Functions' ) ) {
             if(version_compare(get_bloginfo('version'), '4.6', '>=')) {
                 $defaults = array('number' => MUCD_MAX_NUMBER_OF_SITE);
                 $args = wp_parse_args( $args, $defaults );
+                $args = apply_filters( 'mucd_get_sites_args', $args );
                 $sites = get_sites($args);
                 foreach($sites as $key => $site) {
                     $sites[$key] = (array) $site;
@@ -183,6 +184,7 @@ if( !class_exists( 'MUCD_Functions' ) ) {
                 return $sites;
             } else {
                 $defaults = array('limit' => MUCD_MAX_NUMBER_OF_SITE);
+                $args = apply_filters( 'mucd_get_sites_args', $args );
                 $args = wp_parse_args( $args, $defaults );
                 return wp_get_sites( $args );
             }
