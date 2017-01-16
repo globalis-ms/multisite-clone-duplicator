@@ -47,6 +47,7 @@ if( !class_exists( 'MUCD' ) ) {
      * Main class of the plugin
      */
     class MUCD {
+
         /**
         * Plugin's version number
         */
@@ -56,51 +57,20 @@ if( !class_exists( 'MUCD' ) ) {
          * Register hooks used by the plugin
          */
         public static function hooks() {
-            // Register (de)activation hook
             register_activation_hook( __FILE__, array( __CLASS__, 'activate' ) );
-
-            add_action( 'init', array( __CLASS__, 'init' ) );
-            add_action( 'admin_init', array( __CLASS__, 'check_if_multisite' ) );
-        }
-
-
-        /**
-         * Deactivate the plugin if we are not on a multisite installation
-         * @since 0.2.0
-         */
-        public static function check_if_multisite() {
-            if (!function_exists('is_multisite') || !is_multisite()) {
-                deactivate_plugins( plugin_basename( __FILE__ ) );
-                wp_die('multisite-clone-duplicator works only for multisite installation');
-            }
-        }
-
-        /**
-         * Deactivate the plugin if we are not on the network admin
-         * @since 1.4.0
-         */
-        public static function check_if_network_admin() {
-            if (!is_network_admin() ) {
-                deactivate_plugins( plugin_basename( __FILE__ ) );
-                wp_die('multisite-clone-duplicator works only as multisite network-wide plugin');
-            }
+            add_action( 'admin_init', array( 'MUCD_Functions', 'check_if_multisite' ) );
         }
 
         /**
          * What to do on plugin activation
          */
         public static function activate() {
-            MUCD::check_if_multisite();
-            MUCD::check_if_network_admin();
+            MUCD_Functions::check_if_multisite();
+            MUCD_Functions::check_if_network_admin();
             MUCD_Option::init_options();
         }
 
-        /**
-         * Plugin init
-         */
-        public static function init() {
-             // Nothing for now.
-        }   
     }
+
     MUCD::hooks();
 }
