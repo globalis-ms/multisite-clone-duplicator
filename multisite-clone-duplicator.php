@@ -58,8 +58,6 @@ if( !class_exists( 'MUCD' ) ) {
         public static function hooks() {
             // Register (de)activation hook
             register_activation_hook( __FILE__, array( __CLASS__, 'activate' ) );
-            register_deactivation_hook( __FILE__, array( __CLASS__, 'deactivate' ) );
-            register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
 
             add_action( 'init', array( __CLASS__, 'init' ) );
             add_action( 'admin_init', array( __CLASS__, 'check_if_multisite' ) );
@@ -83,34 +81,6 @@ if( !class_exists( 'MUCD' ) ) {
         public static function activate() {
             MUCD::check_if_multisite();
             MUCD_Option::init_options();              
-        }
-
-        /**
-         * What to do on plugin deactivation
-         */
-        public static function deactivate() {
-        
-            $plugins = get_option( 'active_plugins' );
-            $mucd = plugin_basename( __FILE__ );
-            $update  = false;
-            foreach ( $plugins as $i => $plugin ) {
-                if ( $plugin === $mucd ) {
-                    $plugins[$i] = false;
-                    $update = true;
-                }
-            }
-
-            if ( $update ) {
-                update_option( 'active_plugins', array_filter( $plugins ) );
-            }
-
-        }
-
-        /**
-         * What to do on plugin uninstallation
-         */
-        public static function uninstall() {
-            MUCD_Option::delete_options();
         }
 
         /**
