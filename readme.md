@@ -69,11 +69,17 @@ It's not a problem ! Serialized data are understood by the plugin, recursively u
 Check your host / server configuration : you probably cloned your site into a domain that is not available !
 
 ### How to duplicate with command line commands ?
-Install [WP-CLI](http://wp-cli.org/), go to your wordpress multisite directory, and type ``` wp-cli site duplicate --source=<id_of_the_site_to_clone> --slug="<slug_of_the_new_site>"```
+Install [WP-CLI](http://wp-cli.org/), go to your wordpress multisite directory, and type 
+``` 
+wp-cli site duplicate --source=<id_of_the_site_to_clone> --slug="<slug_of_the_new_site>"
+```
 
-Arguments are : ``` wp site duplicate --slug=<slug> --source=<site_id> [--title=<title>]
+Arguments are : 
+``` 
+wp site duplicate --slug=<slug> --source=<site_id> [--title=<title>]
   [--email=<email>] [--network_id=<network-id>] [--private] [--porcelain] [--v]
-  [--do_not_copy_files] [--keep_users] [--log=<dir_path>]```
+  [--do_not_copy_files] [--keep_users] [--log=<dir_path>]
+```
 
 ### Which languages are currently supported? 
 As of now, following languages are supported : English (en_US), French (fr_FR), Spanish (es_ES), Lithuanian (lt_LT) and Greek (el). If you wish to, you can translate the interface in your own language in the [standard WordPress way](http://codex.wordpress.org/Translating_WordPress) or with [Transifex](https://www.transifex.com/projects/p/multisite-clone-duplicator/)
@@ -215,9 +221,11 @@ Filter which strings we want to replace during update
 
 Arguments are :
 
-``` wp site duplicate --slug=<slug> --source=<site_id> [--title=<title>]
+``` 
+wp site duplicate --slug=<slug> --source=<site_id> [--title=<title>]
   [--email=<email>] [--network_id=<network-id>] [--private] [--porcelain] [--v]
-  [--do_not_copy_files] [--keep_users] [--log=<dir_path>]```
+  [--do_not_copy_files] [--keep_users] [--log=<dir_path>]
+```
 
 ## Thank’s
 
