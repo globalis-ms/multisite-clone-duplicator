@@ -88,8 +88,8 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 [Globalis media systems](http://www.globalis-ms.com/) is a web IT consulting company based in Paris, and a pioneer of the PHP and LAMP platform. Since 1997, we have been designing, making and maintaining Internet, intranet or mobile software. We have been working with open source CMS since 2000 and have regularly been using WordPress since 2007.
 
 ## Screenshots
-Screenshots sur wordpress.org
-[Screenshots](https://fr.wordpress.org/plugins/multisite-clone-duplicator/screenshots/)
+Screenshots sur
+[wordpress.org](https://fr.wordpress.org/plugins/multisite-clone-duplicator/screenshots/)
 
 ## Changelog
 
