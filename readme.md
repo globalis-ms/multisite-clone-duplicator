@@ -35,9 +35,9 @@ You can install MultiSite Clone Duplicator using the built in WordPress plugin i
 
 If you prefer download MultiSite Clone Duplicator manually :
 
-1. Upload multisite-clone-duplicator/ to the ``` /wp-content/plugins/ ``` directory
+1. Upload ``` multisite-clone-duplicator/ ``` to the ``` /wp-content/plugins/ ``` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. (Optional) Chmod 777 the logs/ directory of the plugin, if you want to activate logs
+3. (Optional) ``` Chmod 777 ``` the logs/ directory of the plugin, if you want to activate logs
 4. Go to My Sites > Network Admin > Duplication and enjoy !
 5. (Optional) Change default options into Network dashboard > Network settings > Duplication
 
@@ -88,7 +88,7 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 [Globalis media systems](http://www.globalis-ms.com/) is a web IT consulting company based in Paris, and a pioneer of the PHP and LAMP platform. Since 1997, we have been designing, making and maintaining Internet, intranet or mobile software. We have been working with open source CMS since 2000 and have regularly been using WordPress since 2007.
 
 ## Screenshots
-Screenshots sur
+Screenshots on
 [wordpress.org](https://fr.wordpress.org/plugins/multisite-clone-duplicator/screenshots/)
 
 ## Changelog
@@ -172,6 +172,13 @@ Action before / after copying users
   1. Int : from_site_id
   2. Int : to_site_id
   
+---------------------------------------
+### Filter : mucd_get_site_list_args
+Filter args to retrieves a list of network sites
+**Args :**
+
+  1. Array of ( 'param' => 'value' )
+
 ---------------------------------------
 ### Filter : mucd_copy_blog_data_saved_options
 Filter options that should be preserved in the new blog (original values from created blog will not be erased by copy of old site's tables)  
