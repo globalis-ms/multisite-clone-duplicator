@@ -55,13 +55,26 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 $from_site_table = self::get_primary_tables($from_site_prefix);
             }
             else {
-                $sql_query = $wpdb->prepare('SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \'%s\' AND TABLE_NAME LIKE \'%s\'', $schema, $from_site_prefix_like . '%');
-                $from_site_table =  self::do_sql_query($sql_query, 'col'); 
+                $sql_query = $wpdb->prepare('SELECT TABLE_NAME, TABLE_TYPE FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \'%s\' AND TABLE_NAME LIKE \'%s\'', $schema, $from_site_prefix_like . '%');
+                $results =  self::do_sql_query($sql_query, 'results');
+
+                $to_site_view = $from_site_table = [];
+
+                foreach ($results as $table) {
+                    if($table['TABLE_TYPE'] === 'VIEW') {
+                        $from_site_view[] = $table['TABLE_NAME'];
+                        $to_site_view[] = $to_site_prefix . substr( $table['TABLE_NAME'], $from_site_prefix_length );
+                    }
+                    else {
+                        $from_site_table[] = $table['TABLE_NAME'];
+                    }
+                }
             }
 
             foreach ($from_site_table as $table) {
 
                 $table_name = $to_site_prefix . substr( $table, $from_site_prefix_length );
+                $to_site_table[] = $table_name;
 
                 // Drop table if exists
                 self::do_sql_query('DROP TABLE IF EXISTS `' . $table_name . '`');
@@ -72,6 +85,16 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 // Populate database with data from source table
                 self::do_sql_query('INSERT `' . $table_name . '` SELECT * FROM `' . $schema . '`.`' . $table . '`');
 
+            }
+
+            $search  = array_merge($from_site_table, $from_site_view);
+            $replace = array_merge($to_site_table, $to_site_view);
+            
+            foreach ($from_site_view as $view) {
+                $sql_query = $wpdb->prepare('SELECT VIEW_DEFINITION FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = \'%s\' AND TABLE_NAME = \'%s\'', $schema, $view);
+                $definition = str_replace($search, $replace, self::do_sql_query($sql_query));
+                // Create new view
+                self::do_sql_query($definition);
             }
 
             // apply key options from new blog.
