@@ -1,11 +1,11 @@
 # MultiSite Clone Duplicator
-Contributors: pdargham, julienog, daviddaug, globalis
-Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
-Requires at least: 4.0.0
-Tested up to: 4.7.1
-Stable tag: 1.4.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+* Contributors: pdargham, julienog, daviddaug, globalis
+* Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
+* Requires at least: 4.0.0
+* Tested up to: 4.7.1
+* Stable tag: 1.4.0
+* License: GPLv2 or later
+* License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Clones an existing site into a new one in a multisite installation : copies all posts, settings and files
 
