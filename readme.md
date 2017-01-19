@@ -174,7 +174,14 @@ Action before / after copying users
   
 ---------------------------------------
 ### Filter : mucd_get_site_list_args
-Filter args to retrieves a list of network sites
+Filter args to retrieves a list of network sites (function get_site_list)
+**Args :**
+
+  1. Array of ( 'param' => 'value' )
+
+---------------------------------------
+### Filter : mucd_get_sites_args
+Filter args to retrieves a list of network sites (function get_sites)
 **Args :**
 
   1. Array of ( 'param' => 'value' )
