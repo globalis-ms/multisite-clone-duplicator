@@ -366,9 +366,9 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             // enqueue select2
             if ( $select2 ) {
                 $min = $debug ? '' : '.min';
-                wp_enqueue_script( 'select2', MUCD_URL . "/js/select2/js/select2$min.js", array( 'jquery' ), '4.0.0', true );
-                wp_enqueue_style( 'select2', MUCD_URL . '/js/select2/css/select2.css', array(), '4.0.0' );
-                $dependencies[] = 'select2';
+                wp_enqueue_script( 'MUCD/select2', MUCD_URL . "/js/select2/js/select2$min.js", array( 'jquery' ), '4.0.0', true );
+                wp_enqueue_style( 'MUCD/select2', MUCD_URL . '/js/select2/css/select2.css', array(), '4.0.0' );
+                $dependencies[] = 'MUCD/select2';
 
                 // Load select2 language js file
                 $select2_locale = get_locale();
