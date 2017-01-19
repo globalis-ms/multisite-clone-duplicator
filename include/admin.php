@@ -366,9 +366,9 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             // enqueue select2
             if ( $select2 ) {
                 $min = $debug ? '' : '.min';
-                wp_enqueue_script( 'MUCD/select2', MUCD_URL . "/js/select2/js/select2$min.js", array( 'jquery' ), '4.0.0', true );
-                wp_enqueue_style( 'MUCD/select2', MUCD_URL . '/js/select2/css/select2.css', array(), '4.0.0' );
-                $dependencies[] = 'MUCD/select2';
+                wp_enqueue_script( 'mucd/select2', MUCD_URL . "/js/select2/js/select2$min.js", array( 'jquery' ), '4.0.0', true );
+                wp_enqueue_style( 'mucd/select2', MUCD_URL . '/js/select2/css/select2.css', array(), '4.0.0' );
+                $dependencies[] = 'mucd/select2';
 
                 // Load select2 language js file
                 $select2_locale = get_locale();
@@ -376,11 +376,11 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 if ( ! file_exists( MUCD_COMPLETE_PATH . "/js/select2/js/i18n/$select2_locale.js" ) ) {
                     $select2_locale = strstr( $select2_locale, '-', true );
                 }
-                wp_enqueue_script( 'select2-i18n', MUCD_URL . "/js/select2/js/i18n/$select2_locale.js", $dependencies, '4.0.0', true );
-                $dependencies[] = 'select2-i18n';
+                wp_enqueue_script( 'mucd/select2-i18n', MUCD_URL . "/js/select2/js/i18n/$select2_locale.js", $dependencies, '4.0.0', true );
+                $dependencies[] = 'mucd/select2-i18n';
             }
 
-            wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js', $dependencies, MUCD::VERSION, true );
+            wp_enqueue_script( 'mucd/duplicate', MUCD_URL . '/js/network_admin_duplicate_site.js', $dependencies, MUCD::VERSION, true );
 
             // Localize variables for Javascript usage
             $localize_args = array(
@@ -402,7 +402,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             if ( isset( $select2_locale ) && ! empty( $select2_locale ) ) {
                 $localize_args['locale'] = $select2_locale;
             }
-            wp_localize_script( 'mucd-duplicate', 'mucd_config', $localize_args );
+            wp_localize_script( 'mucd/duplicate', 'mucd_config', $localize_args );
         }
 
         /**
@@ -411,9 +411,9 @@ if( !class_exists( 'MUCD_Admin' ) ) {
          */
         public static function enqueue_script_network_settings() {
             // Enqueue script for network settings page
-            wp_enqueue_script( 'mucd-duplicate', MUCD_URL . '/js/network_admin_settings.js', array( 'jquery' ), MUCD::VERSION, true );
+            wp_enqueue_script( 'mucd/duplicate', MUCD_URL . '/js/network_admin_settings.js', array( 'jquery' ), MUCD::VERSION, true );
             // Enqueue style for network settings page
-            wp_enqueue_style( 'mucd-duplicate-css', MUCD_URL . '/css/network_admin_settings.css', array(), MUCD::VERSION );     
+            wp_enqueue_style( 'mucd/duplicate-css', MUCD_URL . '/css/network_admin_settings.css', array(), MUCD::VERSION );     
         }
 
         /**
