@@ -17,7 +17,9 @@ It allows you to clone any site of your network into a new one : all data, files
 
 It is useful when you want to create multiple sites from the same template : Don't waste your time copying the same configuration again and again !  
   
-Simple and user-friendly, this plugin extends WordPress core network's functionalities without polluting the dashboard.  
+Simple and user-friendly, this plugin extends WordPress core network's functionalities without polluting the dashboard.
+
+WARNING : If you clone the primary site, you must use ```mucd_default_primary_tables_to_copy``` filter to declare plugins and custom databse tables, or your cloned site won't be complete
 
 = Features: =
 * Clones any site of your wordpress multisite installation
