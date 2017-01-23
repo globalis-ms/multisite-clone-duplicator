@@ -58,6 +58,7 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
             }
 
             // Create new site
+            switch_to_blog(1);
             $to_site_id = wpmu_create_blog( $newdomain, $path, $title, $user_id , array( 'public' => $public ), $network_id );
             $wpdb->show_errors();
 

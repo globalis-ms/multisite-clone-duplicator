@@ -130,7 +130,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 }
             }
 
-            $use_select2 = ( 'yes' === get_site_option( 'mucd_enhanced_site_select' ) );
+            $use_select2 = ( 'no' === get_site_option( 'mucd_disable_enhanced_site_select' ) );
             self::enqueue_script_network_duplicate( $use_select2 );
 
             if ( $use_select2 ) {
@@ -567,11 +567,11 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                         update_site_option( 'mucd_log', 'no' );
                     }
 
-                    if (isset( $_POST['mucd_enhanced_site_select']) && $_POST['mucd_enhanced_site_select']=='yes') {
-                        update_site_option( 'mucd_enhanced_site_select', 'yes' );
+                    if (isset( $_POST['mucd_disable_enhanced_site_select']) && $_POST['mucd_disable_enhanced_site_select']=='yes') {
+                        update_site_option( 'mucd_disable_enhanced_site_select', 'yes' );
                     }
                     else {
-                        update_site_option( 'mucd_enhanced_site_select', 'no' );
+                        update_site_option( 'mucd_disable_enhanced_site_select', 'no' );
                     }
 
                 }
