@@ -130,7 +130,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                 }
             }
 
-            $use_select2 = ( 'no' === get_site_option( 'mucd_disable_enhanced_site_select' ) );
+            $use_select2 = ( 'yes' !== get_site_option( 'mucd_disable_enhanced_site_select' ) );
             self::enqueue_script_network_duplicate( $use_select2 );
 
             if ( $use_select2 ) {
