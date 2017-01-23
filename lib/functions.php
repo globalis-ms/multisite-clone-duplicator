@@ -83,7 +83,7 @@ if( !class_exists( 'MUCD_Functions' ) ) {
          */
         public static function get_site_list() {
             $site_list = array();
-            $network_blogs = MUCD_Functions::get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
+            $network_blogs = MUCD_Functions::get_sites(apply_filters( 'mucd_get_site_list_args', array()));
             foreach( $network_blogs as $blog ){
                 if (MUCD_Functions::is_duplicable($blog['blog_id']) && MUCD_SITE_DUPLICATION_EXCLUDE != $blog['blog_id']) {
                     $site_list[] = $blog;
@@ -174,13 +174,41 @@ if( !class_exists( 'MUCD_Functions' ) ) {
 
         public static function get_sites( $args = array() ) {
             if(version_compare(get_bloginfo('version'), '4.6', '>=')) {
+                $defaults = array('number' => MUCD_MAX_NUMBER_OF_SITE);
+                $args = wp_parse_args( $args, $defaults );
+                $args = apply_filters( 'mucd_get_sites_args', $args );
                 $sites = get_sites($args);
                 foreach($sites as $key => $site) {
                     $sites[$key] = (array) $site;
                 }
                 return $sites;
             } else {
+                $defaults = array('limit' => MUCD_MAX_NUMBER_OF_SITE);
+                $args = apply_filters( 'mucd_get_sites_args', $args );
+                $args = wp_parse_args( $args, $defaults );
                 return wp_get_sites( $args );
+            }
+        }
+
+        /**
+         * Deactivate the plugin if we are not on a multisite installation
+         * @since 0.2.0
+         */
+        public static function check_if_multisite() {
+            if (!function_exists('is_multisite') || !is_multisite()) {
+                deactivate_plugins( plugin_basename( __FILE__ ) );
+                wp_die('multisite-clone-duplicator works only for multisite installation');
+            }
+        }
+
+        /**
+         * Deactivate the plugin if we are not on the network admin
+         * @since 1.4.0
+         */
+        public static function check_if_network_admin() {
+            if (!is_network_admin() ) {
+                deactivate_plugins( plugin_basename( __FILE__ ) );
+                wp_die('multisite-clone-duplicator works only as multisite network-wide plugin');
             }
         }
 
