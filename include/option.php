@@ -13,7 +13,7 @@ if( !class_exists( 'MUCD_Option' ) ) {
          * @since 0.2.0
          */
         public static function init_duplicable_option($blogs_value = "no", $network_value = "all") {
-            $network_blogs = MUCD_Functions::get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
+            $network_blogs = MUCD_Functions::get_sites();
             foreach( $network_blogs as $blog ){
                 $blog_id = $blog['blog_id'];
                 add_blog_option( $blog_id, 'mucd_duplicable', $blogs_value);
@@ -26,7 +26,7 @@ if( !class_exists( 'MUCD_Option' ) ) {
          * @since 0.2.0
          */
         public static function delete_duplicable_option() {
-            $network_blogs = MUCD_Functions::get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
+            $network_blogs = MUCD_Functions::get_sites();
             foreach( $network_blogs as $blog ){
                 $blog_id = $blog['blog_id'];
                 delete_blog_option( $blog_id, 'mucd_duplicable');
@@ -40,7 +40,7 @@ if( !class_exists( 'MUCD_Option' ) ) {
          * @param array $blogs list of blogs we want the option set to "yes"
          */
         public static function set_duplicable_option($blogs) {
-            $network_blogs = MUCD_Functions::get_sites(array('limit' => MUCD_MAX_NUMBER_OF_SITE));
+            $network_blogs = MUCD_Functions::get_sites();
             foreach( $network_blogs as $blog ){
                 if(in_array($blog['blog_id'], $blogs)) {
                     update_blog_option( $blog['blog_id'], 'mucd_duplicable', "yes");
@@ -59,7 +59,9 @@ if( !class_exists( 'MUCD_Option' ) ) {
             add_site_option('mucd_copy_files', 'yes');
             add_site_option('mucd_keep_users', 'yes');
             add_site_option('mucd_log', 'no');
-            add_site_option('mucd_log_dir', MUCD_COMPLETE_PATH . '/logs/');
+            $upload_dir = wp_upload_dir();
+            add_site_option('mucd_log_dir', $upload_dir['basedir'] . '/multisite-clone-duplicator-logs/');
+            add_site_option('mucd_disable_enhanced_site_select', 'no');
             MUCD_Option::init_duplicable_option();
         }
 
@@ -72,6 +74,7 @@ if( !class_exists( 'MUCD_Option' ) ) {
             delete_site_option('mucd_keep_users');
             delete_site_option('mucd_log');
             delete_site_option('mucd_log_dir');
+            delete_site_option('mucd_disable_enhanced_site_select');
             MUCD_Option::delete_duplicable_option();
         }
       
@@ -81,7 +84,8 @@ if( !class_exists( 'MUCD_Option' ) ) {
          * @return string the path
          */
         public static function get_option_log_directory() {
-            return get_site_option('mucd_log_dir', MUCD_COMPLETE_PATH . '/logs/');
+            $upload_dir = wp_upload_dir();   
+            return get_site_option('mucd_log_dir', $upload_dir['basedir'] . '/multisite-clone-duplicator-logs/');
         }
 
         /**
@@ -165,6 +169,7 @@ if( !class_exists( 'MUCD_Option' ) ) {
                 'terms',
                 'term_relationships',
                 'term_taxonomy',
+                'termmeta',
             );
         }
 

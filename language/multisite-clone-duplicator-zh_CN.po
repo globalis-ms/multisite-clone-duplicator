@@ -1,0 +1,202 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Duplicate Site 0.2.0\n"
+"POT-Creation-Date: 2016-12-27 17:36+0100\n"
+"PO-Revision-Date: 2016-12-27 17:36+0100\n"
+"Last-Translator: \n"
+"Language-Team: Pierre DARGHAM <pierre.dargham@globalis-ms.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-SearchPath-0: ../include\n"
+
+#: ../include/lang.php:6
+msgid "Sorry, you don't have permissions to use this page."
+msgstr "对不起，您没有权限使用此页。"
+
+#: ../include/lang.php:7
+msgid "Sorry, there is no site available for duplication."
+msgstr "对不起，这儿没有网站可供重复。"
+
+#: ../include/lang.php:8
+msgid "The log file cannot be written"
+msgstr "无法写入日志文件"
+
+#: ../include/lang.php:9
+msgid "The log file cannot be written to location"
+msgstr "日志文件无法写入位置"
+
+#: ../include/lang.php:10
+msgid "To enable logging, change permissions on log directory"
+msgstr "若要启用日志记录，请更改日志目录上的权限"
+
+#: ../include/lang.php:15 ../include/lang.php:59
+msgid "Duplicate"
+msgstr "复制(&D)"
+
+#: ../include/lang.php:16
+msgid "Duplication"
+msgstr "内容复制"
+
+#: ../include/lang.php:17
+msgid "Duplicable"
+msgstr "复制"
+
+#: ../include/lang.php:18
+msgid "Customize"
+msgstr "自定义"
+
+#: ../include/lang.php:19
+msgid "Yes"
+msgstr "是的"
+
+#: ../include/lang.php:20
+msgid "No"
+msgstr "否"
+
+#: ../include/lang.php:25
+msgid "Dashboard"
+msgstr "选择此选项删除WordPress站点新闻仪表板部件。"
+
+#: ../include/lang.php:26
+msgid "Visit"
+msgstr "浏览"
+
+#: ../include/lang.php:27
+msgid "View log"
+msgstr "查看文件"
+
+#: ../include/lang.php:28
+msgid "Missing fields"
+msgstr "遗失字段"
+
+#: ../include/lang.php:29
+msgid "Missing or invalid title"
+msgstr "丢失或者标题不对"
+
+#: ../include/lang.php:30
+#, php-format
+msgid ""
+"The following words are reserved for use by WordPress functions and cannot "
+"be used as blog names : <code>%s</code>"
+msgstr "以下字词被保留用于由 WordPress 函数，不能用作博客名称︰<code>%s</code>"
+
+#: ../include/lang.php:31
+msgid "Missing or invalid site address"
+msgstr "缺少或无效的网站地址."
+
+#: ../include/lang.php:32
+msgid "Missing admin email address"
+msgstr "缺少的管理员电子邮件地址"
+
+#: ../include/lang.php:33
+msgid "Invalid admin email address"
+msgstr "无效的管理员电子邮件地址"
+
+#: ../include/lang.php:34
+msgid "Missing or invalid log directory path"
+msgstr "丢失或无效日志目录路径"
+
+#: ../include/lang.php:35
+msgid "New site was created"
+msgstr "获取新版本"
+
+#: ../include/lang.php:36
+msgid "There was an error creating the user."
+msgstr "创建用户时出错。"
+
+#: ../include/lang.php:37
+#, php-format
+msgid "Failed to copy files : check permissions on <strong>%s</strong>"
+msgstr "复制文件失败︰ 请检查对<strong>%s</strong>的权限"
+
+#: ../include/lang.php:42
+msgid "Duplicate Site"
+msgstr "复制网站"
+
+#: ../include/lang.php:43
+msgid "Original site to copy"
+msgstr "原始站点复制"
+
+#: ../include/lang.php:44
+msgid "New Site - Address"
+msgstr "新网站地址"
+
+#: ../include/lang.php:45
+msgid "Only lowercase letters (a-z) and numbers are allowed."
+msgstr "用户名只允许有小写字母（a-z）和数字。"
+
+#: ../include/lang.php:46
+msgid "New Site - Title"
+msgstr "新网站的标题"
+
+#: ../include/lang.php:47
+msgid "New Site - Admin Email"
+msgstr "新网站-管理员的电子邮件"
+
+#: ../include/lang.php:48
+msgid ""
+"A new user will be created if the above email address is not in the database."
+msgstr "如果上面的邮箱地址是不是在数据库中的新用户将被创建。"
+
+#: ../include/lang.php:49
+msgid "The username and password will be mailed to this email address."
+msgstr "用户名和密码将邮寄到这个电子邮件地址。"
+
+#: ../include/lang.php:50
+msgid "Show advanced options"
+msgstr "显示高级选项"
+
+#: ../include/lang.php:51
+msgid "Hide advanced options"
+msgstr "隐藏高级的选项"
+
+#: ../include/lang.php:52
+msgid "Files"
+msgstr "文件"
+
+#: ../include/lang.php:53
+msgid "Duplicate files from duplicated site upload directory"
+msgstr "复制复制的网站上载目录中的文件"
+
+#: ../include/lang.php:54
+msgid "Users and roles"
+msgstr "用户和角色"
+
+#: ../include/lang.php:55
+msgid "Keep users and roles from duplicated site"
+msgstr "从重复的网站让用户和角色"
+
+#: ../include/lang.php:56
+msgid "Log"
+msgstr "日志"
+
+#: ../include/lang.php:57
+msgid "Generate log file"
+msgstr "普通日至文件"
+
+#: ../include/lang.php:58
+msgid "Log directory"
+msgstr "日志目录"
+
+#: ../include/lang.php:60
+msgid "Edit duplicable sites list"
+msgstr "编辑复制站点列表"
+
+#: ../include/lang.php:65
+msgid "Dublicable websites"
+msgstr "Dublicable 网站"
+
+#: ../include/lang.php:66
+msgid "Allow duplication of all sites of the network"
+msgstr "允许重复的所有站点的网络"
+
+#: ../include/lang.php:67
+msgid "Allow duplication of following sites only :"
+msgstr "允许以下网站只复制︰"

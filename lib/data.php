@@ -16,9 +16,9 @@ if( !class_exists( 'MUCD_Data' ) ) {
             self::$to_site_id = $to_site_id;
 
             // Copy
-            MUCD_Data::db_copy_tables( $from_site_id, $to_site_id );
+            $saved_options = self::db_copy_tables( $from_site_id, $to_site_id );
             // Update
-            MUCD_Data::db_update_data( $from_site_id, $to_site_id );
+            self::db_update_data( $from_site_id, $to_site_id, $saved_options );
         }
 
         /**
@@ -52,11 +52,11 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
             // Get sources Tables
             if($from_site_id == MUCD_PRIMARY_SITE_ID) {
-                $from_site_table = MUCD_Data::get_primary_tables($from_site_prefix);
+                $from_site_table = self::get_primary_tables($from_site_prefix);
             }
             else {
                 $sql_query = $wpdb->prepare('SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \'%s\' AND TABLE_NAME LIKE \'%s\'', $schema, $from_site_prefix_like . '%');
-                $from_site_table =  MUCD_Data::do_sql_query($sql_query, 'col'); 
+                $from_site_table =  self::do_sql_query($sql_query, 'col'); 
             }
 
             foreach ($from_site_table as $table) {
@@ -64,23 +64,20 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 $table_name = $to_site_prefix . substr( $table, $from_site_prefix_length );
 
                 // Drop table if exists
-                MUCD_Data::do_sql_query('DROP TABLE IF EXISTS `' . $table_name . '`');
+                self::do_sql_query('DROP TABLE IF EXISTS `' . $table_name . '`');
 
                 // Create new table from source table
-                MUCD_Data::do_sql_query('CREATE TABLE IF NOT EXISTS `' . $table_name . '` LIKE `' . $schema . '`.`' . $table . '`');
+                self::do_sql_query('CREATE TABLE IF NOT EXISTS `' . $table_name . '` LIKE `' . $schema . '`.`' . $table . '`');
 
                 // Populate database with data from source table
-                MUCD_Data::do_sql_query('INSERT `' . $table_name . '` SELECT * FROM `' . $schema . '`.`' . $table . '`');
+                self::do_sql_query('INSERT `' . $table_name . '` SELECT * FROM `' . $schema . '`.`' . $table . '`');
 
             }
 
             // apply key options from new blog.
-            switch_to_blog( $to_site_id );
-            foreach( $saved_options as $option_name => $option_value ) {
-                update_option( $option_name, $option_value );
-            }
+            self::db_restore_data( $to_site_id,  $saved_options );
 
-           restore_current_blog();
+            return $saved_options;
        }
 
         /**
@@ -108,7 +105,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
          * @param  int $from_site_id duplicated site id
          * @param  int $to_site_id   new site id
          */
-        public static function db_update_data( $from_site_id, $to_site_id ) {
+        public static function db_update_data( $from_site_id, $to_site_id, $saved_options ) {
             global $wpdb ;  
 
             $to_blog_prefix = $wpdb->get_blog_prefix( $to_site_id );
@@ -131,14 +128,14 @@ if( !class_exists( 'MUCD_Data' ) ) {
             // Bugfix : escape '_' , '%' and '/' character for mysql 'like' queries
             $to_blog_prefix_like = $wpdb->esc_like($to_blog_prefix);
 
-            $results = MUCD_Data::do_sql_query('SHOW TABLES LIKE \'' . $to_blog_prefix_like . '%\'', 'col', FALSE);
+            $results = self::do_sql_query('SHOW TABLES LIKE \'' . $to_blog_prefix_like . '%\'', 'col', FALSE);
 
             foreach( $results as $k => $v ) {
                 $tables[str_replace($to_blog_prefix, '', $v)] = array();
             }
 
             foreach( $tables as $table => $col) {
-                $results = MUCD_Data::do_sql_query('SHOW COLUMNS FROM `' . $to_blog_prefix . $table . '`', 'col', FALSE);
+                $results = self::do_sql_query('SHOW COLUMNS FROM `' . $to_blog_prefix . $table . '`', 'col', FALSE);
 
                 $columns = array();
 
@@ -168,9 +165,28 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
             foreach( $tables as $table => $field) {
                 foreach( $string_to_replace as $from_string => $to_string) {
-                    MUCD_Data::update($to_blog_prefix . $table, $field, $from_string, $to_string);
+                    self::update($to_blog_prefix . $table, $field, $from_string, $to_string);
                 }
             }
+
+            self::db_restore_data( $to_site_id,  $saved_options );
+        }
+
+        /**
+        * Restore options that should be preserved in the new blog
+        * @since 0.2.0
+        * @param  int $from_site_id duplicated site id
+        * @param  int $to_site_id   new site id
+        */
+        public static function db_restore_data( $to_site_id, $saved_options ) {
+
+           switch_to_blog( $to_site_id );
+
+           foreach ( $saved_options as $option_name => $option_value ) {
+               update_option( $option_name, $option_value );
+           }
+
+           restore_current_blog();
         }
 
         /**
@@ -191,16 +207,16 @@ if( !class_exists( 'MUCD_Data' ) ) {
                     $from_string_like = $wpdb->esc_like($from_string);
 
                     $sql_query = $wpdb->prepare('SELECT `' .$field. '` FROM `'.$table.'` WHERE `' .$field. '` LIKE "%s" ', '%' . $from_string_like . '%');  
-                    $results = MUCD_Data::do_sql_query($sql_query, 'results', FALSE);
+                    $results = self::do_sql_query($sql_query, 'results', FALSE);
 
                     if($results) {
                         $update = 'UPDATE `'.$table.'` SET `'.$field.'` = "%s" WHERE `'.$field.'` = "%s"';
 
                          foreach($results as $result => $row) {
                             $old_value = $row[$field];
-                            $new_value = MUCD_Data::try_replace( $row, $field, $from_string, $to_string );
+                            $new_value = self::try_replace( $row, $field, $from_string, $to_string );
                             $sql_query = $wpdb->prepare($update, $new_value, $old_value);
-                            $results = MUCD_Data::do_sql_query($sql_query);
+                            $results = self::do_sql_query($sql_query);
                         }
                     }
                 }
@@ -239,11 +255,11 @@ if( !class_exists( 'MUCD_Data' ) ) {
             $unset = array();
             if(is_array($val)) {
                 foreach($val as $k => $v) {
-                    $val[$k] = MUCD_Data::try_replace( $val, $k, $from_string, $to_string );
+                    $val[$k] = self::try_replace( $val, $k, $from_string, $to_string );
                 }
             }
             else
-                $val = MUCD_Data::replace($val, $from_string, $to_string);
+                $val = self::replace($val, $from_string, $to_string);
 
             foreach($unset as $k)
                 unset($val[$k]);
@@ -272,17 +288,17 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 }
 
                 if(is_array($row[$field])) {
-                    $row[$field] = MUCD_Data::replace_recursive($row[$field], $from_string, $to_string);
+                    $row[$field] = self::replace_recursive($row[$field], $from_string, $to_string);
                 }
                 else if(is_object($row[$field]) || $row[$field] instanceof __PHP_Incomplete_Class) { // Étrange fonctionnement avec Google Sitemap...
                     $array_object = (array) $row[$field];
-                    $array_object = MUCD_Data::replace_recursive($array_object, $from_string, $to_string);
+                    $array_object = self::replace_recursive($array_object, $from_string, $to_string);
                     foreach($array_object as $key => $field) {
                         $row[$field]->$key = $field;
                     }
                 }
                 else {
-                        $row[$field] = MUCD_Data::replace($row[$field], $from_string, $to_string);
+                        $row[$field] = self::replace($row[$field], $from_string, $to_string);
                 }
 
                 $row[$field] = serialize($row[$field]);
@@ -293,7 +309,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 }
             }
             else {
-                $row[$field] = MUCD_Data::replace($row[$field], $from_string, $to_string);
+                $row[$field] = self::replace($row[$field], $from_string, $to_string);
             }
             return $row[$field];
         }
@@ -334,7 +350,7 @@ if( !class_exists( 'MUCD_Data' ) ) {
             }
 
             if ($wpdb->last_error != "") {
-                MUCD_Data::sql_error($sql_query, $wpdb->last_error);
+                self::sql_error($sql_query, $wpdb->last_error);
            }
 
             return $results;
