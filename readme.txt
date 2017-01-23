@@ -19,7 +19,7 @@ It is useful when you want to create multiple sites from the same template : Don
   
 Simple and user-friendly, this plugin extends WordPress core network's functionalities without polluting the dashboard.
 
-WARNING : If you clone the primary site, you must use ```mucd_default_primary_tables_to_copy``` filter to declare plugins and custom databse tables, or your cloned site won't be complete
+WARNING : If you clone the primary site, you must use ```mucd_default_primary_tables_to_copy``` filter to declare plugins and custom database tables, or your cloned site won't be complete
 
 = Features: =
 * Clones any site of your wordpress multisite installation
