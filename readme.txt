@@ -3,7 +3,7 @@ Contributors: pdargham, julienog, daviddaug, globalis
 Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
 Requires at least: 4.0.0
 Tested up to: 4.7.1
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,9 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 5. **Log warning**
 
 == Changelog ==
+
+= 1.4.1 =
+* Fix wp_cli activation
 
 = 1.4.0 =
 * Added select2 support (Ajax dropdown when selecting site)
