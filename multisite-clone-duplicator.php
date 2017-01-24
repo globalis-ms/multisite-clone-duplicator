@@ -9,6 +9,8 @@
  * Version:             1.4.0
  * Requires at least:   4.0.0
  * Tested up to:        4.7.1
+ *
+ * Network:             true
  */
 
 // Block direct requests
@@ -65,8 +67,6 @@ if( !class_exists( 'MUCD' ) ) {
          * What to do on plugin activation
          */
         public static function activate() {
-            MUCD_Functions::check_if_multisite();
-            MUCD_Functions::check_if_network_admin();
             MUCD_Option::init_options();
         }
 
