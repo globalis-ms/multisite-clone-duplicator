@@ -140,6 +140,20 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
 
             global $wpdb;
 
+            // Bugfix Pierre Dargham : relocating this declaration outside of the loop
+            // PHP < 5.3
+            function user_array_map( $a ){ return $a[0]; }
+
+            if (is_main_site($from_site_id)) {
+                $is_from_main_site = true;
+                $all_sites_ids = MUCD_Functions::get_sites(['fields' => 'ids']);
+                if(!empty($all_sites_ids)) {
+                    $all_sites_ids = array_map( 'user_array_map', $all_sites_ids );
+                }
+            } else {
+                $is_from_main_site = false;
+            }
+
             // Source Site information
             $from_site_prefix = $wpdb->get_blog_prefix( $from_site_id );                    // prefix 
             $from_site_prefix_length = strlen($from_site_prefix);                           // prefix length
@@ -154,24 +168,23 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
 
             switch_to_blog($to_site_id);
 
-            // Bugfix Pierre Dargham : relocating this declaration outside of the loop
-            // PHP < 5.3
-            function user_array_map( $a ){ return $a[0]; }
-
             foreach ($users as $user) {
                 if($user->user_email != $admin_email) {
 
                     add_user_to_blog( $to_site_id, $user->ID, 'subscriber');
 
-                    // PHP >= 5.3
-                    //$all_meta = array_map( function( $a ){ return $a[0]; }, get_user_meta( $user->ID ) );
-                    // PHP < 5.3
                     $all_meta = array_map( 'user_array_map', get_user_meta( $user->ID ) );
 
                     foreach ($all_meta as $metakey => $metavalue) {
                         $prefix = substr($metakey, 0, $from_site_prefix_length);
                         if($prefix==$from_site_prefix) {
                             $raw_meta_name = substr($metakey,$from_site_prefix_length);
+                            if($is_from_main_site) {
+                                $parts = explode('_', $raw_meta_name, 2);
+                                if (count($parts) > 1 && in_array($parts[0], $all_sites_ids)) {
+                                    continue;
+                                }
+                            }
                             update_user_meta( $user->ID, $to_site_prefix . $raw_meta_name, maybe_unserialize($metavalue) );
                         }
                     }
