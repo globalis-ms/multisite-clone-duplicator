@@ -53,7 +53,7 @@ if( !class_exists( 'MUCD' ) ) {
         /**
         * Plugin's version number
         */
-        const VERSION = '1.4.1';
+        const VERSION = '1.5.0';
         
         /**
          * Register hooks used by the plugin
