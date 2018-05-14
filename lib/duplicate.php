@@ -52,7 +52,6 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
             $user_id = MUCD_Duplicate::create_admin($email, $domain);
 
             if ( is_wp_error( $user_id ) ) {
-                wp_cache_flush();
                 $form_message['error'] = $user_id->get_error_message();
                 return $form_message;
             }
@@ -63,7 +62,6 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
             $wpdb->show_errors();
 
             if ( is_wp_error( $to_site_id ) ) {
-                wp_cache_flush();
                 $form_message['error'] = $to_site_id->get_error_message();
                 return $form_message;
             }
