@@ -2,8 +2,8 @@
 * Contributors: pdargham, julienog, daviddaug, globalis
 * Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
 * Requires at least: 4.0.0
-* Tested up to: 4.7.1
-* Stable tag: 1.4.1
+* Tested up to: 4.9.5
+* Stable tag: 1.5.0
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,11 @@ Screenshots on
 [wordpress.org](https://fr.wordpress.org/plugins/multisite-clone-duplicator/screenshots/)
 
 ## Changelog
+
+### 1.5.0
+* Fix duplicating exponentially usermeta
+* Fix unix WP path validation and allow points
+* Remove cache flushing on error
 
 ### 1.4.1
 * Fix wp_cli activation
