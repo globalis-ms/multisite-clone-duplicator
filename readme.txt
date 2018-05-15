@@ -96,7 +96,7 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 = 1.5.0 =
 * Fix duplicating exponentially usermeta
 * Fix unix WP path validation and allow points
-* Remove cache fushing on error
+* Remove cache flushing on error
 
 = 1.4.1 =
 * Fix wp_cli activation
