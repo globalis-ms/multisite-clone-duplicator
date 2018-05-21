@@ -95,7 +95,7 @@ Screenshots on
 
 ## Changelog
 
-### 1.5.0
+### 1.5.1
 * Fix compatibility with PHP version < 5.4
 
 ### 1.5.0
