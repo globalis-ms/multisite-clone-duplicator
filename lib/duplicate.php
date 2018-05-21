@@ -144,7 +144,8 @@ if( !class_exists( 'MUCD_Duplicate' ) ) {
 
             if (is_main_site($from_site_id)) {
                 $is_from_main_site = true;
-                $all_sites_ids = MUCD_Functions::get_sites(['fields' => 'ids']);
+                $args = array('fields' => 'ids');
+                $all_sites_ids = MUCD_Functions::get_sites($args);
                 if(!empty($all_sites_ids)) {
                     $all_sites_ids = array_map( 'user_array_map', $all_sites_ids );
                 }
