@@ -51,7 +51,9 @@ if( !class_exists( 'MUCD_Files' ) ) {
          * @param  string $dst destination directory path
          * @param  array  $exclude_dirs directories to ignore
          */
-        public static function recurse_copy($src,$dst, $exclude_dirs=array()) {
+        public static function recurse_copy($src, $dst, $exclude_dirs=array()) {
+            $src = rtrim( $src, '/' );
+            $dst = rtrim( $dst, '/' );
             $dir = opendir($src);
             @mkdir($dst);
             while(false !== ( $file = readdir($dir)) ) {
