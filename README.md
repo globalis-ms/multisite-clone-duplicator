@@ -3,7 +3,7 @@
 * Tags: duplicate, clone, copy, duplication, duplicator, factory, multisite, site, blog, network, wpmu, new blog
 * Requires at least: 4.0.0
 * Tested up to: 4.9.6
-* Stable tag: 1.5.1
+* Stable tag: 1.5.2
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,9 @@ Screenshots on
 [wordpress.org](https://fr.wordpress.org/plugins/multisite-clone-duplicator/screenshots/)
 
 ## Changelog
+
+### 1.5.2
+* Fix file path on duplicate
 
 ### 1.5.1
 * Fix compatibility with PHP version < 5.4

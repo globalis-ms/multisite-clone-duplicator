@@ -93,6 +93,9 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 
 == Changelog ==
 
+= 1.5.2 =
+* Fix file path on duplicate
+
 = 1.5.1 =
 * Fix compatibility with PHP version < 5.4
 

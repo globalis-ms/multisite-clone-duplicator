@@ -6,7 +6,7 @@
  * Author:              Julien OGER, Pierre DARGHAM, David DAUGREILH, GLOBALIS media systems
  * Author URI:          https://github.com/globalis-ms/multisite-clone-duplicator
  *
- * Version:             1.5.1
+ * Version:             1.5.2
  * Requires at least:   4.0.0
  * Tested up to:        4.9.6
  *
@@ -53,7 +53,7 @@ if( !class_exists( 'MUCD' ) ) {
         /**
         * Plugin's version number
         */
-        const VERSION = '1.5.1';
+        const VERSION = '1.5.2';
         
         /**
          * Register hooks used by the plugin
