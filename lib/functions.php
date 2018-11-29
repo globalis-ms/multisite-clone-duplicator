@@ -27,7 +27,7 @@ if( !class_exists( 'MUCD_Functions' ) ) {
          * @return boolean true | false
          */
     	public static function valid_unix_dir_path($path) {
-    	    $reg = "/^(\/([a-z0-9+\$_.-])+)*\/?$/";
+    	    $reg = "/^(\/([a-zA-Z0-9+\$_.-])+)*\/?$/";
     	    $bool = preg_match($reg,$path);
     	    return ($bool == 1);
     	}

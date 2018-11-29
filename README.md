@@ -98,6 +98,7 @@ Screenshots on
 ### 1.5.3
 * Test compatibily with Wordpress 5.0.0
 * Improvement translations
+* Fix unix file path from log directory
 
 ### 1.5.2
 * Fix file path on duplicate
