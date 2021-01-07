@@ -205,6 +205,17 @@ if( !class_exists( 'MUCD_Data' ) ) {
 
                     // Bugfix : escape '_' , '%' and '/' character for mysql 'like' queries
                     $from_string_like = $wpdb->esc_like($from_string);
+                    
+                    //fix non datetime comparison error
+                    $sql_query = $wpdb->prepare("SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '$table' AND COLUMN_NAME = '$field'");
+                    $data_type = self::do_sql_query($sql_query, 'results', FALSE);
+                    if( is_array( $data_type ) ){
+                        $data_type = $data_type[0]['DATA_TYPE'];
+                    }
+                    if( !in_array($data_type, ["datetime"]) ){
+                        $sql_query = $wpdb->prepare('SELECT `' .$field. '` FROM `'.$table.'` WHERE `' .$field. '` LIKE "%s" ', '%' . $from_string_like . '%');  
+                        $results = self::do_sql_query($sql_query, 'results', FALSE);
+                    }
 
                     $sql_query = $wpdb->prepare('SELECT `' .$field. '` FROM `'.$table.'` WHERE `' .$field. '` LIKE "%s" ', '%' . $from_string_like . '%');  
                     $results = self::do_sql_query($sql_query, 'results', FALSE);
