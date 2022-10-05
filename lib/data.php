@@ -59,6 +59,9 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 $from_site_table =  self::do_sql_query($sql_query, 'col'); 
             }
 
+            // disable foreign key checks so order of cloning doesn't matter
+            self::disable_foreign_key_checks();
+
             foreach ($from_site_table as $table) {
 
                 $table_name = $to_site_prefix . substr( $table, $from_site_prefix_length );
@@ -73,6 +76,9 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 self::do_sql_query('INSERT `' . $table_name . '` SELECT * FROM `' . $schema . '`.`' . $table . '`');
 
             }
+
+            // reenable foreign key checks
+            self::enable_foreign_key_checks();
 
             // apply key options from new blog.
             self::db_restore_data( $to_site_id,  $saved_options );
@@ -373,8 +379,30 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 echo '<a href="' . $log_url . '">' . MUCD_NETWORK_PAGE_DUPLICATE_VIEW_LOG . '</a>';
             }
             MUCD_Functions::remove_blog(self::$to_site_id);
+            self::enable_foreign_key_checks();
             wp_die();
         }
 
+        /**
+         * Disable database foreign key checks
+         * @return void
+         */
+        private static function disable_foreign_key_checks() {
+			self::$foreign_key_checks_disabled = true;
+            self::do_sql_query('SET FOREIGN_KEY_CHECKS=0;');
+        }
+
+        /**
+         * Enable database foreign key checks if it was disabled before
+         * @return void
+         */
+    	private static function enable_foreign_key_checks() {
+            if (self::$foreign_key_checks_disabled) {
+			    // change variable before executing the query to prevent
+				// endless recursion loop in case of error
+				self::$foreign_key_checks_disabled = false;
+				self::do_sql_query('SET FOREIGN_KEY_CHECKS=1;');
+            }
+	    }
     }
 }
