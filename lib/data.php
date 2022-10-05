@@ -293,8 +293,8 @@ if( !class_exists( 'MUCD_Data' ) ) {
                 else if(is_object($row[$field]) || $row[$field] instanceof __PHP_Incomplete_Class) { // Étrange fonctionnement avec Google Sitemap...
                     $array_object = (array) $row[$field];
                     $array_object = self::replace_recursive($array_object, $from_string, $to_string);
-                    foreach($array_object as $key => $field) {
-                        $row[$field]->$key = $field;
+                    foreach($array_object as $key => $inner_field) {
+                        $row[$field]->$key = $inner_field;
                     }
                 }
                 else {
