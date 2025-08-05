@@ -48,7 +48,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
                     'id'     => 'network-admin-duplicate',
                     'title'  => MUCD_NETWORK_MENU_DUPLICATION,
                     'href'   => network_admin_url('sites.php?page='. MUCD_SLUG_NETWORK_ACTION),
-                ) ); 
+                ) );
 
                 foreach ( (array) $wp_admin_bar->user->blogs as $blog ) {
 
@@ -148,7 +148,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
 
                 $select_site_list = self::select_site_list( $site_list, $data['source'] );
             }
- 
+
             require_once MUCD_COMPLETE_PATH . '/template/network_admin_duplicate_site.php';
 
             MUCD_Duplicate::close_log();
@@ -222,7 +222,8 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             );
 
             if ( ! $security_check_passes ) {
-                wp_send_json_error( $_GET );
+                $escaped_get = array_map( 'esc_html', $_GET );
+                wp_send_json_error( $escaped_get );
             }
 
             // @info $site_id is actually the 'network' id
@@ -413,7 +414,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             // Enqueue script for network settings page
             wp_enqueue_script( 'mucd/duplicate', MUCD_URL . '/js/network_admin_settings.js', array( 'jquery' ), MUCD::VERSION, true );
             // Enqueue style for network settings page
-            wp_enqueue_style( 'mucd/duplicate-css', MUCD_URL . '/css/network_admin_settings.css', array(), MUCD::VERSION );     
+            wp_enqueue_style( 'mucd/duplicate-css', MUCD_URL . '/css/network_admin_settings.css', array(), MUCD::VERSION );
         }
 
         /**
@@ -427,7 +428,7 @@ if( !class_exists( 'MUCD_Admin' ) ) {
             $data = $init_data;
             $data['copy_files'] = 'no';
             $data['keep_users'] = 'no';
-            $data['log'] = 'no';          
+            $data['log'] = 'no';
 
             // Check referer and nonce
             if(check_admin_referer( MUCD_DOMAIN )) {
