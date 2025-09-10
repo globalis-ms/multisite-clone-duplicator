@@ -93,6 +93,10 @@ As of now, following languages are supported : English (en_US), French (fr_FR), 
 
 == Changelog ==
 
+= 1.5.4 =
+* Improve how language strings are loaded and ensure they are registered
+  at the correct time in Wordpress
+
 = 1.5.3 =
 * Test compatibily with Wordpress 5.0.0
 * Improvement translations
